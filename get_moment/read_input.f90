@@ -14,6 +14,7 @@
         read(11,*) RandPhase, inputPhase
         read(11,*) fiboM,commC,setQ
         read(11,*) BHZ,BHZ_SPIN,BHZ_M
+        read(11,*) OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
         close(11)
 
         if (QP) then

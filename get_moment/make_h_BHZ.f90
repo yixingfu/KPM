@@ -132,7 +132,7 @@
           do s = 0,1
           s_ = 1-s
           ! set row pointer and disorder term
-          rp(rp_ind) = 9*rp_ind-8
+          rp(rp_ind) = PerSite*rp_ind-(PerSite-1)
           col(col_ind) = rp_ind
           rp_ind = rp_ind+1
           A(col_ind) = eps(eps_ind) + zz(s,s)! zz for BHZ
@@ -141,56 +141,60 @@
           ! x forward
           t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,phase)
-          ind_r = xys2i(modulo(i-2,L)+1,j,s_,L)
+        i_=modulo(i-2,L)+1
+          ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
-          A(col_ind) = txf(s,s_)*t_tmp
+          A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
 !        write(*,*)A(col_ind)
           col_ind = col_ind+1
-          ind_r = xys2i(modulo(i-2,L)+1,j,s,L)
+          ind_r = xys2i(i_,j,s,L)
           col(col_ind) = ind_r
-          A(col_ind) = txf(s,s)*t_tmp
+          A(col_ind) = txf(s,s)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
 !        write(*,*)A(col_ind)
           col_ind = col_ind+1
 
           ! x backward
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
-          ind_r = xys2i(modulo(i,L)+1,j,s_,L)
+        i_=modulo(i,L)+1
+          ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
-          A(col_ind) = txb(s,s_)*t_tmp
+          A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
 !        write(*,*)A(col_ind)
           col_ind = col_ind+1
-          ind_r = xys2i(modulo(i,L)+1,j,s,L)
+          ind_r = xys2i(i_,j,s,L)
           col(col_ind) = ind_r
-          A(col_ind) = txb(s,s)*t_tmp
+          A(col_ind) = txb(s,s)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
 !        write(*,*)A(col_ind)
           col_ind = col_ind+1
 
           ! y forward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j-0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j-0.5d0,P,Q,phase)
-          ind_r = xys2i(i,modulo(j-2,L)+1,s_,L)
+        j_=modulo(j-2,L)+1
+          ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
-          A(col_ind) = tyf(s,s_)*t_tmp
+          A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
 !        write(*,*)A(col_ind)
           col_ind = col_ind+1
-          ind_r = xys2i(i,modulo(j-2,L)+1,s,L)
+          ind_r = xys2i(i,j_,s,L)
           col(col_ind) = ind_r
-          A(col_ind) = tyf(s,s)*t_tmp
+          A(col_ind) = tyf(s,s)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
 !        write(*,*)A(col_ind)
           col_ind = col_ind+1
 
           ! y backward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j+0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j+0.5d0,P,Q,phase)
-          ind_r = xys2i(i,modulo(j,L)+1,s_,L)
+        j_=modulo(j,L)+1
+          ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
-          A(col_ind) = tyb(s,s_)*t_tmp
+          A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
 !        write(*,*)A(col_ind)
           col_ind = col_ind+1
-          ind_r = xys2i(i,modulo(j,L)+1,s,L)
+          ind_r = xys2i(i,j_,s,L)
           col(col_ind) = ind_r
-          A(col_ind) = tyb(s,s)*t_tmp
+          A(col_ind) = tyb(s,s)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
 !        write(*,*)A(col_ind)
           col_ind = col_ind+1
 
@@ -202,6 +206,7 @@
 
           deallocate(eps)
       else if (D.eq.3) then
+        write(*,*) "BHZ for 3D not implemented!"
           ! not differentiating QP or not
           rp = 0
           col = 0

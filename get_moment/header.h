@@ -14,6 +14,7 @@
 	real*8,dimension(2)::inputPhase
 	real*8::BHZ_M
 	integer::BHZ_SPIN
+	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
 
 	! Options
 	Logical::QP, BHZ
@@ -49,7 +50,7 @@
 	complex*16,parameter::III=dcmplx(0d0,1d0)
 	
 	
-
+	integer::PerSite
 	! H matrix (CSR)
 	complex*16,dimension(:),allocatable::A
 	integer*8,dimension(:),allocatable::col,rp
@@ -75,7 +76,7 @@
 
 
 	! local variables
-	integer::i,j,k
+	integer::i,j,k,i_,j_,k_
 	integer*8::i8,j8,k8
 
 	! 2D QP: phase

@@ -133,5 +133,6 @@
           include "fibonacci.f90"
           include "Lanczos.f90"
           include "Rescale.f90"
+          include "open_bc.f90"
 
       end program main
