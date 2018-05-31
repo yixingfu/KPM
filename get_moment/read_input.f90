@@ -16,7 +16,7 @@
       read(11,*) MODEL_TYPE
       read(11,*) BHZ_SPIN,BHZ_M
       read(11,*) OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
-      read(11,*) 
+!      read(11,*) 
       close(11)
 
       if (QP) then

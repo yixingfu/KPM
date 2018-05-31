@@ -26,6 +26,7 @@
 	Logical::Inherit,SaveAll
 	Logical::ExactSpectrum,ExactStates
 	Logical::RandPhase
+	Logical::PIFLUX,GRAPHENE
 
 	! Matrix dimensions
 	integer*8::N, NNZ, JNNZ
