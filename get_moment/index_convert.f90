@@ -1,5 +1,5 @@
 ! created=Tue 12 Dec 2017 03:55:22 PM STD
-! Last Modified=Thu 10 May 2018 03:05:34 PM DST
+! Last Modified=Thu 31 May 2018 04:25:07 PM DST
       ! changing indices between x,y,z,s to single index
       ! s=0 for spin up, s=1 for spin down
       integer*8 function xyzs2i(x,y,z,s,L)
@@ -16,3 +16,8 @@
           xys2i = 2_8*((y-1)*L+(x-1))+1+s
           return
       end function xys2i
+      integer*8 function xy2i(x,y,L)
+          integer,intent(in)::x,y,L
+          xy2i = 1_8*((y-1)*L+(x-1))+1
+          return
+      end function xy2i

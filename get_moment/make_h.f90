@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
-! Last Modified=Sun 13 May 2018 04:41:04 PM DST
+! Last Modified=Wed 30 May 2018 11:08:49 PM DST
       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
@@ -27,17 +27,17 @@
       tyb = yb*cdexp(dcmplx(0d0,-Twist(2)))
       tzf = zf*cdexp(dcmplx(0d0,Twist(3)))
       tzb = zb*cdexp(dcmplx(0d0,-Twist(3)))
-        if (my_id .eq. 0) then
-                write(*,*) '-',txf
-                write(*,*) '-',txb
-                write(*,*) '-',tyf
-                write(*,*) '-',tyb
-                write(*,*) '-',tzf
-                write(*,*) '-',tzb
-        endif
+      if (my_id .eq. 0) then
+          write(*,*) '-',txf
+          write(*,*) '-',txb
+          write(*,*) '-',tyf
+          write(*,*) '-',tyb
+          write(*,*) '-',tzf
+          write(*,*) '-',tzb
+      endif
 
 
-      
+
 
 
 
@@ -65,9 +65,9 @@
               P = P + setQ
               Q = P
 
-        if (my_id.eq.0) then
-              write(*,*)"Q=" , Q,"; M=",fiboM
-        endif
+              if (my_id.eq.0) then
+                  write(*,*)"Q=" , Q,"; M=",fiboM
+              endif
           else 
               WQP = 0d0
               Wrnd = W
@@ -143,7 +143,7 @@
           ! y forward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j-0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j-0.5d0,P,Q,phase)
-        j_=modulo(j-2,L)+1
+          j_=modulo(j-2,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -152,7 +152,7 @@
           ! y backward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j+0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j+0.5d0,P,Q,phase)
-        j_=modulo(j,L)+1
+          j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -193,28 +193,28 @@
           col_ind = col_ind+1
 
           ! x forward
-        i_=modulo(i-2,L)+1
+          i_=modulo(i-2,L)+1
           ind_r = xyzs2i(i_,j,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! x backward
-        i_=modulo(i,L)+1
+          i_=modulo(i,L)+1
           ind_r = xyzs2i(i_,j,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! y forward
-        j_=modulo(j-2,L)+1
+          j_=modulo(j-2,L)+1
           ind_r = xyzs2i(i,j_,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
           ! y backward
-        j_=modulo(j,L)+1
+          j_=modulo(j,L)+1
           ind_r = xyzs2i(i,j_,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*open_bc(j,j_,L,OPEN_BC_y)
@@ -222,14 +222,14 @@
 
           ! caution! z has s->s, not s->s_
           ! z forward
-        k_=modulo(k-2,L)+1
+          k_=modulo(k-2,L)+1
           ind_r = xyzs2i(i,j,k_,s,L)
           col(col_ind) = ind_r
           A(col_ind) = tzf(s,s)*open_bc(k,k_,L,OPEN_BC_z)
           col_ind = col_ind+1
 
           ! z backward
-        k_=modulo(k,L)+1
+          k_=modulo(k,L)+1
           ind_r = xyzs2i(i,j,k_,s,L)
           col(col_ind) = ind_r
           A(col_ind) = tzb(s,s)*open_bc(k,k_,L,OPEN_BC_z)
@@ -244,16 +244,16 @@
           deallocate(eps)
 
       endif
-        if (my_id.eq.0) then
-        open(111,file="MATRIX.txt",status="replace",&
-                form="unformatted",access="stream")
-        write(111) N
-        write(111) NNZ
-        write(*,*)"NNZ",NNZ
-        write(111) A, col, rp
-        close(111)
-        endif
-        
+      if (my_id.eq.0) then
+          open(111,file="MATRIX.txt",status="replace",&
+              form="unformatted",access="stream")
+          write(111) N
+          write(111) NNZ
+          write(*,*)"NNZ",NNZ
+          write(111) A, col, rp
+          close(111)
+      endif
+
 
 
 ! -------------------------EIGENVALUE

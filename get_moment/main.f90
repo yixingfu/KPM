@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Thu 10 May 2018 03:00:30 PM DST
+! Last Modified=Wed 30 May 2018 11:08:39 PM DST
       program main
           use lapack95
           use f95_precision
@@ -28,11 +28,11 @@
               '(a,i4.4)')trim(outputfile)//"_",rlz_id
 
           ! make H (and normalize)
-        if (BHZ) then
-          include "make_h_BHZ.f90"
-        else
-          include "make_h.f90"
-        endif 
+          if (BHZ) then
+              include "make_h_BHZ.f90"
+          else
+              include "make_h.f90"
+          endif 
           ! check
           !call printCSR(N,NNZ,A,col,rp)
 

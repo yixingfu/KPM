@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
-! Last Modified=Sun 13 May 2018 04:41:04 PM DST
+! Last Modified=Wed 30 May 2018 11:08:43 PM DST
       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
@@ -18,20 +18,20 @@
           Twist = (Twist)*pi/L! 0 to pi??
       endif
 
-        ! BHZ Definition
+      ! BHZ Definition
 
-        if (BHZ) then
-        xf= BHZ_SPIN * 0.5d0*III*pauli_x + 0.5d0*pauli_z
-        xb=-BHZ_SPIN * 0.5d0*III*pauli_x + 0.5d0*pauli_z
+      if (BHZ) then
+          xf= BHZ_SPIN * 0.5d0*III*pauli_x + 0.5d0*pauli_z
+          xb=-BHZ_SPIN * 0.5d0*III*pauli_x + 0.5d0*pauli_z
 
-        yf= 0.5d0*III*pauli_y + 0.5d0*pauli_z
-        yb=-0.5d0*III*pauli_y + 0.5d0*pauli_z
+          yf= 0.5d0*III*pauli_y + 0.5d0*pauli_z
+          yb=-0.5d0*III*pauli_y + 0.5d0*pauli_z
 
-        zf=0d0
-        zb=0d0
+          zf=0d0
+          zb=0d0
 
-        zz=(BHZ_M-2d0)*pauli_z
-        endif
+          zz=(BHZ_M-2d0)*pauli_z
+      endif
 
       ! Add Twist
       txf = xf*cdexp(dcmplx(0d0,Twist(1)))
@@ -40,20 +40,20 @@
       tyb = yb*cdexp(dcmplx(0d0,-Twist(2)))
       tzf = zf*cdexp(dcmplx(0d0,Twist(3)))
       tzb = zb*cdexp(dcmplx(0d0,-Twist(3)))
-        if (my_id .eq. 0) then
-                write(*,*) 'BHZ:',BHZ
-                write(*,*) 'BHZ spin:',BHZ_SPIN
-                write(*,*) 'BHZ M:',BHZ_M
-                write(*,*) '-',txf
-                write(*,*) '-',txb
-                write(*,*) '-',tyf
-                write(*,*) '-',tyb
-                write(*,*) '-',tzf
-                write(*,*) '-',tzb
-        endif
+      if (my_id .eq. 0) then
+          write(*,*) 'BHZ:',BHZ
+          write(*,*) 'BHZ spin:',BHZ_SPIN
+          write(*,*) 'BHZ M:',BHZ_M
+          write(*,*) '-',txf
+          write(*,*) '-',txb
+          write(*,*) '-',tyf
+          write(*,*) '-',tyb
+          write(*,*) '-',tzf
+          write(*,*) '-',tzb
+      endif
 
 
-      
+
 
 
 
@@ -81,9 +81,9 @@
               P = P + setQ
               Q = P
 
-        if (my_id.eq.0) then
-              write(*,*)"Q=" , Q,"; M=",fiboM
-        endif
+              if (my_id.eq.0) then
+                  write(*,*)"Q=" , Q,"; M=",fiboM
+              endif
           else 
               WQP = 0d0
               Wrnd = W
@@ -141,7 +141,7 @@
           ! x forward
           t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,phase)
-        i_=modulo(i-2,L)+1
+          i_=modulo(i-2,L)+1
           ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
@@ -156,7 +156,7 @@
           ! x backward
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
-        i_=modulo(i,L)+1
+          i_=modulo(i,L)+1
           ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
@@ -171,7 +171,7 @@
           ! y forward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j-0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j-0.5d0,P,Q,phase)
-        j_=modulo(j-2,L)+1
+          j_=modulo(j-2,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -186,7 +186,7 @@
           ! y backward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j+0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j+0.5d0,P,Q,phase)
-        j_=modulo(j,L)+1
+          j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -206,7 +206,7 @@
 
           deallocate(eps)
       else if (D.eq.3) then
-        write(*,*) "BHZ for 3D not implemented!"
+          write(*,*) "BHZ for 3D not implemented!"
           ! not differentiating QP or not
           rp = 0
           col = 0
@@ -279,16 +279,16 @@
           deallocate(eps)
 
       endif
-        if (my_id.eq.0) then
-        open(111,file="MATRIX.txt",status="replace",&
-                form="unformatted",access="stream")
-        write(111) N
-        write(111) NNZ
-        write(*,*)"NNZ",NNZ
-        write(111) A, col, rp
-        close(111)
-        endif
-        
+      if (my_id.eq.0) then
+          open(111,file="MATRIX.txt",status="replace",&
+              form="unformatted",access="stream")
+          write(111) N
+          write(111) NNZ
+          write(*,*)"NNZ",NNZ
+          write(111) A, col, rp
+          close(111)
+      endif
+
 
 
 ! -------------------------EIGENVALUE

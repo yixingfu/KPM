@@ -15,6 +15,9 @@
 	real*8::BHZ_M
 	integer::BHZ_SPIN
 	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
+        integer::MODEL_TYPE
+        integer,parameter::TYPE_SLNN=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
+
 
 	! Options
 	Logical::QP, BHZ
@@ -115,6 +118,8 @@
 	complex*16,dimension(0:1,0:1)::xf,xb,yf,yb,zf,zb,zz
 	complex*16,dimension(0:1,0:1)::txf,txb,tyf,tyb,tzf,tzb
 	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb
+        complex*16,dimension(0:1)::eiAx,eiAy
+        complex*16::tx,tx_,ty,ty_
 
 	! MPI
 	integer::status,ierr,num_procs,my_id,rlz_id
