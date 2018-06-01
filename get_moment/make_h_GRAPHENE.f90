@@ -1,9 +1,9 @@
-! Branched=Thu 31 May 2018 01:57:56 PM DST
-! Last Modified=Fri 01 Jun 2018 03:22:16 PM DST
-      !This file creates H for Pi flux (semimetal case, no t')
+! Branched=Thu 31 May 2018 07:42:14 PM DST
+! Last Modified=Thu 31 May 2018 11:02:36 PM DST
+      !This file creates H for graphene
       ! 
       !The matrix is stored as CSR(A,col,rp)
-      ! See Fradkins 16.3.1
+      ! See Fradkins 16.3.2
       ! Set t = 1/2
       ! Quasi periodic parameter W
       ! 2D only
@@ -21,10 +21,6 @@
       endif
 
       ! term between c^\dagger and c
-      eiAx(0) = -1d0
-      eiAx(1) = 1d0
-      eiAy(0) = 1d0
-      eiAy(1) = -1d0
       ! Twist
       tx = 0.5d0*cdexp(dcmplx(0d0,Twist(1)))
       tx_ = 0.5d0*cdexp(dcmplx(0d0,-Twist(1)))
@@ -70,7 +66,7 @@
           i_=modulo(i,L)+1
           ind_r = xy2i(i_,j,L)
           col(col_ind) = ind_r
-          A(col_ind) = - eiAx(modulo(i,2))*t_tmp!*open_bc(i,i_,L,OPEN_BC_x)
+          A(col_ind) = eiAx(modulo(i,2))*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! x backward
@@ -79,7 +75,7 @@
           i_=modulo(i-2,L)+1
           ind_r = xy2i(i_,j,L)
           col(col_ind) = ind_r
-          A(col_ind) = - eiAx(modulo(i_,2))*t_tmp!*open_bc(i,i_,L,OPEN_BC_x)
+          A(col_ind) = eiAx(modulo(i_,2))*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! y forward
@@ -88,7 +84,7 @@
           j_=modulo(j,L)+1
           ind_r = xy2i(i,j_,L)
           col(col_ind) = ind_r
-          A(col_ind) = - eiAy(modulo(i,2))*t_tmp!*open_bc(j,j_,L,OPEN_BC_y)
+          A(col_ind) = eiAy(modulo(i,2))*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
           ! y backward
@@ -97,7 +93,7 @@
           j_=modulo(j-2,L)+1
           ind_r = xy2i(i,j_,L)
           col(col_ind) = ind_r
-          A(col_ind) = - eiAy(modulo(i,2))*t_tmp!*open_bc(j,j_,L,OPEN_BC_y)
+          A(col_ind) = eiAy(modulo(i,2))*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
           eps_ind = eps_ind+1

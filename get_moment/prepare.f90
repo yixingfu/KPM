@@ -1,5 +1,5 @@
 ! Created =Tue 12 Dec 2017 03:10:19 PM STD
-! Last Modified=Thu 31 May 2018 01:56:42 PM DST
+! Last Modified=Fri 01 Jun 2018 02:59:33 PM DST
 ! 
 
       ! This file prepares a few derived parameters from input file
@@ -19,6 +19,8 @@
           ! This is the version w/o t'
       else if (MODEL_TYPE.eq.TYPE_GRAPHENE) then
           GRAPHENE=.true.
+          PerSite=1+3
+          N = 2*(L**D)
       else
           PerSite=1+2*D
           N = 2*(L**D)
