@@ -2,8 +2,7 @@
 ! This generates correlated potential term
 ! eps has a term on each site
 ! partially correlated version
-      allocate(phase_vals(D,PIECE),phase_all(D,L*L))
-
+      allocate(phase_vals(D,PIECE))
       ! setting parameters
       phase = 0
       if (QP) then

@@ -17,13 +17,14 @@
 	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
         integer::MODEL_TYPE
         integer,parameter::TYPE_SLNN=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
-        integer::PIECE,temp_i,temp_start,total_count,set_count
+        integer::PIECE,temp_i,temp_start,total_count,set_count,PIECE
         real*8::temp_i_real
+        
 
 
 
 	! Options
-	Logical::QP, BHZ
+	Logical::QP, BHZ, LIMIT_CORRELATION
 	Logical::slowOPTCOND
 	Logical::fixedTwist
 	Logical::Inherit,SaveAll

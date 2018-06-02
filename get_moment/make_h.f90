@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
-! Last Modified=Wed 30 May 2018 11:08:49 PM DST
+! Last Modified=Sat 02 Jun 2018 03:25:03 PM DST
       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
@@ -42,75 +42,20 @@
 
 
       if (D.eq.2) then
-          phase = 0
-          if (QP) then
-              Wrnd = 0d0
-              WQP = W
-              if (RandPhase) then
-                  call random_number(phase)
-              else 
-                  phase = inputPhase
-              endif
+          allocate(phase_all(D,L*L))
 
-              phase = phase*2d0*pi
-              P = 2.0d0*pi*fibonacci(fiboN-fiboM)/fibonacci(fiboN)
-              Q = P
-              if (commC .ne. 0) then
-                  ! if set commensurate C, then Q=P=2pi/C
-                  P=2.0d0*pi/commC
-                  Q=P
-              endif
-
-              ! offset Q
-              P = P + setQ
-              Q = P
-
-              if (my_id.eq.0) then
-                  write(*,*)"Q=" , Q,"; M=",fiboM
-              endif
-          else 
-              WQP = 0d0
-              Wrnd = W
-          End if
-          TQP = 0d0
-          Trnd = 0d0
-          t0 = 1d0
-          if (RandType.eq.RandHOP) then
-              WQP = 0d0
-              Wrnd = 0d0
-              t0 = dsqrt(1d0-W**2)
-              if (QP) then
-                  TQP = W
-                  Trnd = 0d0
-              else 
-                  TQP = 0d0
-                  Trnd = W
-              endif
+          if (LIMIT_CORRELATION) then
+              include "2d_QP_prepare_piecewise.f90"
+          else
+              include "2d_QP_prepare.f90"
           endif
-
-
+          ! initiate indices
+          eps_ind = 1
           rp = 0
           col = 0
           col_ind = 1
           rp_ind = 1
-          allocate(eps(L*L)) 
-          eps_ind = 1
-          if (RandType.eq.RandPOT) then
-              do j=1,L
-              do i=1,L
 
-              eps(eps_ind) = &
-                  WQP*quasiperiodic(i+0d0,j+0d0,P,Q,phase)&
-                  + Wrnd*random2D(i+0d0,j+0d0,P,Q)
-              eps_ind=eps_ind+1
-              enddo
-              enddo
-              eps = eps - sum(eps)/real(L*L)
-          else if (RandType.eq.RandHOP) then
-              eps = 0d0
-          endif
-
-          eps_ind = 1
           do j=1,L! y
           do i=1,L! x
           do s = 0,1
@@ -123,37 +68,39 @@
           col_ind = col_ind+1
 
           ! x forward
-          t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
-              + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,phase)
           i_=modulo(i-2,L)+1
           ind_r = xys2i(i_,j,s_,L)
+          t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
+              + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,&
+              phase_all(:,xys2i(i,j,s,L)))
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! x backward
-          t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
-              + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
           i_=modulo(i,L)+1
           ind_r = xys2i(i_,j,s_,L)
+          t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
+             + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase_all(:,ind_r))
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! y forward
-          t_tmp = t0 + Trnd*random2D(i+0.0d0,j-0.5d0,P,Q)&
-              + TQP*quasiperiodic(i+0.0d0,j-0.5d0,P,Q,phase)
           j_=modulo(j-2,L)+1
           ind_r = xys2i(i,j_,s_,L)
+          t_tmp = t0 + Trnd*random2D(i+0d0,j-0.5d0,P,Q)&
+              + TQP*quasiperiodic(i+0d0,j-0.5d0,P,Q,&
+              phase_all(:,xys2i(i,j,s,L)))
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
           ! y backward
-          t_tmp = t0 + Trnd*random2D(i+0.0d0,j+0.5d0,P,Q)&
-              + TQP*quasiperiodic(i+0.0d0,j+0.5d0,P,Q,phase)
           j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
+          t_tmp = t0 + Trnd*random2D(i+0d0,j+0.5d0,P,Q)&
+             + TQP*quasiperiodic(i+0d0,j+0.5d0,P,Q,phase_all(:,ind_r))
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
@@ -164,7 +111,7 @@
           End do
           rp(rp_ind) = NNZ+1
 
-          deallocate(eps)
+          deallocate(eps,phase_all)
       else if (D.eq.3) then
           ! not differentiating QP or not
           rp = 0

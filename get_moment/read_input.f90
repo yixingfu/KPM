@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:19:48 PM STD
-! Last Modified=Wed 30 May 2018 11:09:13 PM DST
+! Last Modified=Sat 02 Jun 2018 03:26:45 PM DST
       ! read inputfile name from command line
       call getarg(1,inputfile)
       ! read inputs D,L,Nc,W,QP?, from input file
@@ -16,7 +16,7 @@
       read(11,*) MODEL_TYPE
       read(11,*) BHZ_SPIN,BHZ_M
       read(11,*) OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
-!      read(11,*) 
+      read(11,*) LIMIT_CORRELATION,PIECE
       close(11)
 
       if (QP) then
