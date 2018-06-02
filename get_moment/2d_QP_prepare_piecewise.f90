@@ -52,12 +52,18 @@
       endif
       call random_number(phase_vals)
       phase_vals =  phase_vals * 2d0 * pi
-      
+      ! reset 
+      phase_all = -1
+
+      ! place phase_vals in random locations
       do i=1,PIECE
-         call random_number(temp_i_real)
-         temp_i = round(temp_i_real*L*L)!!!!
-         call random_number(phase_temp)
-         phase_all(:,temp_i) = phase_vals(:,i)
+ 20      call random_number(temp_i_real)
+         temp_i = ceiling(temp_i_real*L*L)
+         if (phase_all(1,temp_i).eq.-1) then
+             phase_all(:,temp_i) = phase_vals(:,i)
+         else
+             goto 20
+         endif
       enddo
 
       ! Now that the seeds are set, we grow them
@@ -68,7 +74,33 @@
       ! if defined, then extend it at a random direction
       ! When one location gets updated, also update the total location
       ! number count. End when all locations populated.
+      set_count = 0
+      total_count = L**D
 
+      while (set_count .lt. total_count) do
+        call random(temp_i_real)
+        temp_start = ceiling(temp_i_real*total_count)
+        do temp_i=1,total_count
+          if (phase_all(1,i).eq.-1) CYCLE
+          i = modulo(temp_i+temp_start,total_count) + 1
+          call random_number(temp_i_real)
+          if (temp_i_real .lt. 0.25) then
+                i_ = i_left_2d(i,L)
+          else if (temp_i_real.lt.0.5) then
+                i_ = i_right_2d(i,L)
+          else if (temp_i_real.lt.0.75) then
+                i_ = i_up_2d(i,L)
+          else
+                i_ = i_down_2d(i,L)
+          endif
+          if (phase_all(1,i_).eq.-1) then
+              phase_all(:,i_)=phase_all(:,i)
+              set_count=set_count+1
+          endif
+        enddo
+      enddo
+      write(*,*)"phase for all"
+      write(*,*)phase_all
 
       
 
@@ -80,8 +112,7 @@
           do i=1,L
 
           eps(eps_ind) = &
-              WQP*quasiperiodic(i+0d0,j+0d0,P,Q,phase)&
-              + Wrnd*random2D(i+0d0,j+0d0,P,Q)
+              WQP*quasiperiodic(i+0d0,j+0d0,P,Q,phase_all(eps_ind))
           eps_ind=eps_ind+1
           enddo
           enddo
