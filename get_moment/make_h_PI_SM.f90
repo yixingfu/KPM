@@ -1,5 +1,5 @@
 ! Branched=Thu 31 May 2018 01:57:56 PM DST
-! Last Modified=Fri 01 Jun 2018 03:22:16 PM DST
+! Last Modified=Sat 02 Jun 2018 01:03:39 PM DST
       !This file creates H for Pi flux (semimetal case, no t')
       ! 
       !The matrix is stored as CSR(A,col,rp)
@@ -24,7 +24,7 @@
       eiAx(0) = -1d0
       eiAx(1) = 1d0
       eiAy(0) = 1d0
-      eiAy(1) = -1d0
+      eiAy(1) = 1d0
       ! Twist
       tx = 0.5d0*cdexp(dcmplx(0d0,Twist(1)))
       tx_ = 0.5d0*cdexp(dcmplx(0d0,-Twist(1)))

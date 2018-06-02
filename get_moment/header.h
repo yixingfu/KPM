@@ -17,6 +17,9 @@
 	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
         integer::MODEL_TYPE
         integer,parameter::TYPE_SLNN=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
+        integer::PIECE,temp_i
+        real*8::temp_i_real
+
 
 
 	! Options
@@ -85,6 +88,7 @@
 
 	! 2D QP: phase
 	real*8,dimension(2)::phase
+        real*8,dimension(:,:),allocatable::phase_vals,phase_all
 
 	! moment mu
 	real*8,dimension(:),allocatable::mu_tot,mu2_tot,mu,psi0R
