@@ -30,13 +30,13 @@
       end function i_up_2d
       integer*8 function i_down_2d(i,L)
           integer,intent(in)::i,L
-          i_up_2d=modulo(i+L-1,L*L)+1_8
+          i_down_2d=modulo(i+L-1,L*L)+1_8
       end function i_down_2d
       integer*8 function i_left_2d(i,L)
           integer,intent(in)::i,L
-          i_up_2d=i-1_8+(((i-1)/L)-((i-2)/L))*L
+          i_left_2d=i-1_8+(((i-1)/L)-((i-2)/L))*L
       end function i_left_2d
       integer*8 function i_right_2d(i,L)
           integer,intent(in)::i,L
-          i_up_2d=i+1_8-(((i)/L)-((i-1)/L))*L
+          i_right_2d=i+1_8-(((i)/L)-((i-1)/L))*L
       end function i_right_2d

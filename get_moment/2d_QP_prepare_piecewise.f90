@@ -76,7 +76,7 @@
       set_count = 0
       total_count = L**D
 
-      while (set_count .lt. total_count) do
+      do while (set_count .lt. total_count)
         call random(temp_i_real)
         temp_start = ceiling(temp_i_real*total_count)
         do temp_i=1,total_count
@@ -111,7 +111,7 @@
           do i=1,L
 
           eps(eps_ind) = &
-              WQP*quasiperiodic(i+0d0,j+0d0,P,Q,phase_all(eps_ind))
+              WQP*quasiperiodic(i+0d0,j+0d0,P,Q,phase_all(:,eps_ind))
           eps_ind=eps_ind+1
           enddo
           enddo
