@@ -41,6 +41,7 @@
 
 
       if (D.eq.2) then
+!          allocate(phase_all(D,L*L))
           include "2d_QP_prepare.f90"
           ! reset before get going
           rp = 0

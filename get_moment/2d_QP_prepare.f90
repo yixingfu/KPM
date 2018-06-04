@@ -66,7 +66,5 @@
       else if (RandType.eq.RandHOP) then
           eps = 0d0
       endif
-      phase_all(1,:) = phase(1)
-      phase_all(2,:) = phase(2)
 
 

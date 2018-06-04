@@ -21,10 +21,10 @@
       endif
 
       ! term between c^\dagger and c
-      eiAx(0) = -1d0
-      eiAx(1) = 1d0
-      eiAy(0) = 1d0
-      eiAy(1) = 1d0
+      eiAx(0) = III
+      eiAx(1) = III
+      eiAy(0) = -III
+      eiAy(1) = III
       ! Twist
       tx = 0.5d0*cdexp(dcmplx(0d0,Twist(1)))
       tx_ = 0.5d0*cdexp(dcmplx(0d0,-Twist(1)))
@@ -33,6 +33,7 @@
       
 
       if (my_id .eq. 0) then
+          write(*,*)'twisttttt',twist
           write(*,*)'tx - ',tx
           write(*,*)'tx_ - ',tx_
           write(*,*)'ty - ',ty
@@ -45,6 +46,7 @@
 
 
       if (D.eq.2) then
+!          allocate(phase_all(D,L*L))
           include "2d_QP_prepare.f90"
           ! reset before get going
           rp = 0
@@ -52,6 +54,7 @@
           col_ind = 1
           rp_ind = 1
           eps_ind = 1
+        write(*,*)"paras",Trnd,TQP
           do j=1,L! y
           do i=1,L! x
           ! set row pointer and disorder term (almost same for every
@@ -79,7 +82,7 @@
           i_=modulo(i-2,L)+1
           ind_r = xy2i(i_,j,L)
           col(col_ind) = ind_r
-          A(col_ind) = - eiAx(modulo(i_,2))*t_tmp!*open_bc(i,i_,L,OPEN_BC_x)
+          A(col_ind) = - conjg(eiAx(modulo(i_,2)))*t_tmp!*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! y forward
@@ -97,7 +100,7 @@
           j_=modulo(j-2,L)+1
           ind_r = xy2i(i,j_,L)
           col(col_ind) = ind_r
-          A(col_ind) = - eiAy(modulo(i,2))*t_tmp!*open_bc(j,j_,L,OPEN_BC_y)
+          A(col_ind) = - conjg(eiAy(modulo(i,2)))*t_tmp!*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
           eps_ind = eps_ind+1
@@ -112,15 +115,16 @@
 
 ! FOR TESTING: SAVE MATRIX
 !      if (my_id.eq.0) then
-!          open(111,file="MATRIX.txt",status="replace",&
+!      write(matrixfile,'(a,i4.4,a)') "MATRIX",my_id,".txt"
+!          open(111,file=matrixfile,status="replace",&
 !              form="unformatted",access="stream")
 !          write(111) N
 !          write(111) NNZ
 !          write(*,*)"NNZ",NNZ
-!          write(111) A, col, rp
+!          write(111) real(A),imag(A), col, rp
 !          close(111)
 !      endif
-!
+
 
 
 ! -------------------------EIGENVALUE

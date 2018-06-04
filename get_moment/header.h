@@ -1,5 +1,5 @@
 	! Input file
-	character(200)::inputfile
+	character(200)::inputfile, matrixfile
 
 	! All inputs
 	integer::D,L,Nc,Rep
@@ -43,7 +43,8 @@
 	complex*16,dimension(3)::expTwist
 
 	! Disorder
-	real*8::WQP,Wrnd,P,Q,TQP,Trnd,t0,t_tmp
+	real*8::WQP,Wrnd,P,Q,TQP,Trnd,t0
+	complex*16::t_tmp
 	real*8,dimension(:),allocatable::eps
 	integer::eps_ind
 
@@ -126,6 +127,8 @@
 	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb
         complex*16,dimension(0:1)::eiAx,eiAy
         complex*16::tx,tx_,ty,ty_
+
+
 
 	! MPI
 	integer::status,ierr,num_procs,my_id,rlz_id

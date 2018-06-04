@@ -17,8 +17,8 @@
           write(*,*)'normalization factors:',norm_a,norm_b
 !        do i=1,N
 !                do j=rp(i),rp(i+1)-1
-!        write(*,*)i,',',col(j),',',real(A(j)),',',imag(A(j))
-!
+!        write(*,'(i4.4,a,i4.4,a,F11.9,a,F11.9)')i,',',col(j),&
+!                ',',real(A(j)),',',imag(A(j))
 !                enddo
 !        enddo
 

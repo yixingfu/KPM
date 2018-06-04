@@ -48,6 +48,8 @@
               include "2d_QP_prepare_piecewise.f90"
           else
               include "2d_QP_prepare.f90"
+        phase_all(1,:) = phase(1)
+        phase_all(2,:) = phase(2)
           endif
           ! initiate indices
           eps_ind = 1
