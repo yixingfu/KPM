@@ -10,7 +10,10 @@
           Wrnd = 0d0
           WQP = W
           if (RandPhase) then
-              call random_number(phase)
+              allocate(TwistAll(num_procs*3*seq_rep))
+              call random_number(TwistAll)
+              phase = TwistAll(my_id*3+1:my_id*3+2)
+              deallocate(TwistAll)
           else 
               phase = inputPhase
           endif
