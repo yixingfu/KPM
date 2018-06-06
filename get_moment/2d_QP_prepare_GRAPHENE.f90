@@ -73,7 +73,7 @@
 
           ! site B: + 1
           eps(eps_ind) = &
-              WQP*quasiperiodic(xx+1d0,yy,j,P,Q,phase)&
+              WQP*quasiperiodic(xx+1d0,yy,P,Q,phase)&
               + Wrnd*random2D(xx+1d0,yy,P,Q)
           eps_ind=eps_ind+1
           enddo

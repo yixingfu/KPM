@@ -43,7 +43,7 @@
 	complex*16,dimension(3)::expTwist
 
 	! Disorder
-	real*8::WQP,Wrnd,P,Q,TQP,Trnd,t0
+	real*8::WQP,Wrnd,P,Q,TQP,Trnd,t0,t
 	complex*16::t_tmp
 	real*8,dimension(:),allocatable::eps
 	integer::eps_ind
