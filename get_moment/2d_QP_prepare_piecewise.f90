@@ -57,12 +57,12 @@
       ! place phase_vals in random locations
       do i=1,PIECE
  20      call random_number(temp_i_real)
-         temp_i = ceiling(temp_i_real*L*L)
-         if (phase_all(1,temp_i).eq.-1) then
-             phase_all(:,temp_i) = phase_vals(:,i)
-         else
-             goto 20
-         endif
+      temp_i = ceiling(temp_i_real*L*L)
+      if (phase_all(1,temp_i).eq.-1) then
+          phase_all(:,temp_i) = phase_vals(:,i)
+      else
+          goto 20
+      endif
       enddo
 
       ! Now that the seeds are set, we grow them
@@ -77,31 +77,31 @@
       total_count = L**D
 
       do while (set_count .lt. total_count)
-        call random(temp_i_real)
-        temp_start = ceiling(temp_i_real*total_count)
-        do temp_i=1,total_count
-          if (phase_all(1,i).eq.-1) CYCLE
-          i = modulo(temp_i+temp_start,total_count) + 1
-          call random_number(temp_i_real)
-          if (temp_i_real .lt. 0.25) then
-                i_ = i_left_2d(i,L)
-          else if (temp_i_real.lt.0.5) then
-                i_ = i_right_2d(i,L)
-          else if (temp_i_real.lt.0.75) then
-                i_ = i_up_2d(i,L)
-          else
-                i_ = i_down_2d(i,L)
-          endif
-          if (phase_all(1,i_).eq.-1) then
-              phase_all(:,i_)=phase_all(:,i)
-              set_count=set_count+1
-          endif
-        enddo
+      call random(temp_i_real)
+      temp_start = ceiling(temp_i_real*total_count)
+      do temp_i=1,total_count
+      if (phase_all(1,i).eq.-1) CYCLE
+      i = modulo(temp_i+temp_start,total_count) + 1
+      call random_number(temp_i_real)
+      if (temp_i_real .lt. 0.25) then
+          i_ = i_left_2d(i,L)
+      else if (temp_i_real.lt.0.5) then
+          i_ = i_right_2d(i,L)
+      else if (temp_i_real.lt.0.75) then
+          i_ = i_up_2d(i,L)
+      else
+          i_ = i_down_2d(i,L)
+      endif
+      if (phase_all(1,i_).eq.-1) then
+          phase_all(:,i_)=phase_all(:,i)
+          set_count=set_count+1
+      endif
+      enddo
       enddo
       write(*,*)"phase for all"
       write(*,*)phase_all
 
-      
+
 
       ! Populating eps
       allocate(eps(L*L))  !!2D
@@ -120,4 +120,4 @@
           eps = 0d0
       endif
 
-        deallocate(phase_vals,phase_all)
+      deallocate(phase_vals,phase_all)

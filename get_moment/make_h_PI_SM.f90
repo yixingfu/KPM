@@ -1,5 +1,5 @@
 ! Branched=Thu 31 May 2018 01:57:56 PM DST
-! Last Modified=Sat 02 Jun 2018 01:03:39 PM DST
+! Last Modified=Wed 06 Jun 2018 03:00:09 PM DST
       !This file creates H for Pi flux (semimetal case, no t')
       ! 
       !The matrix is stored as CSR(A,col,rp)
@@ -30,7 +30,7 @@
       tx_ = 0.5d0*cdexp(dcmplx(0d0,-Twist(1)))
       ty = 0.5d0*cdexp(dcmplx(0d0,Twist(2)))
       ty_ = 0.5d0*cdexp(dcmplx(0d0,-Twist(2)))
-      
+
 
       if (my_id .eq. 0) then
           write(*,*)'twisttttt',twist
@@ -54,7 +54,7 @@
           col_ind = 1
           rp_ind = 1
           eps_ind = 1
-        write(*,*)"paras",Trnd,TQP
+          write(*,*)"paras",Trnd,TQP
           do j=1,L! y
           do i=1,L! x
           ! set row pointer and disorder term (almost same for every

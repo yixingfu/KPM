@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
-! Last Modified=Sat 02 Jun 2018 03:25:03 PM DST
+! Last Modified=Wed 06 Jun 2018 03:00:08 PM DST
       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
@@ -48,8 +48,8 @@
               include "2d_QP_prepare_piecewise.f90"
           else
               include "2d_QP_prepare.f90"
-        phase_all(1,:) = phase(1)
-        phase_all(2,:) = phase(2)
+              phase_all(1,:) = phase(1)
+              phase_all(2,:) = phase(2)
           endif
           ! initiate indices
           eps_ind = 1
@@ -83,7 +83,7 @@
           i_=modulo(i,L)+1
           ind_r = xys2i(i_,j,s_,L)
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
-             + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase_all(:,ind_r))
+              + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase_all(:,ind_r))
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
@@ -102,7 +102,7 @@
           j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
           t_tmp = t0 + Trnd*random2D(i+0d0,j+0.5d0,P,Q)&
-             + TQP*quasiperiodic(i+0d0,j+0.5d0,P,Q,phase_all(:,ind_r))
+              + TQP*quasiperiodic(i+0d0,j+0.5d0,P,Q,phase_all(:,ind_r))
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1

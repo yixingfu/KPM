@@ -127,6 +127,10 @@
 	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb
         complex*16,dimension(0:1)::eiAx,eiAy
         complex*16::tx,tx_,ty,ty_
+        real*8::ix,iy,jx,jy,xx,yy,xx_,yy_
+        integer,dimension(0:1,1:3)::NNx,NNy
+        integer::NNi
+        
 
 
 

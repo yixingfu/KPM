@@ -1,5 +1,5 @@
 ! Created =Tue 12 Dec 2017 03:10:19 PM STD
-! Last Modified=Fri 01 Jun 2018 02:59:33 PM DST
+! Last Modified=Wed 06 Jun 2018 03:00:09 PM DST
 ! 
 
       ! This file prepares a few derived parameters from input file
@@ -26,7 +26,7 @@
           N = 2*(L**D)
           ! Potential + spin up/down fwd/bwd matching
       endif
-      
+
       NNZ = PerSite*N ! fwd & bwd each site per dim + disorder
 
       JNNZ = (2)*N ! fwd & bwd each site @ x
