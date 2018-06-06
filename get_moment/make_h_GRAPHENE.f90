@@ -57,10 +57,10 @@
           ! NN: c^\dagger(row), c(col). col get varied
           i_ = safe_mod(i+NNx(s,NNi),L)
           j_ = safe_mod(j+NNy(s,NNi),L)
-          write(*,*)i,j,i_,j_
+!          write(*,*)i,j,i_,j_
           xx_ = i_*ix+j_*jx+(1-s) ! A to B, B to A
           yy_ = i_*iy+j_*jy
-          col(col_ind) = xys2i(i_,j_,s,L)
+          col(col_ind) = xys2i(i_,j_,1-s,L)
 
           ! QP when Trnd or TQP turns on, it modifies the 
           ! real part of t

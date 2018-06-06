@@ -10,17 +10,19 @@
           complex*16,dimension(NNZ),intent(inout)::A
           real*8,intent(in)::norm_a,norm_b
           integer*8::i,j
-          do i=1,N
-          A(rp(i)) = A(rp(i))-norm_b
-          enddo
-          A = A/norm_a
-          write(*,*)'normalization factors:',norm_a,norm_b
+
 !        do i=1,N
 !                do j=rp(i),rp(i+1)-1
 !        write(*,'(i4.4,a,i4.4,a,F11.9,a,F11.9)')i,',',col(j),&
 !                ',',real(A(j)),',',imag(A(j))
 !                enddo
 !        enddo
+
+          do i=1,N
+          A(rp(i)) = A(rp(i))-norm_b
+          enddo
+          A = A/norm_a
+          write(*,*)'normalization factors:',norm_a,norm_b
 
           return
       end subroutine rescale_to_1
