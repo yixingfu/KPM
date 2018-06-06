@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Wed 06 Jun 2018 04:36:51 PM DST
+! Last Modified=Wed 06 Jun 2018 04:52:31 PM DST
       program main
           use lapack95
           use f95_precision
@@ -32,6 +32,8 @@
               include "make_h_BHZ.f90"
           else if (PIFLUX) then
               include "make_h_PI_SM.f90"
+          else if (GRAPHENE) then
+              include "make_h_GRAPHENE.f90"
           else
               include "make_h.f90"
           endif 
