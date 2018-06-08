@@ -49,7 +49,7 @@
           A(col_ind) = eps(eps_ind)
           col_ind = col_ind+1
 
-          xx=i*ix+j*jx+s
+          xx=i*ix+j*jx+s*AB
           yy=i*iy+j*jy
           
           do NNi=1,3
@@ -58,7 +58,7 @@
           i_ = safe_mod(i+NNx(s,NNi),L)
           j_ = safe_mod(j+NNy(s,NNi),L)
 !          write(*,*)i,j,i_,j_
-          xx_ = i_*ix+j_*jx+(1-s) ! A to B, B to A
+          xx_ = i_*ix+j_*jx+(1-s)*AB ! A to B, B to A
           yy_ = i_*iy+j_*jy
           col(col_ind) = xys2i(i_,j_,1-s,L)
 

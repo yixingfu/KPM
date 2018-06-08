@@ -1,9 +1,8 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
 ! Last Modified=Wed 06 Jun 2018 03:00:08 PM DST
-      !This file creates H
+       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
-
       allocate(A(NNZ),col(NNZ),rp(N+1))
       if (fixedTwist) then
           Twist = OrigTwist*pi/real(L)
