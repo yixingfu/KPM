@@ -19,6 +19,8 @@
         integer,parameter::TYPE_SLNN=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
         integer::PIECE,temp_i,temp_start,total_count,set_count
         real*8::temp_i_real
+	integer::HONEYCOMB_BASIS
+	integer,parameter::HC_LAT=0,HC_XY=1
         
 
 
@@ -127,7 +129,8 @@
 	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb
         complex*16,dimension(0:1)::eiAx,eiAy
         complex*16::tx,tx_,ty,ty_
-        real*8::ix,iy,jx,jy,xx,yy,xx_,yy_,AB
+        real*8::ix,iy,jx,jy,xx,yy,xx_,yy_,ABx,ABy
+	complex*16,dimension(0:1,1:3)::texp_theta ! graphene
         integer,dimension(0:1,1:3)::NNx,NNy
         integer::NNi
         

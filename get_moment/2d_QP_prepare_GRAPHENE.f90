@@ -56,17 +56,26 @@
 
       ! L*L lattice sites, 2 particles each
       ! parameters for honeycomb shape
-! Test:
+     if (HONEYCOMB_BASIS.eq.HC_LAT) then
+! Along lattice vectors
       jx=0d0
       jy=1d0
       ix=1d0
       iy=0d0
-      AB=0d0
-!      jx = 0d0
-!      jy = dsqrt(3d0)
-!      ix = 1.5d0
-!      iy = dsqrt(3d0)/2d0
-!      AB=1d0
+      ABy=-1d0/3d0
+      ABx=2d0/3d0
+! ~~~~~~~~~~~~~~~~
+        else if (HONEYCOMB_BASIS.eq.HC_XY) then
+! Along x,y
+      jx = 0d0
+      jy = dsqrt(3d0)
+      ix = 1.5d0
+      iy = dsqrt(3d0)/2d0
+      ABx=1d0
+      ABy=0d0
+! ~~~~~~~~~~~~~~~~
+        endif
+
       allocate(eps(L*L*2)) 
       eps_ind = 1
       if (RandType.eq.RandPOT) then
@@ -82,8 +91,8 @@
 
           ! site B: + 1
           eps(eps_ind) = &
-              WQP*quasiperiodic(xx+AB,yy,P,Q,phase)&
-              + Wrnd*random2D(xx+AB,yy,P,Q)
+              WQP*quasiperiodic(xx+ABx,yy+ABy,P,Q,phase)&
+              + Wrnd*random2D(xx+ABx,yy+ABy,P,Q)
           eps_ind=eps_ind+1
           enddo
           enddo

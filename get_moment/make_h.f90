@@ -11,6 +11,7 @@
           allocate(TwistAll(num_procs*3*seq_rep))
           call random_number(TwistAll)
           Twist=TwistAll(my_id*3+1:my_id*3+3)
+        twist=twist*2d0-1d0
           write(*,*) 'twist:',Twist
           deallocate(TwistAll)
 
@@ -73,7 +74,7 @@
           ind_r = xys2i(i_,j,s_,L)
           t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,&
-              phase_all(:,xys2i(i,j,s,L)))
+              phase)
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
@@ -82,7 +83,7 @@
           i_=modulo(i,L)+1
           ind_r = xys2i(i_,j,s_,L)
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
-              + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase_all(:,ind_r))
+              + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
@@ -92,7 +93,7 @@
           ind_r = xys2i(i,j_,s_,L)
           t_tmp = t0 + Trnd*random2D(i+0d0,j-0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0d0,j-0.5d0,P,Q,&
-              phase_all(:,xys2i(i,j,s,L)))
+              phase)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
@@ -101,7 +102,7 @@
           j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
           t_tmp = t0 + Trnd*random2D(i+0d0,j+0.5d0,P,Q)&
-              + TQP*quasiperiodic(i+0d0,j+0.5d0,P,Q,phase_all(:,ind_r))
+              + TQP*quasiperiodic(i+0d0,j+0.5d0,P,Q,phase)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1

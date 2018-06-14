@@ -3,7 +3,7 @@
       ! This file makes J operator
 
       if (D.eq.2) then
-          write(*,*) "J not implemented for 2D"
+          write(*,*) "Testing Conductivity Feature for 2D"
       else if (D.eq.3) then
           ! not differentiating QP or not
           write(*,*) "3D,J"

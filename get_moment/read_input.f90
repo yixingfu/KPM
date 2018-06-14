@@ -17,6 +17,7 @@
       read(11,*) BHZ_SPIN,BHZ_M
       read(11,*) OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
       read(11,*) LIMIT_CORRELATION,PIECE
+      read(11,*) HONEYCOMB_BASIS
       close(11)
 
       if (QP) then
