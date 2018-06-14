@@ -1,12 +1,25 @@
 ! Created=Wed 13 Dec 2017 11:51:36 PM STD
-! Last Modified=Thu 10 May 2018 03:02:41 PM DST
+! Last Modified=Thu 14 Jun 2018 12:55:43 PM DST
       ! This file makes J operator
 
       if (D.eq.2) then
           write(*,*) "Testing Conductivity Feature for 2D"
+          if (RandType.eq.RandHOP) then
+              write(*,*) "Hopping conductivity not implemented"
+          else
+              if (BHZ) then
+                  include "make_j_BHZ.f90"
+              else if (PIFLUX) then
+                  include "make_j_PIFLUX.f90"
+              else if (GRAPHENE) then
+                  include "make_j_GRAPHENE.f90"
+              else
+                  include "make_j_SOC.f90"
+              endif
+          endif
       else if (D.eq.3) then
           ! not differentiating QP or not
-          write(*,*) "3D,J"
+!          write(*,*) "3D,J"
           Jrp = 0
           Jcol= 0
           col_ind = 1

@@ -65,7 +65,7 @@
       ABy=-1d0/3d0
       ABx=2d0/3d0
 ! ~~~~~~~~~~~~~~~~
-        else if (HONEYCOMB_BASIS.eq.HC_XY) then
+  else if (HONEYCOMB_BASIS.eq.HC_XY) then
 ! Along x,y
       jx = 0d0
       jy = dsqrt(3d0)
@@ -74,7 +74,7 @@
       ABx=1d0
       ABy=0d0
 ! ~~~~~~~~~~~~~~~~
-        endif
+  endif
 
       allocate(eps(L*L*2)) 
       eps_ind = 1
@@ -103,21 +103,21 @@
       endif
 
 
-          ! parameter
-          ! 0 is A, left site.
-          ! clockwise from same index A-B
-          ! left bottom to right top
-          NNx(0,1) = 0
-          NNy(0,1) = 0
-          NNx(0,2) = -1
-          NNy(0,2) = 0
-          NNx(0,3) = -1
-          NNy(0,3) = 1
+      ! parameter
+      ! 0 is A, left site.
+      ! clockwise from same index A-B
+      ! left bottom to right top
+      NNx(0,1) = 0
+      NNy(0,1) = 0
+      NNx(0,2) = -1
+      NNy(0,2) = 0
+      NNx(0,3) = -1
+      NNy(0,3) = 1
 
-          NNx(1,1) = 0
-          NNy(1,1) = 0
-          NNx(1,2) = 1
-          NNy(1,2) = 0
-          NNx(1,3) = 1
-          NNy(1,3) = -1
+      NNx(1,1) = 0
+      NNy(1,1) = 0
+      NNx(1,2) = 1
+      NNy(1,2) = 0
+      NNx(1,3) = 1
+      NNy(1,3) = -1
 

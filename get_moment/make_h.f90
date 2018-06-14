@@ -1,6 +1,6 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
-! Last Modified=Wed 06 Jun 2018 03:00:08 PM DST
-       !This file creates H
+! Last Modified=Thu 14 Jun 2018 01:02:19 PM DST
+      !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
       allocate(A(NNZ),col(NNZ),rp(N+1))
@@ -11,7 +11,7 @@
           allocate(TwistAll(num_procs*3*seq_rep))
           call random_number(TwistAll)
           Twist=TwistAll(my_id*3+1:my_id*3+3)
-        twist=twist*2d0-1d0
+          twist=twist*2d0-1d0
           write(*,*) 'twist:',Twist
           deallocate(TwistAll)
 
@@ -70,7 +70,7 @@
           col_ind = col_ind+1
 
           ! x forward
-          i_=modulo(i-2,L)+1
+          i_=modulo(i,L)+1
           ind_r = xys2i(i_,j,s_,L)
           t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,&
@@ -80,7 +80,7 @@
           col_ind = col_ind+1
 
           ! x backward
-          i_=modulo(i,L)+1
+          i_=modulo(i-2,L)+1
           ind_r = xys2i(i_,j,s_,L)
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
@@ -89,7 +89,7 @@
           col_ind = col_ind+1
 
           ! y forward
-          j_=modulo(j-2,L)+1
+          j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
           t_tmp = t0 + Trnd*random2D(i+0d0,j-0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0d0,j-0.5d0,P,Q,&
@@ -99,7 +99,7 @@
           col_ind = col_ind+1
 
           ! y backward
-          j_=modulo(j,L)+1
+          j_=modulo(j-2,L)+1
           ind_r = xys2i(i,j_,s_,L)
           t_tmp = t0 + Trnd*random2D(i+0d0,j+0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0d0,j+0.5d0,P,Q,phase)
@@ -142,28 +142,28 @@
           col_ind = col_ind+1
 
           ! x forward
-          i_=modulo(i-2,L)+1
+          i_=modulo(i,L)+1
           ind_r = xyzs2i(i_,j,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! x backward
-          i_=modulo(i,L)+1
+          i_=modulo(i-2,L)+1
           ind_r = xyzs2i(i_,j,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! y forward
-          j_=modulo(j-2,L)+1
+          j_=modulo(j,L)+1
           ind_r = xyzs2i(i,j_,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
           ! y backward
-          j_=modulo(j,L)+1
+          j_=modulo(j-2,L)+1
           ind_r = xyzs2i(i,j_,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*open_bc(j,j_,L,OPEN_BC_y)
@@ -171,14 +171,14 @@
 
           ! caution! z has s->s, not s->s_
           ! z forward
-          k_=modulo(k-2,L)+1
+          k_=modulo(k,L)+1
           ind_r = xyzs2i(i,j,k_,s,L)
           col(col_ind) = ind_r
           A(col_ind) = tzf(s,s)*open_bc(k,k_,L,OPEN_BC_z)
           col_ind = col_ind+1
 
           ! z backward
-          k_=modulo(k,L)+1
+          k_=modulo(k-2,L)+1
           ind_r = xyzs2i(i,j,k_,s,L)
           col(col_ind) = ind_r
           A(col_ind) = tzb(s,s)*open_bc(k,k_,L,OPEN_BC_z)
