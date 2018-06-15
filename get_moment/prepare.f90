@@ -28,8 +28,11 @@
       endif
 
       NNZ = PerSite*N ! fwd & bwd each site per dim + disorder
-
+        if (GRAPHENE) then
+        JNNZ=3*N
+        else 
       JNNZ = (2)*N ! fwd & bwd each site @ x
+        endif
 !      write(*,*)D,N,L,NNZ
 
 

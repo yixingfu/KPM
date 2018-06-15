@@ -4,7 +4,7 @@
 
           ! not differentiating QP or not
           if (my_id.eq.0) then
-              write(*,*) "2D,J"
+              write(*,*) "2D,J,seem to work"
           endif
           ! reset
           Jrp = 0

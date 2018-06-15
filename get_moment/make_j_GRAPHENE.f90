@@ -12,30 +12,35 @@
           col_ind = 1
           rp_ind = 1
           ! txf*(-i),txb*(i), same as the ready use 3D case
-          Jtxf = -txf*III
-          Jtxb = txb*III
+        Jtexp_theta = III*texp_theta
+        Jtexp_theta(0,:) = Jtexp_theta(0,:)&
+                *((NNx(0,:)*real_ix+&
+                NNy(0,:)*real_jx+real_ABx)*HC_Jx &
+                +(NNx(0,:)*real_iy+&
+                NNy(0,:)*real_jy+real_ABy)*HC_Jy)
+        Jtexp_theta(1,:) = conjg(Jtexp_theta(0,:))
+        write(*,*)'--',Jtexp_theta(:,1)
+        write(*,*)'--',Jtexp_theta(:,2)
+        write(*,*)'--',Jtexp_theta(:,3)
+
 
           do j=1,L!y
           do i=1,L!x
           do s=0,1
           s_ = 1-s
-          Jrp(rp_ind) = 2*rp_ind-1
+          Jrp(rp_ind) = 3*rp_ind-1
           rp_ind = rp_ind+1
 
-          ! x_forward
-          i_=modulo(i,L)+1
-          ind_r = xys2i(i_,j,s_,L)
+          do NNi=1,3
+      i_ = safe_mod(i+NNx(s,NNi),L)
+      j_ = safe_mod(j+NNy(s,NNi),L)
+
+          ind_r = xys2i(i_,j_,s_,L)
           Jcol(col_ind) = ind_r
-          JA(col_ind) = Jtxf(s,s_)
+          JA(col_ind) = Jtexp_theta(s,NNi)
           col_ind = col_ind+1
 
-          ! x backward
-          i_=modulo(i-2,L)+1
-          ind_r = xys2i(i_,j,s_,L)
-          Jcol(col_ind) = ind_r
-          JA(col_ind) = Jtxb(s,s_)
-          col_ind = col_ind+1
-
+          enddo
           End do
           End do
           End do

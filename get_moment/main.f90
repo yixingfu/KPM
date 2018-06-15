@@ -20,7 +20,7 @@
           ! prepare (including the realization dependent)
           include "prepare.f90"
 
-          allocate(Jrp(N+1),JA(NNZ),Jcol(NNZ))
+          allocate(Jrp(N+1),JA(JNNZ),Jcol(JNNZ))
           do seq_i=0,seq_rep-1
 
           rlz_id = REALIZATION0+my_id

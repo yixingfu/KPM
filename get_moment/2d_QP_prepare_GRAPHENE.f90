@@ -76,6 +76,15 @@
 ! ~~~~~~~~~~~~~~~~
   endif
 
+! Along x,y, as parameters
+      real_jx = 0d0
+      real_jy = dsqrt(3d0)
+      real_ix = 1.5d0
+      real_iy = dsqrt(3d0)/2d0
+      real_ABx=1d0
+      real_ABy=0d0
+! ~~~~~~~~~~~~~~~~
+
       allocate(eps(L*L*2)) 
       eps_ind = 1
       if (RandType.eq.RandPOT) then
