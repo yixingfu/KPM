@@ -88,7 +88,7 @@
       total_count = L**D
 
       do while (set_count .lt. total_count)
-      call random(temp_i_real)
+      call random_number(temp_i_real)
       temp_start = ceiling(temp_i_real*total_count)
       do temp_i=1,total_count
       if (phase_all(1,i).eq.-1) CYCLE
