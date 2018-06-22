@@ -141,7 +141,7 @@
           ! x forward
           t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,phase)
-          i_=modulo(i-2,L)+1
+          i_=modulo(i,L)+1
           ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
@@ -156,7 +156,7 @@
           ! x backward
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
-          i_=modulo(i,L)+1
+          i_=modulo(i-2,L)+1
           ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
@@ -171,7 +171,7 @@
           ! y forward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j-0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j-0.5d0,P,Q,phase)
-          j_=modulo(j-2,L)+1
+          j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -186,7 +186,7 @@
           ! y backward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j+0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j+0.5d0,P,Q,phase)
-          j_=modulo(j,L)+1
+          j_=modulo(j-2,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -234,38 +234,44 @@
           col_ind = col_ind+1
 
           ! x forward
-          ind_r = xyzs2i(modulo(i-2,L)+1,j,k,s_,L)
+          i_ = modulo(i,L)+1
+          ind_r = xyzs2i(i_,j,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)
           col_ind = col_ind+1
 
           ! x backward
-          ind_r = xyzs2i(modulo(i,L)+1,j,k,s_,L)
+          i_ = modulo(i-2,L)+1
+          ind_r = xyzs2i(i_,j,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)
           col_ind = col_ind+1
 
           ! y forward
-          ind_r = xyzs2i(i,modulo(j-2,L)+1,k,s_,L)
+          j_ = modulo(j,L)+1
+          ind_r = xyzs2i(i,j_,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)
           col_ind = col_ind+1
 
           ! y backward
-          ind_r = xyzs2i(i,modulo(j,L)+1,k,s_,L)
+          j_ = modulo(j-2,L)+1
+          ind_r = xyzs2i(i,j_,k,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)
           col_ind = col_ind+1
 
           ! caution! z has s->s, not s->s_
           ! z forward
-          ind_r = xyzs2i(i,j,modulo(k-2,L)+1,s,L)
+          k_ = modulo(k,L)+1
+          ind_r = xyzs2i(i,j,k_,s,L)
           col(col_ind) = ind_r
           A(col_ind) = tzf(s,s_)
           col_ind = col_ind+1
 
           ! z backward
-          ind_r = xyzs2i(i,j,modulo(k,L)+1,s,L)
+          k_ = modulo(k-2,L)+1
+          ind_r = xyzs2i(i,j,k_,s,L)
           col(col_ind) = ind_r
           A(col_ind) = tzb(s,s_)
           col_ind = col_ind+1

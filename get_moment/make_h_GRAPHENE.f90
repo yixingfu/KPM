@@ -8,6 +8,9 @@
       ! Quasi periodic parameter W
       ! 2D only
       ! Twist testing
+        ! Note: xx,yy,ix,jx,iy,jy not used 
+        ! over HERE
+        ! unless we want to do hopping model
 
 
       allocate(A(NNZ),col(NNZ),rp(N+1))

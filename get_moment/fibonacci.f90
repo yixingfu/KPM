@@ -18,3 +18,13 @@
           return
 
       end function fibonacci
+
+      integer function inv_fibo(L)
+                integer::N,L
+                do N=1,L
+                    if (fibonacci(N).eq.L) then
+                        inv_fibo=N
+                        return
+                    endif
+                enddo
+      end function inv_fibo

@@ -26,9 +26,17 @@
               Q=P
           endif
 
-          ! offset Q
+          ! set Q
+        if (setQ .ne. 0) then
           P = P + setQ
           Q = P
+          write(*,*) "Q set to ",Q
+        endif
+        if (Qn .ne. 0) then
+          P = 2d0*pi*Qn/L
+          Q = P
+          write(*,*) "---Q set to ",Q
+        endif
 
           if (my_id.eq.0) then
               write(*,*)"Q=" , Q,"; M=",fiboM

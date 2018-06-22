@@ -9,6 +9,7 @@
 	character(200)::outputfile_final
 	integer::fiboN,fiboM,commC! fiboN is for L, fiboM is for F_{n-m}/L
 	real*8::setQ
+	integer::Qn
 	integer::REALIZATION0
 	character(200)::arg_tmp
 	real*8,dimension(2)::inputPhase
@@ -20,8 +21,12 @@
         integer::PIECE,temp_i,temp_start,total_count,set_count
         real*8::temp_i_real
 	integer::HONEYCOMB_BASIS
-	integer,parameter::HC_LAT=0,HC_XY=1
+	integer,parameter::HC_LAT=0,HC_XY=1,HC_set=2
 	real*8::HC_Jx,HC_Jy
+	real*8::HC_ix_in, HC_iy_in
+	real*8::HC_jx_in, HC_jy_in
+	real*8::HC_ABx_in, HC_ABy_in
+	
         
 
 

@@ -12,17 +12,18 @@
 !!        read(11,*) Inherit, SaveAll
       read(11,*) ExactSpectrum, ExactStates
       read(11,*) RandPhase, inputPhase
-      read(11,*) fiboM,commC,setQ
+      read(11,*) fiboM,commC,setQ,Qn
       read(11,*) MODEL_TYPE
       read(11,*) BHZ_SPIN,BHZ_M
       read(11,*) OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
       read(11,*) LIMIT_CORRELATION,PIECE
       read(11,*) HONEYCOMB_BASIS,HC_Jx,HC_Jy
+      read(11,*) HC_ix_in,HC_iy_in,HC_jx_in,HC_jy_in, &
+                HC_ABx_in,HC_ABy_in
       close(11)
 
       if (QP) then
-          fiboN = L
-          L = fibonacci(fiboN)
+          fiboN = inv_fibo(L)
       endif
 
 !         check

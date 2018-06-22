@@ -28,8 +28,16 @@
           endif
 
           ! offset Q
-          P = P + setQ
+        if (setQ .ne. 0) then
+          P = setQ
           Q = P
+        write(*,*) "Q set to" , Q
+        endif
+        if (Qn .ne. 0) then
+          P = 2d0*pi*Qn/L
+          Q = P
+          write(*,*) "---Q set to ",Q
+        endif
 
           if (my_id.eq.0) then
               write(*,*)"Q=" , Q,"; M=",fiboM
@@ -74,6 +82,13 @@
       ABx=1d0
       ABy=0d0
 ! ~~~~~~~~~~~~~~~~
+  else if (HONEYCOMB_BASIS.eq.HC_set) then
+      jx = HC_jx_in
+      jy = HC_jy_in
+      ix = HC_ix_in
+      iy = HC_iy_in
+      ABx = HC_ABx_in
+      ABy = HC_ABy_in
   endif
 
 ! Along x,y, as parameters
