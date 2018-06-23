@@ -116,19 +116,22 @@
           deallocate(eps,phase_all)
       else if (D.eq.3) then
           ! not differentiating QP or not
+          allocate(phase_all(D,L*L*L))
+
+          if (LIMIT_CORRELATION) then
+              include "3d_QP_prepare_piecewise.f90"
+          else
+              include "3d_QP_prepare.f90"
+              phase_all(1,:) = phase(1)
+              phase_all(2,:) = phase(2)
+          endif
+          ! initiate indices
+          eps_ind = 1
           rp = 0
           col = 0
           col_ind = 1
           rp_ind = 1
-          allocate(eps(L*L*L))
-          eps = 0
-!                call ResetRandSeed(my_id*7)
-!                call random_number(eps)
-!                eps = W*2.0d0*(eps-0.5d0)
-!                idum=-my_id*17
-          call random3D(eps,W,my_id)
-!                write(*,*)eps
-          eps_ind = 1
+
           do k=1,L!z
           do j=1,L!y 
           do i=1,L!x
@@ -145,43 +148,49 @@
           i_=modulo(i,L)+1
           ind_r = xyzs2i(i_,j,k,s_,L)
           col(col_ind) = ind_r
-          A(col_ind) = txf(s,s_)*open_bc(i,i_,L,OPEN_BC_x)
+          t_tmp = t0 ! + HOPPING
+          A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! x backward
           i_=modulo(i-2,L)+1
           ind_r = xyzs2i(i_,j,k,s_,L)
           col(col_ind) = ind_r
-          A(col_ind) = txb(s,s_)*open_bc(i,i_,L,OPEN_BC_x)
+          t_tmp = t0 ! + HOPPING
+          A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
           col_ind = col_ind+1
 
           ! y forward
           j_=modulo(j,L)+1
           ind_r = xyzs2i(i,j_,k,s_,L)
+          t_tmp = t0 ! + HOPPING
           col(col_ind) = ind_r
-          A(col_ind) = tyf(s,s_)*open_bc(j,j_,L,OPEN_BC_y)
+          A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
           ! y backward
           j_=modulo(j-2,L)+1
           ind_r = xyzs2i(i,j_,k,s_,L)
+          t_tmp = t0 ! + HOPPING
           col(col_ind) = ind_r
-          A(col_ind) = tyb(s,s_)*open_bc(j,j_,L,OPEN_BC_y)
+          A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
           ! caution! z has s->s, not s->s_
           ! z forward
           k_=modulo(k,L)+1
           ind_r = xyzs2i(i,j,k_,s,L)
+          t_tmp = t0 ! + HOPPING
           col(col_ind) = ind_r
-          A(col_ind) = tzf(s,s)*open_bc(k,k_,L,OPEN_BC_z)
+          A(col_ind) = tzf(s,s)*t_tmp*open_bc(k,k_,L,OPEN_BC_z)
           col_ind = col_ind+1
 
           ! z backward
           k_=modulo(k-2,L)+1
           ind_r = xyzs2i(i,j,k_,s,L)
+          t_tmp = t0 ! + HOPPING
           col(col_ind) = ind_r
-          A(col_ind) = tzb(s,s)*open_bc(k,k_,L,OPEN_BC_z)
+          A(col_ind) = tzb(s,s)*t_tmp*open_bc(k,k_,L,OPEN_BC_z)
           col_ind = col_ind+1
 
           End do
@@ -190,7 +199,7 @@
           End do
           End do
           rp(rp_ind) = NNZ+1
-          deallocate(eps)
+          deallocate(eps,phase_all)
 
       endif
       if (my_id.eq.0) then

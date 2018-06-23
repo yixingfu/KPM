@@ -11,6 +11,17 @@
           return
       end function quasiperiodic
 
+      real*8 function quasiperiodic3D(i,j,k,P,Q,R,phase)
+          real*8::i,j,k
+          real*8::P,Q,R
+          real*8,dimension(3)::phase
+          quasiperiodic3D = dcos(P*i+phase(1))+&
+              dcos(Q*j+phase(2))+&
+              dcos(R*k+phase(3))
+          return
+      end function quasiperiodic3D
+
+
       real*8 function random2D(i,j,P,Q)
           ! This is the random that fits 2D case best
           real*8::i,j

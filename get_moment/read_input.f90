@@ -18,8 +18,8 @@
       read(11,*) OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
       read(11,*) LIMIT_CORRELATION,PIECE
       read(11,*) HONEYCOMB_BASIS,HC_Jx,HC_Jy
-      read(11,*) HC_ix_in,HC_iy_in,HC_jx_in,HC_jy_in, &
-                HC_ABx_in,HC_ABy_in
+      read(11,*) HC_ix_in,HC_iy_in,HC_jx_in,HC_jy_in
+      read(11,*) HC_theta_in
       close(11)
 
       if (QP) then

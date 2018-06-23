@@ -12,7 +12,7 @@
 	integer::Qn
 	integer::REALIZATION0
 	character(200)::arg_tmp
-	real*8,dimension(2)::inputPhase
+	real*8,dimension(3)::inputPhase
 	real*8::BHZ_M
 	integer::BHZ_SPIN
 	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
@@ -21,11 +21,14 @@
         integer::PIECE,temp_i,temp_start,total_count,set_count
         real*8::temp_i_real
 	integer::HONEYCOMB_BASIS
-	integer,parameter::HC_LAT=0,HC_XY=1,HC_set=2
+	integer,parameter::HC_LAT=0,HC_XY=1
+	integer,parameter::HC_set=2,HC_set_theta=3
 	real*8::HC_Jx,HC_Jy
 	real*8::HC_ix_in, HC_iy_in
 	real*8::HC_jx_in, HC_jy_in
-	real*8::HC_ABx_in, HC_ABy_in
+	real*8::HC_theta_in
+	real*8::a1,a2,b1,b2,HC_denom
+
 	
         
 
@@ -51,7 +54,7 @@
 	complex*16,dimension(3)::expTwist
 
 	! Disorder
-	real*8::WQP,Wrnd,P,Q,TQP,Trnd,t0,t
+	real*8::WQP,Wrnd,P,Q,R,TQP,Trnd,t0,t
 	complex*16::t_tmp
 	real*8,dimension(:),allocatable::eps
 	integer::eps_ind
@@ -97,7 +100,7 @@
 	integer*8::i8,j8,k8
 
 	! 2D QP: phase
-	real*8,dimension(2)::phase
+	real*8,dimension(3)::phase
         real*8,dimension(:,:),allocatable::phase_vals,phase_all
 
 	! moment mu

@@ -83,12 +83,39 @@
       ABy=0d0
 ! ~~~~~~~~~~~~~~~~
   else if (HONEYCOMB_BASIS.eq.HC_set) then
+!!!! EXPLANATION: We are setting matrix T
+! such that (i, j) = T (delta x,y), where
+! delta x,y represent the direction we are 
+! setting QP. These directions are normalized
+! so that it respect finite size periodicity.
+! Each lattice point has its i,j,
+! and we want to convert to x,y defined on
+! those basis. If choosing this option,
+! make sure all the 6 parameters are done
+! correctly
       jx = HC_jx_in
       jy = HC_jy_in
       ix = HC_ix_in
       iy = HC_iy_in
-      ABx = HC_ABx_in
-      ABy = HC_ABy_in
+        ABx = 2d0/3d0*ix - 1d0/3d0*jx
+        ABy = 2d0/3d0*iy - 1d0/3d0*jy
+  else if (HONEYCOMB_BASIS.eq.HC_set_theta) then
+      ! This is giving a choice that is a rotation
+      ! of angle theta, and conforming to the 
+      ! requiement discussed above.
+
+        ! counterclockwise theta
+        a1 = 1d0
+        b2 = 1d0
+        a2 = -2d0*dtan(HC_theta_in)/(dsqrt(3d0)+dtan(HC_theta_in))
+        b1 =  2d0*dtan(HC_theta_in)/(dsqrt(3d0)-dtan(HC_theta_in))
+        HC_denom = a1*b2-a2*b1
+        ix = b2/HC_denom
+        iy = -b1/HC_denom
+        jx = -a2/HC_denom
+        jy = a1/HC_denom
+        ABx = 2d0/3d0*ix - 1d0/3d0*jx
+        ABy = 2d0/3d0*iy - 1d0/3d0*jy
   endif
 
 ! Along x,y, as parameters
