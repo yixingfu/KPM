@@ -20,10 +20,11 @@
       read(11,*) HONEYCOMB_BASIS,HC_Jx,HC_Jy
       read(11,*) HC_ix_in,HC_iy_in,HC_jx_in,HC_jy_in
       read(11,*) HC_theta_in
+      read(11,*) FiboBasis
       close(11)
 
       if (QP) then
-          fiboN = inv_fibo(L)
+          fiboN = inv_fibo(L,FiboBasis)
       endif
 
 !         check

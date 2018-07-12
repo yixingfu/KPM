@@ -8,6 +8,7 @@
 	character(200)::outputfile
 	character(200)::outputfile_final
 	integer::fiboN,fiboM,commC! fiboN is for L, fiboM is for F_{n-m}/L
+	integer,dimension(2)::FiboBasis
 	real*8::setQ
 	integer::Qn
 	integer::REALIZATION0

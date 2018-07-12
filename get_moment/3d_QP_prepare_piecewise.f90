@@ -17,7 +17,8 @@
           endif
 
           phase = phase*2d0*pi
-          P = 2.0d0*pi*fibonacci(fiboN-fiboM)/fibonacci(fiboN)
+          P = 2.0d0*pi*fibonacci(fiboN-fiboM,FiboBasis)&
+                /fibonacci(fiboN,FiboBasis)
           Q = P
           R = P!!!!!!
           if (commC .ne. 0) then
