@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
-! Last Modified=Thu 14 Jun 2018 01:02:19 PM DST
+! Last Modified=Sat 23 Jun 2018 02:46:03 PM EDT
       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
@@ -117,7 +117,7 @@
       else if (D.eq.3) then
           ! not differentiating QP or not
           allocate(phase_all(D,L*L*L))
-
+        write(*,*) '3d'
           if (LIMIT_CORRELATION) then
               include "3d_QP_prepare_piecewise.f90"
           else

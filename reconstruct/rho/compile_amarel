@@ -1,2 +1,2 @@
-gfortran -o main main.f90
-mv main ~/bin/get_rho
+mpifort -o main main_parallel.f90
+mv main ~/bin/get_rho_parallel
