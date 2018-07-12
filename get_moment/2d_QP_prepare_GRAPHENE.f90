@@ -12,7 +12,7 @@
           if (RandPhase) then
               allocate(TwistAll(num_procs*3*seq_rep))
               call random_number(TwistAll)
-              phase = TwistAll(my_id*3+1:my_id*3+2)
+              phase = TwistAll(my_id*3+1:my_id*3+3)
               deallocate(TwistAll)
           else 
               phase = inputPhase
@@ -137,13 +137,13 @@
           yy = i*iy+j*jy
           ! site A: + 0
           eps(eps_ind) = &
-              WQP*quasiperiodic(xx,yy,P,Q,phase)&
+              WQP*quasiperiodic_HC(xx,yy,P,Q,phase)&
               + Wrnd*random2D(xx,yy,P,Q)
           eps_ind=eps_ind+1
 
           ! site B: + 1
           eps(eps_ind) = &
-              WQP*quasiperiodic(xx+ABx,yy+ABy,P,Q,phase)&
+              WQP*quasiperiodic_HC(xx+ABx,yy+ABy,P,Q,phase)&
               + Wrnd*random2D(xx+ABx,yy+ABy,P,Q)
           eps_ind=eps_ind+1
           enddo

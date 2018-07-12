@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 06:05:12 PM STD
-! Last Modified=Thu 10 May 2018 03:05:35 PM DST
+! Last Modified=Thu 12 Jul 2018 10:41:12 AM DST
       ! some random or quasiperiodic number routine
 
       real*8 function quasiperiodic(i,j,P,Q,phase)
@@ -10,6 +10,16 @@
               dcos(Q*j+phase(2))
           return
       end function quasiperiodic
+
+      real*8 function quasiperiodic_HC(i,j,P,Q,phase)
+          real*8::i,j
+          real*8::P,Q
+          real*8,dimension(3)::phase
+          quasiperiodic = dcos(P*i+phase(1))+&
+              dcos(Q*j+phase(2))+&
+              dcos(Q*(j-i)+phase(3))
+          return
+      end function quasiperiodic_HC
 
       real*8 function quasiperiodic3D(i,j,k,P,Q,R,phase)
           real*8::i,j,k

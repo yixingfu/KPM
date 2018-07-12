@@ -10,7 +10,7 @@
           if (RandPhase) then
               allocate(TwistAll(num_procs*3*seq_rep))
               call random_number(TwistAll)
-              phase = TwistAll(my_id*3+1:my_id*3+2)
+              phase = TwistAll(my_id*3+1:my_id*3+3)
               deallocate(TwistAll)
           else 
               phase = inputPhase
