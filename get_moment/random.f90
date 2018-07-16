@@ -17,7 +17,7 @@
           real*8,dimension(3)::phase
           quasiperiodic_HC = dcos(P*i+phase(1))+&
               dcos(Q*j+phase(2))+&
-              dcos(Q*(j-i)+phase(3))
+              dcos(-dsqrt(3d0)/2d0*Q*(j+i)+phase(3))
           return
       end function quasiperiodic_HC
 
