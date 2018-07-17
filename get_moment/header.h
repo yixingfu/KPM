@@ -140,7 +140,7 @@
 	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb
         complex*16,dimension(0:1)::eiAx,eiAy
         complex*16::tx,tx_,ty,ty_
-        real*8::ix,iy,jx,jy,xx,yy,xx_,yy_,ABx,ABy
+        real*8::ix,iy,jx,jy,xx,yy,ww,xx_,yy_,ABx,ABy
         real*8::real_ix,real_iy,real_jx,real_jy,real_ABx,real_ABy
 
 	complex*16,dimension(0:1,1:3)::texp_theta,Jtexp_theta ! graphene

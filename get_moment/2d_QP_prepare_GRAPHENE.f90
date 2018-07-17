@@ -152,9 +152,9 @@
           ! site A: + 0
           xx = dot_product(HC_r,HC_d1)
           yy = dot_product(HC_r,HC_d2)
-          zz = dot_product(HC_r,HC_d3)
+          ww = dot_product(HC_r,HC_d3)
           eps(eps_ind) = &
-              WQP*quasiperiodic_HC(xx,yy,zz,P,Q,R,phase)&
+              WQP*quasiperiodic_HC(xx,yy,ww,P,Q,R,phase)&
               + Wrnd*random2D(xx,yy,P,Q)
           eps_ind=eps_ind+1
 
@@ -162,9 +162,9 @@
           HC_r = HC_r + HC_b
           xx = dot_product(HC_r,HC_d1)
           yy = dot_product(HC_r,HC_d2)
-          zz = dot_product(HC_r,HC_d3)
+          ww = dot_product(HC_r,HC_d3)
           eps(eps_ind) = &
-              WQP*quasiperiodic_HC(xx,yy,zz,P,Q,R,phase)&
+              WQP*quasiperiodic_HC(xx,yy,ww,P,Q,R,phase)&
               + Wrnd*random2D(xx,yy,P,Q)
           eps_ind=eps_ind+1
           enddo
