@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:19:48 PM STD
-! Last Modified=Sat 02 Jun 2018 03:26:45 PM DST
+! Last Modified=Tue 17 Jul 2018 10:03:03 AM DST
       ! read inputfile name from command line
       call getarg(1,inputfile)
       ! read inputs D,L,Nc,W,QP?, from input file
@@ -17,8 +17,11 @@
       read(11,*) BHZ_SPIN,BHZ_M
       read(11,*) OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
       read(11,*) LIMIT_CORRELATION,PIECE
-      read(11,*) HONEYCOMB_BASIS,HC_Jx,HC_Jy
-      read(11,*) HC_ix_in,HC_iy_in,HC_jx_in,HC_jy_in
+      ! direction of velocity calculation
+      read(11,*) HONEYCOMB_BASIS,HC_Jx,HC_Jy 
+      ! direction of QP
+      read(11,*) HC_d1, HC_d2, HC_d3
+      ! extra rotation -- not working for now!!!
       read(11,*) HC_theta_in
       read(11,*) FiboBasis
       close(11)

@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Wed 06 Jun 2018 04:52:31 PM DST
+! Last Modified=Tue 17 Jul 2018 11:46:01 AM DST
       program main
           use lapack95
           use f95_precision
@@ -139,5 +139,6 @@
           include "Rescale.f90"
           include "open_bc.f90"
           include "safe_mod.f90"
+          include "dual.f90"
 
       end program main

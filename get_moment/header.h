@@ -25,8 +25,9 @@
 	integer,parameter::HC_LAT=0,HC_XY=1
 	integer,parameter::HC_set=2,HC_set_theta=3
 	real*8::HC_Jx,HC_Jy
-	real*8::HC_ix_in, HC_iy_in
-	real*8::HC_jx_in, HC_jy_in
+        real*8,dimension(2)::HC_d1,HC_d2,HC_d3
+        real*8,dimension(2)::HC_a1,HC_a2,HC_a
+        real*8,dimension(2)::HC_b,HC_r
 	real*8::HC_theta_in
 	real*8::a1,a2,b1,b2,HC_denom
 

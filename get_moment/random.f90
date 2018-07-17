@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 06:05:12 PM STD
-! Last Modified=Thu 12 Jul 2018 10:41:12 AM DST
+! Last Modified=Tue 17 Jul 2018 10:31:49 AM DST
       ! some random or quasiperiodic number routine
 
       real*8 function quasiperiodic(i,j,P,Q,phase)
@@ -18,7 +18,7 @@
           quasiperiodic_HC = dcos(P*i+phase(1))+&
               dcos(Q*j+phase(2))+&
               dcos(R*k+phase(3))
-!              dcos(-dsqrt(1d0)/2d0*Q*(j+i)+phase(3))
+!              dcos(-dsqrt(3d0)/2d0*Q*(j+i)+phase(3))
           return
       end function quasiperiodic_HC
 

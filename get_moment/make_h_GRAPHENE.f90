@@ -1,5 +1,5 @@
 ! Branched=Thu 31 May 2018 07:42:14 PM DST
-! Last Modified=Thu 14 Jun 2018 12:42:15 PM DST
+! Last Modified=Tue 17 Jul 2018 11:53:22 AM DST
       !This file creates H for graphene
       ! 
       !The matrix is stored as CSR(A,col,rp)
@@ -17,11 +17,13 @@
 
       include "2d_QP_prepare_GRAPHENE.f90" 
 
-      write(*,*)" Twist testing ..."
-! Get Twist x,y
+      ! Get Twist x,y
       if (fixedTwist) then
           Twist = OrigTwist*pi/real(L)
       else
+          ! we need 3 phases, not 3 twists. 
+          ! here twist has dimension 3 to keep up
+          ! with other cases
           allocate(TwistAll(num_procs*3*seq_rep))
           call random_number(TwistAll)
           Twist=TwistAll(my_id*3+1:my_id*3+3)
@@ -35,9 +37,12 @@
       texp_theta = t
       ! A row B col
 
-
-
-
+      ! NOTE: twist has nothing to do with
+      ! the QP potential.
+      ! This is multiplying the DUAL.
+      ! trust it for now.
+      ! IF we want to change lattice shape, 
+      ! then these need to be modified. not for now
       texp_theta(0,1) = (2d0/3d0)*Twist(1)+(-1d0/3d0)*Twist(2)
       texp_theta(0,2) = texp_theta(0,1) - Twist(1)
       texp_theta(0,3) = texp_theta(0,2) + Twist(2)
@@ -66,8 +71,8 @@
       A(col_ind) = eps(eps_ind)
       col_ind = col_ind+1
 
-      xx=i*ix+j*jx+s*ABx
-      yy=i*iy+j*jy+s*ABy
+      !xx=i*ix+j*jx+s*ABx
+      !yy=i*iy+j*jy+s*ABy
 
       do NNi=1,3
 
@@ -75,8 +80,8 @@
       i_ = safe_mod(i+NNx(s,NNi),L)
       j_ = safe_mod(j+NNy(s,NNi),L)
 !          write(*,*)i,j,i_,j_
-      xx_ = i_*ix+j_*jx+(1-s)*ABx ! A to B, B to A
-      yy_ = i_*iy+j_*jy+(1-s)*ABy
+      !xx_ = i_*ix+j_*jx+(1-s)*ABx ! A to B, B to A
+      !yy_ = i_*iy+j_*jy+(1-s)*ABy
       col(col_ind) = xys2i(i_,j_,1-s,L)
 
       ! QP when Trnd or TQP turns on, it modifies the 
