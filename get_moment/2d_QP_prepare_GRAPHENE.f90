@@ -136,14 +136,15 @@
           xx = i*ix+j*jx
           yy = i*iy+j*jy
           ! site A: + 0
+        ! zz is the third leg. set to 0 if not used
           eps(eps_ind) = &
-              WQP*quasiperiodic_HC(xx,yy,P,Q,phase)&
+              WQP*quasiperiodic_HC(xx,yy,zz,P,Q,R,phase)&
               + Wrnd*random2D(xx,yy,P,Q)
           eps_ind=eps_ind+1
 
           ! site B: + 1
           eps(eps_ind) = &
-              WQP*quasiperiodic_HC(xx+ABx,yy+ABy,P,Q,phase)&
+              WQP*quasiperiodic_HC(xx+ABx,yy+ABy,zz+ABz,P,Q,phase)&
               + Wrnd*random2D(xx+ABx,yy+ABy,P,Q)
           eps_ind=eps_ind+1
           enddo

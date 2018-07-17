@@ -11,13 +11,14 @@
           return
       end function quasiperiodic
 
-      real*8 function quasiperiodic_HC(i,j,P,Q,phase)
-          real*8::i,j
-          real*8::P,Q
+      real*8 function quasiperiodic_HC(i,j,k,P,Q,R,phase)
+          real*8::i,j,k
+          real*8::P,Q,R
           real*8,dimension(3)::phase
           quasiperiodic_HC = dcos(P*i+phase(1))+&
               dcos(Q*j+phase(2))+&
-              dcos(-dsqrt(3d0)/2d0*Q*(j+i)+phase(3))
+              dcos(R*k+phase(3))
+!              dcos(-dsqrt(1d0)/2d0*Q*(j+i)+phase(3))
           return
       end function quasiperiodic_HC
 
