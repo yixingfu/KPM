@@ -104,6 +104,7 @@
          ! correctly
          !!!!!
          !!!!! SEE NOTES
+        HC_d3 = HC_d3 * HC_d3_abs
         if (my_id .eq. 0) then
             write(*,*) "HC: delta = "
             write(*,*) HC_d1
@@ -153,6 +154,11 @@
           xx = dot_product(HC_r,HC_d1)
           yy = dot_product(HC_r,HC_d2)
           ww = dot_product(HC_r,HC_d3)
+        if (my_id.eq.0)then
+                write(*,*)"xxA",xx
+                write(*,*)"yyA",yy
+                write(*,*)"wwA",ww
+        endif
 
           eps(eps_ind) = &
               WQP*quasiperiodic_HC(xx,yy,ww,P,Q,R,phase)&
@@ -164,6 +170,12 @@
           xx = dot_product(HC_r,HC_d1)
           yy = dot_product(HC_r,HC_d2)
           ww = dot_product(HC_r,HC_d3)
+        if (my_id.eq.0)then
+                write(*,*)"xxB",xx
+                write(*,*)"yyB",yy
+                write(*,*)"wwB",ww
+        endif
+
           eps(eps_ind) = &
               WQP*quasiperiodic_HC(xx,yy,ww,P,Q,R,phase)&
               + Wrnd*random2D(xx,yy,P,Q)

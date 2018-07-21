@@ -20,7 +20,7 @@
       ! direction of velocity calculation
       read(11,*) HONEYCOMB_BASIS,HC_Jx,HC_Jy 
       ! direction of QP
-      read(11,*) HC_d1, HC_d2, HC_d3
+      read(11,*) HC_d1, HC_d2, HC_d3, HC_d3_abs
       ! extra rotation -- not working for now!!!
       read(11,*) HC_theta_in
       read(11,*) FiboBasis
