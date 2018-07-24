@@ -92,7 +92,10 @@
       !+ Trnd*random2D((xx+xx_)/2d0,(yy+yy_)/2d0,P,Q)&
       !  + TQP*quasiperiodic((xx+xx_)/2d0,(yy+yy_)/2d0,P,Q,phase)
 
-      A(col_ind) = texp_theta(s,NNi)! t_tmp!*open_bc(i,i_,L,OPEN_BC_x)
+      A(col_ind) = texp_theta(s,NNi) & 
+        *open_bc(i,i_,L,OPEN_BC_x) & 
+        *open_bc(j,j_,L,OPEN_BC_y)! t_tmp 
+             !! opening BC along parallelogram
       col_ind = col_ind+1
       enddo
 
