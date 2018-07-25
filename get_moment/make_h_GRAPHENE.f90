@@ -94,7 +94,8 @@
 
       A(col_ind) = texp_theta(s,NNi) & 
         *open_bc(i,i_,L,OPEN_BC_x) & 
-        *open_bc(j,j_,L,OPEN_BC_y)! t_tmp 
+        *open_bc(j,j_,L,OPEN_BC_y) &
+        *cut_bc_below(i,j,L)*cut_bc_above(i,j,L)! t_tmp 
              !! opening BC along parallelogram
       col_ind = col_ind+1
       enddo
