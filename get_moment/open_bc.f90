@@ -8,7 +8,7 @@
       integer function cut_bc_below(i,j,L)
               !!!! Set left bottom cornor to 0
           integer::i,j,L,temp
-          temp=((i+j) .lt. (L/2))
+          temp=((i+j) .le. (L/2))
           cut_bc_below = 1-temp
       end function cut_bc_below
 
@@ -16,6 +16,6 @@
       integer function cut_bc_above(i,j,L)
               !!!! Set right top cornor to 0
           integer::i,j,L,temp
-          temp=((i+j) .gt. (3*L/2))
+          temp=((i+j) .ge. (3*L/2))
           cut_bc_above=1-temp
       end function cut_bc_above

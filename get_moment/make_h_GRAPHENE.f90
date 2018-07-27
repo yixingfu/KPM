@@ -93,10 +93,29 @@
       !  + TQP*quasiperiodic((xx+xx_)/2d0,(yy+yy_)/2d0,P,Q,phase)
 
       A(col_ind) = texp_theta(s,NNi) & 
-        *open_bc(i,i_,L,OPEN_BC_x) & 
-        *open_bc(j,j_,L,OPEN_BC_y) &
-        *cut_bc_below(i,j,L)*cut_bc_above(i,j,L)! t_tmp 
-             !! opening BC along parallelogram
+        *(1-&
+                (OPEN_BC_x*&
+                ((NNi .eq. 1) .and. (i.eq.L))))&
+        *(1-&
+                (OPEN_BC_y*&
+                (abs(j-j_) .eq. (L-1))))&
+        *(1-&
+                ((i+j).le.(L/2)))&
+        *(1-&
+                ((i_+j_).le.(L/2)))&
+        *(1-&
+                (((i+j).le.(L/2+1)).and.(NNi.eq.2)))&
+        *(1-&
+                (((i_+j_).le.(L/2+1)).and.(NNi.eq.2)))&
+        *(1-&
+                ((i+j).gt.(3*L/2)))&
+        *(1-&
+                ((i_+j_).gt.(3*L/2)))
+        ! this is A-B, B-A at i=L
+!        *open_bc(i,i_,L,OPEN_BC_x) & 
+!        *open_bc(j,j_,L,OPEN_BC_y) &
+!        *cut_bc_below(i,j,L)*cut_bc_above(i,j,L)! t_tmp 
+!             !! opening BC along parallelogram
       col_ind = col_ind+1
       enddo
 
