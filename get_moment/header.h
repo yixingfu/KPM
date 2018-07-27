@@ -28,7 +28,7 @@
         real*8,dimension(2)::HC_d1,HC_d2,HC_d3
 	real*8::HC_d3_abs
         real*8,dimension(2)::HC_a1,HC_a2,HC_a
-        real*8,dimension(2)::HC_b,HC_r
+        real*8,dimension(2)::HC_b,HC_r,HC_r_,HC_r_ref
 	real*8::HC_theta_in
 	real*8::a1,a2,b1,b2,HC_denom
 
