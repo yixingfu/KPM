@@ -32,7 +32,7 @@
           Twist = (Twist)*2d0*pi/L! 0 to pi??
       endif
 
-      t = 0.5d0 ! the only term
+      t = -0.5d0 ! the only term
 
       texp_theta = t
       ! A row B col
@@ -60,20 +60,22 @@
       col_ind = 1
       rp_ind = 1
       eps_ind = 1
+      HC_r_ref = (L*HC_a1+L*HC_a2+HC_b)/2d0
+
       do j=1,L! y
       do i=1,L! x
       do s=0,1
+      HC_r = i*HC_a1+j*HC_a2+s*HC_b
       ! set row pointer and disorder term (almost same for every
       ! model)
       rp(rp_ind) = PerSite*rp_ind-(PerSite-1)
       col(col_ind) = rp_ind
       rp_ind = rp_ind+1
-      A(col_ind) = eps(eps_ind)
+      A(col_ind) = eps(eps_ind)!*set_shape(HC_r,HC_r,HC_r_ref)
       col_ind = col_ind+1
 
       !xx=i*ix+j*jx+s*ABx
       !yy=i*iy+j*jy+s*ABy
-      HC_r_ref = (L*HC_a1+L*HC_a2+HC_b)/2d0
 
       do NNi=1,3
 
@@ -95,8 +97,8 @@
       HC_r = i*HC_a1+j*HC_a2+s*HC_b
       HC_r_ = i_*HC_a1+j_*HC_a2+(1-s)*HC_b
 
-      A(col_ind) = texp_theta(s,NNi) & 
-          * set_shape(HC_r,HC_r_,HC_r_ref)
+      A(col_ind) = texp_theta(s,NNi)! & 
+         ! * set_shape(HC_r,HC_r_,HC_r_ref)
       col_ind = col_ind+1
       enddo
 

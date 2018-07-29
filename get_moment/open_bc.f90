@@ -23,7 +23,7 @@
       integer function set_shape(HC_r,HC_r_,HC_r_ref)
           real*8,dimension(2)::HC_r,HC_r_,HC_r_ref
           integer::temp
-          real*8,parameter::threshold=80
+          real*8,parameter::threshold=6400
           real*8::radius
           ! circle with radius 80
 
@@ -32,6 +32,7 @@
           temp = temp * (abs(radius).lt.threshold)
           radius = dot_product(HC_r_-HC_r_ref,HC_r_-HC_r_ref)
           temp = temp * (abs(radius).lt.threshold)
+        write(*,*)HC_r,temp
 
           set_shape = temp
       end function set_shape

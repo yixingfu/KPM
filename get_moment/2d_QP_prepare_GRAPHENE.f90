@@ -19,6 +19,7 @@
           endif
 
           phase = phase*2d0*pi
+          phase(3) = 3d0*pi/2d0-(phase(1)+phase(2))
           P = 2.0d0*pi*fibonacci(fiboN-fiboM,FiboBasis)&
                 /fibonacci(fiboN,FiboBasis)
           Q = P
@@ -183,6 +184,7 @@
           enddo
           enddo
           ! normalize
+        write(*,*)'eps normalize (doing)',sum(eps)/real(2*L*L)
           eps = eps - sum(eps)/real(2*L*L)
       else if (RandType.eq.RandHOP) then
           eps = 0d0

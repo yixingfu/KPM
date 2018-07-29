@@ -10,6 +10,7 @@
           complex*16,dimension(NNZ),intent(inout)::A
           real*8,intent(in)::norm_a,norm_b
           integer*8::i,j
+        complex*16::Arpi
 
 !        do i=1,N
 !                do j=rp(i),rp(i+1)-1
@@ -19,7 +20,8 @@
 !        enddo
 
           do i=1,N
-          A(rp(i)) = A(rp(i))-norm_b
+        Arpi = A(rp(i))
+          A(rp(i)) = Arpi-norm_b*(abs(Arpi).gt.0.000001d0)
           enddo
           A = A/norm_a
           write(*,*)'normalization factors:',norm_a,norm_b
