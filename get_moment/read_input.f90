@@ -23,6 +23,7 @@
       read(11,*) HC_d1, HC_d2, HC_d3, HC_d3_abs
       ! extra rotation -- not working for now!!!
       read(11,*) HC_theta_in
+      read(11,*) FLAKE_SHAPE
       read(11,*) FiboBasis
       close(11)
 

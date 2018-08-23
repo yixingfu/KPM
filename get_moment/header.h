@@ -29,6 +29,9 @@
 	real*8::HC_d3_abs
         real*8,dimension(2)::HC_a1,HC_a2,HC_a
         real*8,dimension(2)::HC_b,HC_r,HC_r_,HC_r_ref
+	integer::controller,SET_HEXAGON,SET_PARA
+	integer::FLAKE_SHAPE
+	integer,parameter::HEXAGON=2,PARAGRAM=1
 	real*8::HC_theta_in
 	real*8::a1,a2,b1,b2,HC_denom
 

@@ -50,8 +50,15 @@
       ! t exp(i *) 
       texp_theta = t*cdexp(III*texp_theta)
       write(*,*)texp_theta
-
-
+        SET_PARA = 0
+        SET_HEXAGON = 0
+        if (FLAKE_SHAPE.eq.HEXAGON) then
+                SET_PARA = 0
+                SET_HEXAGON = 1
+        else if (FLAKE_SHAPE.eq.PARAGRAM) then
+                SET_PARA = 1
+                SET_HEXAGON = 0
+        endif
 
 
       ! reset before get going
@@ -71,7 +78,9 @@
       rp(rp_ind) = PerSite*rp_ind-(PerSite-1)
       col(col_ind) = rp_ind
       rp_ind = rp_ind+1
-      A(col_ind) = eps(eps_ind)!*set_shape(HC_r,HC_r,HC_r_ref)
+        controller = ((i+j).gt.(L/2)).and.((i+j).lt.(3*L/2))
+        controller = controller*SET_HEXAGON+SET_PARA
+      A(col_ind) = eps(eps_ind)*controller!*set_shape(HC_r,HC_r,HC_r_ref)
       col_ind = col_ind+1
 
       !xx=i*ix+j*jx+s*ABx
@@ -97,7 +106,7 @@
       HC_r = i*HC_a1+j*HC_a2+s*HC_b
       HC_r_ = i_*HC_a1+j_*HC_a2+(1-s)*HC_b
 
-      A(col_ind) = texp_theta(s,NNi)! & 
+      A(col_ind) = texp_theta(s,NNi)*controller! & 
          ! * set_shape(HC_r,HC_r_,HC_r_ref)
       col_ind = col_ind+1
       enddo

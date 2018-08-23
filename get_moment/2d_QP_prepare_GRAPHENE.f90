@@ -184,8 +184,8 @@
           enddo
           enddo
           ! normalize
-        write(*,*)'eps normalize (doing)',sum(eps)/real(2*L*L)
-          eps = eps - sum(eps)/real(2*L*L)
+        write(*,*)'eps normalize (not doing)',sum(eps)/real(2*L*L)
+!          eps = eps - sum(eps)/real(2*L*L)
       else if (RandType.eq.RandHOP) then
           eps = 0d0
       endif

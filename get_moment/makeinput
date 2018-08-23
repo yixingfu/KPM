@@ -1,0 +1,55 @@
+#### Last Modified=Wed 04 Apr 2018 03:36:16 PM EDT
+rm *.in
+for W in $(seq 0.00 0.05 2.0); do
+#for Tx in $(seq -1. 0.01 1); do
+export d3l=1
+export Tx=1.0
+export Ty=1.0
+export Tz=1.0
+export Nc=4096
+export M=5
+export C=0 ### commensurate, if set to non zero (2pi/C). Overwrite M.
+export Qset=0 # overwrite all
+export Qn=0
+export FileName=W$W\_Nc$Nc\_M$M
+echo "2,55,$Nc,$W,18, 0" >> batch$FileName.in ### D,L,Nc,W,Rep,RLZ0
+echo ".true., .false., .false. " >> batch$FileName.in ### QP?, fixTwist?, Slow OPTCOND?
+echo "1, 1 " >> batch$FileName.in ### RHO=1,OPTCOND=2,RHODER=3; RandPOT=1,RandHOP=2
+echo "$Tx,$Ty,$Tz " >> batch$FileName.in ### Twist(-1 to 1), correspond to -pi to pi
+echo "'$FileName'">>batch$FileName.in ###out file(mark disorder)
+####echo ".false.,.false.">>batch$FileName.in ###Inherit,SaveAll
+echo ".false.,.false.">>batch$FileName.in ###Exact Spectrum; Exact Eigen States
+echo ".true.,0,0,0">>batch$FileName.in ### Random phase (for QP); given phase (-1 to 1) if random phase is false
+echo "$M,$C,$Qset,$Qn">>batch$FileName.in ### Q=2pi F_{n-m}/L, this number is the m; Set Q directly- overwrite everything else before it. Qn: overwrite everything if not 0 (integer)
+echo "0">>batch$FileName.in ### Model Type: See below
+echo "1,1">>batch$FileName.in ### BHZ: SPIN UP (+1) or SPIN DONW (-1); M in BHZ
+echo "0,0,0">>batch$FileName.in ### Open boundary condition: 1 for open; 0 for not open (periodic)
+####echo "0,0,0">>batch$FileName.in ### For pi-flux -- not yet using
+echo ".false.,1">>batch$FileName.in ### Limited correlation. Pieces of correlated. This option overrides non-random phase. Only on Model 0
+echo "2,0.866025403784439,0.5">>batch$FileName.in ### HoneyComb Choices: 0=use lattice basis; 1=use xy basis; 2=use specific set below; 3=set theta, below;;; Then is the vector for sigma we look for sigma. No effect if doing rho
+echo "0.666666666666667,0,-0.333333333333333,0.577350269189626,-0.333333333333333,-0.577350269189626,$d3l">>batch$FileName.in ###HC: d1,d2,d3. See bottom
+echo "0">>batch$FileName.in ### honeycomb set theta (counterclockwise, ix, iy,jx,jy,ABx and ABy are set automatically) The rotation is 0 pi/6. larger may cause problem.
+echo "1">>batch$FileName.in ### HEXAGON=2,PARAGRAM=1
+echo "0,1">>batch$FileName.in ### Fibonacci basis. For regular fibonacci, it is 0,1. For Lucas, 2,1
+
+#done
+done
+
+### Model Type
+# 0=Square Lattice Nearest Neighbor W/ spin -- support 3D
+# 1=BHZ (square lattice nearest neighbor w/ spin)
+# 2=pi-flux (square lattice NN + NNN w/o spin)
+# 3=graphene (honeycomb lattice, pseudospin by A B lattice type)
+#
+### Changes needed
+# Exact Diag: Exact line; fixTwist; random phase; filename
+#
+### Fibonacci table
+# 1	1	2	3	5	8	13	21	34	55	89	144	233
+# 1	2	3	4	5	6	7	8	9	10	11	12	13
+#
+### d1,d2,d3 table
+# 0.666666666666667,0,-0.333333333333333,0.577350269189626,-0.333333333333333,-0.577350269189626
+# d1 = 2/3,0 
+# d2 =-1/3,1/sqrt(3)
+# d3 =-1/3,-1/sqrt(3)
