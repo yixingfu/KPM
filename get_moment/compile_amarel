@@ -1,3 +1,3 @@
 mpifort -o get_moment main.f90 ran2.o $FLAG
 mv get_moment ~/bin/get_moment
-mv makeinput ~/bin/makeinput
+cp makeinput ~/bin/makeinput

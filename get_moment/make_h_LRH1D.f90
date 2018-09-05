@@ -56,7 +56,7 @@
           col(col_ind) = rp_ind
           rp_ind = rp_ind+1
           k_i = (i-0.5d0)/L*2d0*pi+Twist(1)
-          A(col_ind) = sign(cos(k_i))*abs(cos(k_i))**LRH_sigma
+          A(col_ind) = sign(abs(cos(k_i))**LRH_sigma,cos(k_i))
           col_ind = col_ind+1
 
           !  forward

@@ -63,6 +63,8 @@
 
 	! Disorder
 	real*8::WQP,Wrnd,P,Q,R,TQP,Trnd,t0,t
+	real*8::k_i
+	integer*8::iQ
 	complex*16::t_tmp
 	real*8,dimension(:),allocatable::eps
 	integer::eps_ind
