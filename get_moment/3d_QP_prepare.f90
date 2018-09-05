@@ -80,8 +80,6 @@
           do k=1,L
           do j=1,L
           do i=1,L
-        ! WARNING: random3D is in the very random mind set, not
-        ! random phase.
           eps(eps_ind) = eps(eps_ind)+&
               WQP*quasiperiodic3D(i+0d0,j+0d0,k+0d0,P,Q,R,phase)
           eps_ind=eps_ind+1

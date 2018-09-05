@@ -31,6 +31,7 @@ echo "0.666666666666667,0,-0.333333333333333,0.577350269189626,-0.33333333333333
 echo "0">>batch$FileName.in ### honeycomb set theta (counterclockwise, ix, iy,jx,jy,ABx and ABy are set automatically) The rotation is 0 pi/6. larger may cause problem.
 echo "1">>batch$FileName.in ### HEXAGON=2,PARAGRAM=1
 echo "0,1">>batch$FileName.in ### Fibonacci basis. For regular fibonacci, it is 0,1. For Lucas, 2,1
+echo "0.333333333333333">>batch$FileName.in ### 1D LRH model: sigma
 
 #done
 done
@@ -40,6 +41,7 @@ done
 # 1=BHZ (square lattice nearest neighbor w/ spin)
 # 2=pi-flux (square lattice NN + NNN w/o spin)
 # 3=graphene (honeycomb lattice, pseudospin by A B lattice type)
+# 4=1D LRH model (set to 1D, set sigma, set to QP)
 #
 ### Changes needed
 # Exact Diag: Exact line; fixTwist; random phase; filename

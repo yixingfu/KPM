@@ -19,6 +19,7 @@
 	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
         integer::MODEL_TYPE
         integer,parameter::TYPE_SLNN=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
+        integer,parameter::TYPE_LRH1D=4
         integer::PIECE,temp_i,temp_start,total_count,set_count
         real*8::temp_i_real
 	integer::HONEYCOMB_BASIS
@@ -31,6 +32,7 @@
         real*8,dimension(2)::HC_b,HC_r,HC_r_,HC_r_ref
 	integer::controller,SET_HEXAGON,SET_PARA
 	integer::FLAKE_SHAPE
+        real*8::LRH_sigma
 	integer,parameter::HEXAGON=2,PARAGRAM=1
 	real*8::HC_theta_in
 	real*8::a1,a2,b1,b2,HC_denom
@@ -47,7 +49,7 @@
 	Logical::Inherit,SaveAll
 	Logical::ExactSpectrum,ExactStates
 	Logical::RandPhase
-	Logical::PIFLUX,GRAPHENE
+	Logical::PIFLUX,GRAPHENE,LRH1D
 
 	! Matrix dimensions
 	integer*8::N, NNZ, JNNZ
@@ -143,6 +145,7 @@
 	complex*16,dimension(0:1,0:1)::txf,txb,tyf,tyb,tzf,tzb
 	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb
         complex*16,dimension(0:1)::eiAx,eiAy
+        complex*16::U_fwd,U_bwd
         complex*16::tx,tx_,ty,ty_
         real*8::ix,iy,jx,jy,xx,yy,ww,xx_,yy_,ABx,ABy
         real*8::real_ix,real_iy,real_jx,real_jy,real_ABx,real_ABy

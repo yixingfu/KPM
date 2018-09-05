@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:19:48 PM STD
-! Last Modified=Tue 17 Jul 2018 10:03:03 AM DST
+! Last Modified=Wed 05 Sep 2018 03:16:53 PM DST
       ! read inputfile name from command line
       call getarg(1,inputfile)
       ! read inputs D,L,Nc,W,QP?, from input file
@@ -25,6 +25,7 @@
       read(11,*) HC_theta_in
       read(11,*) FLAKE_SHAPE
       read(11,*) FiboBasis
+      read(11,*) LRH_sigma
       close(11)
 
       if (QP) then
