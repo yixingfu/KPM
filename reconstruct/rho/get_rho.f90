@@ -1,5 +1,5 @@
 ! Created=Wed 13 Dec 2017 03:05:25 PM STD
-! Last Modified=Thu 06 Sep 2018 02:17:08 PM DST
+! Last Modified=Thu 06 Sep 2018 03:14:35 PM DST
       ! 
       allocate(rho(1:Ntilde))
       ! it need to be scaled here, and scaled back later
@@ -35,13 +35,14 @@
               enddo
           else if (Der .eq. 2) then
               write(*,*) "The Entire Array is E=0!"
-              rhoi = gJ(0)*mu_avg(0)
-              do j=1,ForceNc-1
-                rhoi = rhoi + &
-                    2d0*dcos(j*pi/2d0)*gJ(j)*mu_avg(j) + &
-                    2d0*j*j*dcos(pi*(j-2d0)/2d0)*gJ(j)*mu_avg(j)
-              enddo
-              rhoi = rhoi/(norm_a**3*pi)
+              include "Der2.f"
+!              rhoi = gJ(0)*mu_avg(0)
+!              do j=1,ForceNc-1
+!                rhoi = rhoi + &
+!                    2d0*dcos(j*pi/2d0)*gJ(j)*mu_avg(j) + &
+!                    2d0*j*j*dcos(pi*(j-2d0)/2d0)*gJ(j)*mu_avg(j)
+!              enddo
+!              rhoi = rhoi/(norm_a**3*pi)
               do i=1,Ntilde
               rho(i) = rhoi
               enddo
