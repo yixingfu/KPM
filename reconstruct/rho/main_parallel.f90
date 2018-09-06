@@ -58,7 +58,7 @@
                 MPI_INTEGER,MPI_SUM,0,MPI_COMM_WORLD,ierr)
 
      if (my_id .eq. 0) then
-        write(*,*) N_rlz_collect
+        write(*,*) N_rlz_collect,rho_tot_collect(1)
              write(outputfile,'(a,i6.6)')trim(outputfile),ForceNc
               open(13,file=trim(outputfile)//".dat",status="replace",&
                       form="unformatted",access="stream")
