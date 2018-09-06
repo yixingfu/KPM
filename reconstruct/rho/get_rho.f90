@@ -35,7 +35,6 @@
               enddo
           else if (Der .eq. 2) then
               write(*,*) "The Entire Array is E=0!"
-              include "Der2.f"
               rhoi = D2rhomu0(norm_a,norm_b,0d0)&
                   * gJ(0)*mu_avg(0)
               do j=1,ForceNc-1

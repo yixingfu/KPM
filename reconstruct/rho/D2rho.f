@@ -1,7 +1,7 @@
           FUNCTION D2rho(n,a,b,x)
           INTEGER :: n
           Integer, parameter :: idp = kind(1.d0)
-          REAL(idp) :: a,b,x,D2rho,ChebyU,ChebyT
+          REAL(idp) :: a,b,x,D2rho
 
           D2rho=((a**2 + 2*(b - x)**2)*ChebyT(n,(-b + x)/a))/&
       (a**2 - (b - x)**2)**2.5 + &
