@@ -38,7 +38,7 @@
               rhoi = gJ(0)*mu_avg(0)
               do j=1,ForceNc-1
                 rhoi = rhoi + &
-                    2d0*dcos(j*pi/2d0)*gJ(j)*mu_avg(n) + &
+                    2d0*dcos(j*pi/2d0)*gJ(j)*mu_avg(j) + &
                     2d0*j*j*dcos(pi*(j-2d0)/2d0)*gJ(j)*mu_avg(j)
               enddo
               rhoi = rhoi/(norm_a**3*pi)
