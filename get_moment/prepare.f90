@@ -22,7 +22,7 @@
           GRAPHENE=.true.
           PerSite=1+3
           N = 2*(L**D)
-      else if (MODEL_TYPE.eq.LRH1D) then
+      else if (MODEL_TYPE.eq.TYPE_LRH1D) then
           LRH1D=.true.
           PerSite=1+2 ! back and forward, momentum space
           N = L! no spin

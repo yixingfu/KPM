@@ -12,7 +12,6 @@
           call random_number(TwistAll)
           Twist=TwistAll(my_id*3+1:my_id*3+3)
           twist=twist*2d0-1d0
-          write(*,*) 'twist:',Twist
           deallocate(TwistAll)
           Twist = (Twist)*pi/L! 0 to pi??
       endif
@@ -54,9 +53,9 @@
           ! set row pointer and self term
           rp(rp_ind) = PerSite*rp_ind-(PerSite-1)
           col(col_ind) = rp_ind
-          rp_ind = rp_ind+1
           k_i = (i-0.5d0)/L*2d0*pi+Twist(1)
-          A(col_ind) = sign(abs(cos(k_i))**LRH_sigma,cos(k_i))
+          A(col_ind) = sign(abs(dcos(k_i))**LRH_sigma,dcos(k_i))
+          rp_ind = rp_ind+1
           col_ind = col_ind+1
 
           !  forward
@@ -91,7 +90,6 @@
 ! --------------------EIGEnVALUE end
 
       ! normalization same for both
-
       call LanczosBound(N,NNZ,A,rp,col,1000,Emax,Emin)
       norm_a = (Emax-Emin)/(2d0-0.2d0)
       norm_b = (Emax+Emin)/2
