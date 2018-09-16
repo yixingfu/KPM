@@ -50,6 +50,7 @@
 	Logical::ExactSpectrum,ExactStates
 	Logical::RandPhase
 	Logical::PIFLUX,GRAPHENE,LRH1D
+	Logical::Scramble
 
 	! Matrix dimensions
 	integer*8::N, NNZ, JNNZ

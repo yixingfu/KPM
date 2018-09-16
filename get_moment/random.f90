@@ -84,5 +84,18 @@
           call random_seed(put=seed)
       End subroutine ResetRandSeed
 
+        subroutine ScrambleArray(array_to_scramble)
+               real*8,dimension(:)::array_to_scramble
+               real*8::x,temp
+               integer::i,j,N
+               N = size(array_to_scramble)
+                do i=1,N
+                   call random_number(x)
+                   j = floor(x*N)+1
+                   temp = array_to_scramble(j)
+                   array_to_scramble(j) = array_to_scramble(i)
+                   array_to_scramble(i) = temp
+                enddo
 
+        end subroutine ScrambleArray
 

@@ -75,6 +75,11 @@
           enddo
           enddo
           eps = eps - sum(eps)/real(L*L)
+
+        if (Scramble) then
+                write(*,*) "scrambled"
+                call ScrambleArray(eps)
+        endif
       else if (RandType.eq.RandHOP) then
           eps = 0d0
       endif

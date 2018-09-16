@@ -6,7 +6,7 @@
       open(11, file=trim(inputfile))
       read(11,*) D,L,Nc,W,Rep,REALIZATION0
       read(11,*) QP,fixedTwist, slowOPTCOND
-      read(11,*) task, RandType
+      read(11,*) task, RandType, Scramble
       read(11,*) OrigTwist
       read(11,*) outputfile
 !!        read(11,*) Inherit, SaveAll
