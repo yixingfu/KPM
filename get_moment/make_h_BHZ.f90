@@ -57,7 +57,7 @@
 
 
       if (D.eq.2) then
-        include "2d_QP_prepare.BHZ.f90"
+        include "2d_QP_prepare_BHZ.f90"
 
           rp = 0
           col = 0
