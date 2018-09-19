@@ -1,5 +1,5 @@
 ! Created =Tue 12 Dec 2017 03:10:19 PM STD
-! Last Modified=Wed 05 Sep 2018 03:23:09 PM DST
+! Last Modified=Wed 19 Sep 2018 11:20:46 AM DST
 ! 
 
       ! This file prepares a few derived parameters from input file
@@ -41,6 +41,9 @@
         else if (LRH1D) then
             JNNZ=N
             write(*,*) "not implemented - LRH 1D cond"
+        else if (BHZ) then
+            JNNZ = 4*N
+            write(*,*)"J has 4 nonzero elements for each real point"
         else 
       JNNZ = (2)*N ! fwd & bwd each site @ x
         endif
