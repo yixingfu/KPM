@@ -35,7 +35,7 @@
         if (Qn .ne. 0) then
           P = 2d0*pi*Qn/L
           Q = P
-          write(*,*) "---Q set to ",Q
+          write(*,*) "---Q set to ",Q,",Qn=",Qn
         endif
 
           if (my_id.eq.0) then
