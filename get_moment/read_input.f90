@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:19:48 PM STD
-! Last Modified=Thu 20 Sep 2018 05:31:29 PM DST
+! Last Modified=Sat 22 Sep 2018 03:35:35 PM DST
       ! read inputfile name from command line
       call getarg(1,inputfile)
       ! read inputs D,L,Nc,W,QP?, from input file
@@ -26,7 +26,7 @@
       read(11,*) FLAKE_SHAPE
       read(11,*) FiboBasis
       read(11,*) LRH_sigma
-      read(11,*) Dir_a, Dir_b
+      read(11,*) CondTensor, Dir_a, Dir_b
       close(11)
 
       if (QP) then

@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Wed 05 Sep 2018 03:11:13 PM DST
+! Last Modified=Sat 22 Sep 2018 03:38:02 PM DST
       program main
           use lapack95
           use f95_precision
@@ -44,8 +44,13 @@
 
 
           if (task.eq.OPTCOND) then
-              ! make J
-              include "make_j.f90"
+              if (CondTensor) then
+                  ! make x and y matrx
+                  include "make_xy.f90"
+              else
+                  ! make J
+                  include "make_j.f90"
+              endif
           endif
 
           ! find moment and save result
@@ -75,7 +80,12 @@
               endif
 
           else if (task.eq.OPTCOND) then
-              include "get_mu2d.f90"
+              if (CondTensor) then
+                  write(*,*) "include hall conductivity"
+                  include "get_mu2d_general.f90"
+              else
+                  include "get_mu2d.f90"
+              endif
 
               ! save result
               rlz_id = REALIZATION0+my_id

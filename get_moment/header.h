@@ -50,7 +50,7 @@
 	Logical::ExactSpectrum,ExactStates
 	Logical::RandPhase
 	Logical::PIFLUX,GRAPHENE,LRH1D
-	Logical::Scramble
+	Logical::Scramble, CondTensor
 
 	! Matrix dimensions
 	integer*8::N, NNZ, JNNZ,XYNNZ
@@ -104,7 +104,7 @@
 	! J matrix (CSR)
         integer,parameter::DIR_X=1,DIR_Y=2
         integer::Dir_a,Dir_y
-	complex*16,dimension(:),allocatable::JA,XA,YA,RAa,RAb
+	complex*16,dimension(:),allocatable::JA,XA,YA,RaA,RbA
 	integer*8,dimension(:),allocatable::Jcol,Jrp
 	integer*8,dimension(:),allocatable::XYcol,XYrp
 
@@ -130,11 +130,11 @@
 	real*8,dimension(:,:),allocatable::mu2d_tot,mu2d2_tot
 	real*8,dimension(:,:),allocatable::mu2d_avg,mu2d2_avg
 	real*8,dimension(:,:),allocatable::mu2d
-	complex*16,dimension(:),allocatable::psi0_out,psi1_out,psi_tmp_out
-	complex*16,dimension(:),allocatable::psi_in,psi_p_in,psi_pp_in
-	complex*16,dimension(:),allocatable::psi_out,psi_p_out,psi_pp_out
 	! fast (high memory consumption)
 	complex*16,dimension(:,:),allocatable::psi_all_out
+        complex*16,dimension(:,:),allocatable::JaPsi,JbTmJaPsi
+        complex*16,dimension(:,:),allocatable::TmJaPsi,TmpJaPsi,TmppJaPsi
+        complex*16,dimension(:,:),allocatable::TnPsi,TnpPsi,TnppPsi
 
 !!	! 2d moment reduced memory
 !!	integer::proj_N

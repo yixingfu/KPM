@@ -1,6 +1,7 @@
 #### Last Modified=Wed 04 Apr 2018 03:36:16 PM EDT
 export DIR_X=1
 export DIR_Y=2
+export HALLCOND=.true.
 rm *.in
 for W in $(seq 0.00 0.05 2.0); do
 #for Tx in $(seq -1. 0.01 1); do
@@ -35,7 +36,7 @@ echo "0">>batch$FileName.in ### honeycomb set theta (counterclockwise, ix, iy,jx
 echo "1">>batch$FileName.in ### HEXAGON=2,PARAGRAM=1
 echo "0,1">>batch$FileName.in ### Fibonacci basis. For regular fibonacci, it is 0,1. For Lucas, 2,1
 echo "0.333333333333333">>batch$FileName.in ### 1D LRH model: sigma
-echo "$Dir_a, $Dir_b">>batch$FileName.in ### 2D, direction of conductivity. X is 1, Y is 2. a is left, b is right
+echo "$HALLCOND,$Dir_a, $Dir_b">>batch$FileName.in ### 2D hall cond, direction of conductivity. X is 1, Y is 2. a is left, b is right. Only fast (memory consuming) method is implemented
 
 #done
 done
