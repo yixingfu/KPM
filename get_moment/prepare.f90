@@ -1,5 +1,5 @@
 ! Created =Tue 12 Dec 2017 03:10:19 PM STD
-! Last Modified=Wed 19 Sep 2018 11:20:46 AM DST
+! Last Modified=Thu 20 Sep 2018 05:20:50 PM DST
 ! 
 
       ! This file prepares a few derived parameters from input file
@@ -49,6 +49,8 @@
         endif
 !      write(*,*)D,N,L,NNZ
 
+
+        XYNNZ = N
 
       EigValTot = 0
       EigValLancTot = 0

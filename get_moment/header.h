@@ -53,7 +53,7 @@
 	Logical::Scramble
 
 	! Matrix dimensions
-	integer*8::N, NNZ, JNNZ
+	integer*8::N, NNZ, JNNZ,XYNNZ
 
 
 	! Twist 
@@ -102,8 +102,11 @@
 	real*8::norm_a,norm_b,Emin,Emax
 
 	! J matrix (CSR)
-	complex*16,dimension(:),allocatable::JA
+        integer,parameter::DIR_X=1,DIR_Y=2
+        integer::Dir_a,Dir_y
+	complex*16,dimension(:),allocatable::JA,XA,YA,RAa,RAb
 	integer*8,dimension(:),allocatable::Jcol,Jrp
+	integer*8,dimension(:),allocatable::XYcol,XYrp
 
 
 	! local variables

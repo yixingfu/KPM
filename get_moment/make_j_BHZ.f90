@@ -1,5 +1,5 @@
 ! Created=Wed 13 Dec 2017 11:51:36 PM STD
-! Last Modified=Wed 19 Sep 2018 11:26:07 AM DST
+! Last Modified=Thu 20 Sep 2018 05:11:48 PM DST
       ! This file makes J operator for BHZ, 2D
 
           ! not differentiating QP or not
@@ -19,8 +19,8 @@
           do i=1,L!x
           do s=0,1
           s_ = 1-s
-          Jrp(rp_ind) = 2*2*rp_ind-1
-          ! each real space point has 4
+          Jrp(rp_ind) = 2*2*rp_ind-3
+          ! each real space point has 4: bwd/fwd,same/diff spin
           rp_ind = rp_ind+1
 
           ! x_forward
