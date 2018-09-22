@@ -103,7 +103,7 @@
 
 	! J matrix (CSR)
         integer,parameter::DIR_X=1,DIR_Y=2
-        integer::Dir_a,Dir_y
+        integer::Dir_a,Dir_b
 	complex*16,dimension(:),allocatable::JA,XA,YA,RaA,RbA
 	integer*8,dimension(:),allocatable::Jcol,Jrp
 	integer*8,dimension(:),allocatable::XYcol,XYrp
@@ -132,9 +132,16 @@
 	real*8,dimension(:,:),allocatable::mu2d
 	! fast (high memory consumption)
 	complex*16,dimension(:,:),allocatable::psi_all_out
-        complex*16,dimension(:,:),allocatable::JaPsi,JbTmJaPsi
-        complex*16,dimension(:,:),allocatable::TmJaPsi,TmpJaPsi,TmppJaPsi
-        complex*16,dimension(:,:),allocatable::TnPsi,TnpPsi,TnppPsi
+        complex*16,dimension(:),allocatable::JaPsi,JbTmJaPsi
+        complex*16,dimension(:),allocatable::TmJaPsi,TmpJaPsi,TmppJaPsi
+        complex*16,dimension(:),allocatable::TnPsi,TnpPsi,TnppPsi
+	integer::cond_m,cond_n
+
+	! old
+        complex*16,dimension(:),allocatable::psi_out,&
+	psi0_out,psi1_out,psi_tmp_out,psi_in,&
+	psi_p_in,psi_pp_in,psi_p_out,psi_pp_out
+	
 
 !!	! 2d moment reduced memory
 !!	integer::proj_N

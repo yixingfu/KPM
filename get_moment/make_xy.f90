@@ -1,6 +1,8 @@
 ! Created=Thu 20 Sep 2018 05:01:31 PM DST
 ! Last Modified=Thu 20 Sep 2018 05:52:23 PM DST
       ! Makes x and y operator
+        allocate(XA(XYNNZ),YA(XYNNZ))
+        allocate(XYcol(XYNNZ),XYrp(N+1))
 
       XYrp = 0
       XYcol = 0

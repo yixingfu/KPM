@@ -5,7 +5,7 @@
       ! dir_a and dir_b
       !  we look for \sigma_ab
       ! calculating \mu_{m,n}
-
+        allocate(RaA(XYNNZ),RbA(XYNNZ))
       if (Dir_a .eq.DIR_X) then
           RaA = XA
       else if (Dir_a .eq. DIR_Y) then
@@ -110,8 +110,10 @@
       mu2d_avg = mu2d_tot/(Rep*N)
       mu2d2_avg = mu2d2_tot/(Rep*N)
       deallocate(mu2d_tot,mu2d2_tot,mu2d)
-      deallocate(psi0R,psi0,psi1,psi_tmp)
-      deallocate(psi0_out,psi1_out,psi_tmp_out)
-      deallocate(psi_in,psi_p_in,psi_pp_in)
-      deallocate(psi_out,psi_p_out,psi_pp_out)
+      deallocate(psi0R,psi0)
       deallocate(psi_all_out)
+      deallocate(JaPsi,JbTmJaPsi)
+      deallocate(TmJaPsi,TmpJaPsi,TmppJaPsi)
+      deallocate(TnPsi,TnpPsi,TnppPsi)
+        deallocate(RaA,RbA)
+        deallocate(XA,YA,XYcol,XYrp)

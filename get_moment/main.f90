@@ -152,5 +152,6 @@
           include "open_bc.f90"
           include "safe_mod.f90"
           include "dual.f90"
+          include "operators.f90"
 
       end program main
