@@ -80,6 +80,8 @@
 
 !        write(*,*)mu(0:5)
       mu_tot = mu_tot+mu
+        write(*,*)mu_tot(0:4)/real(i)
+        write(*,*)"-----"
       mu2_tot = mu2_tot+mu**2
       enddo
       mu_avg = mu_tot/(Rep)

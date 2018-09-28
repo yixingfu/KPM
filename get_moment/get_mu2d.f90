@@ -19,7 +19,7 @@
 
       ! Repetition for KPM
       do i=1,Rep
-      mu2d = 0
+      mu2d = 0d0
 
       ! set \psi(0)
       call ResetRandSeed()

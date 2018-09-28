@@ -6,12 +6,14 @@
 	integer::RLZmax,RLZmin
 	integer::Nc,Noutput
 	real*8::norm_a,norm_b
-	real*8,dimension(:,:),allocatable::mu_avg,mu2_avg,mu_tilde
+	complex*16,dimension(:,:),allocatable::mu_avg,mu2_avg,mu_tilde
 	
 	integer::Ntilde
-	real*8,dimension(:),allocatable::eps_grid,gamma_mu
+	real*8,dimension(:),allocatable::eps_grid,Gamma_mu
         real*8::eps,Gamma_mu_tmp
         integer::eps_ind
+
+	integer::my_id, num_procs,k_proc
 
 
 	

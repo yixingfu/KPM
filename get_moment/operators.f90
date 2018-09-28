@@ -26,6 +26,8 @@
       end subroutine op_commutator
 
       subroutine op_chebyshev(N,NNZ,A,rp,col,v_pp,v_p,v)
+! Warning: this works from T2. 
+! If want to start from T1,  set T-1 as x
           integer*8,intent(in)::N,NNZ
           integer*8,dimension(NNZ),intent(in)::col
           integer*8,dimension(N+1),intent(in)::rp

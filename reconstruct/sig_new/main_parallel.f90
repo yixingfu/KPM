@@ -58,6 +58,7 @@
           enddo
 
           deallocate(mu_avg,mu2_avg,mu_tilde,eps_grid,gamma_mu,gJ,hm)
+        call MPI_FINALIZE(ierr)
 
       contains 
           include "Chebyshev.f90"

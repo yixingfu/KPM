@@ -27,6 +27,7 @@
       read(11,*) FiboBasis
       read(11,*) LRH_sigma
       read(11,*) CondTensor, Dir_a, Dir_b
+      read(11,*) Set_Norm_a
       close(11)
 
       if (QP) then

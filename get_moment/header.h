@@ -99,14 +99,14 @@
 	character(1)::JOBZ
 
 	! Normalization
-	real*8::norm_a,norm_b,Emin,Emax
+	real*8::norm_a,norm_b,Emin,Emax,Set_Norm_a,Set_Norm_b
 
 	! J matrix (CSR)
         integer,parameter::DIR_X=1,DIR_Y=2
         integer::Dir_a,Dir_b
-	complex*16,dimension(:),allocatable::JA,XA,YA,RaA,RbA
+	complex*16,dimension(:),allocatable::JA,JxA,JyA,JaA,JbA
 	integer*8,dimension(:),allocatable::Jcol,Jrp
-	integer*8,dimension(:),allocatable::XYcol,XYrp
+	integer*8,dimension(:),allocatable::Jxcol,Jxrp,Jycol,Jyrp
 
 
 	! local variables
@@ -127,9 +127,10 @@
 	integer::prevNc,j0
 
 	! 2d moment mu2d
-	real*8,dimension(:,:),allocatable::mu2d_tot,mu2d2_tot
-	real*8,dimension(:,:),allocatable::mu2d_avg,mu2d2_avg
-	real*8,dimension(:,:),allocatable::mu2d
+	complex*16,dimension(:,:),allocatable::mu2d_tot,mu2d2_tot
+	complex*16,dimension(:,:),allocatable::mu2d_avg,mu2d2_avg
+	complex*16,dimension(:,:),allocatable::mu2d
+
 	! fast (high memory consumption)
 	complex*16,dimension(:,:),allocatable::psi_all_out
         complex*16,dimension(:),allocatable::JaPsi,JbTmJaPsi

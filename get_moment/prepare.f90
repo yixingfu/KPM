@@ -43,7 +43,7 @@
             write(*,*) "not implemented - LRH 1D cond"
         else if (BHZ) then
             JNNZ = 4*N
-            write(*,*)"J has 4 nonzero elements for each real point"
+            write(*,*)"J has 4 nonzero elements for each  point"
         else 
       JNNZ = (2)*N ! fwd & bwd each site @ x
         endif

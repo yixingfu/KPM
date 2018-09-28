@@ -5,10 +5,12 @@
       do eps_ind=1,Noutput
       eps = eps_grid(eps_ind)
       Gamma_mu_tmp = 0d0
+        write(*,*)"----",eps
       do m=0,Nc-1
       do n=0,m
+!        write(*,*) m,n,gamma_mn(m,n,eps),mu_tilde(m,n)
       Gamma_mu_tmp = Gamma_mu_tmp & 
-          + real(gamma_mn(m,n,eps)) * mu_tilde(m,n)
+          + real(gamma_mn(m,n,eps) * mu_tilde(m,n))
       enddo
       enddo
       Gamma_mu(eps_ind) = Gamma_mu_tmp

@@ -44,13 +44,8 @@
 
 
           if (task.eq.OPTCOND) then
-              if (CondTensor) then
-                  ! make x and y matrx
-                  include "make_xy.f90"
-              else
-                  ! make J
-                  include "make_j.f90"
-              endif
+                ! make J
+                include "make_j.f90"
           endif
 
           ! find moment and save result
@@ -96,7 +91,8 @@
                   form="unformatted",access="stream")
               write(18) Nc
               write(18) norm_a,norm_b
-              write(18) mu2d_avg,mu2d2_avg
+              write(18) real(mu2d_avg),imag(mu2d_avg)
+              write(18) real(mu2d2_avg),imag(mu2d2_avg)
               close(18)
               open(19,file=trim(outputfile_final)//".log",&
                   status="replace")

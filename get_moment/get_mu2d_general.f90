@@ -5,18 +5,42 @@
       ! dir_a and dir_b
       !  we look for \sigma_ab
       ! calculating \mu_{m,n}
-        allocate(RaA(XYNNZ),RbA(XYNNZ))
+        allocate(JaA(XYNNZ),JbA(XYNNZ))
+        allocate(Jarp(N+1),Jbrp(N+1))
+        allocate(Jacol(XYNNZ),Jbcol(XYNNZ))
       if (Dir_a .eq.DIR_X) then
-          RaA = XA
+          JaA = JxA
+          Jarp = Jxrp
+          Jacol = Jxcol
       else if (Dir_a .eq. DIR_Y) then
-          RaA = YA
+          JaA = JyA
+          Jarp = Jyrp
+          Jacol = Jycol
       endif
 
       if (Dir_b .eq. DIR_X) then
-          RbA = XA
+          JbA = JxA
+          Jbrp = Jxrp
+          Jbcol = Jxcol
       else if (Dir_b .eq. DIR_Y) then
-          RbA = YA
+          JbA = JyA
+          Jbrp = Jyrp
+          Jbcol = Jycol
       endif
+
+!       do i=1,N
+!          do j=rp(i),rp(i+1)-1
+!               write(*,"(2I4,2F10.4)") i,col(j),real(A(j)),imag(A(j))
+!          enddo
+!       enddo
+!       write(*,*) "END of H"
+
+!       do i=1,N
+!          do j=XYrp(i),XYrp(i+1)-1
+!          write(*,"(2I4,2F10.4)") i,XYcol(j),real(RaA(j)),real(RbA(j))
+!          enddo
+!       enddo
+!       write(*,*) "END of X,Y"
 
       
 
@@ -41,9 +65,15 @@
       mu2d = 0
 
       ! set \psi(0)
-      call ResetRandSeed()
-      call random_number(psi0R)
-      psi0 = zexp(dcmplx(0d0,2.0d0*pi*psi0R))
+!      call ResetRandSeed()
+!      call random_number(psi0R)
+!      psi0 = zexp(dcmplx(0d0,2.0d0*pi*psi0R))
+      do ipsi=1,N
+      psirand = ran2(idum)*pi*2d0
+      psi0(ipsi) = dcos(psirand)+III*dsin(psirand)
+      enddo
+
+
       TnPsi = psi0
 
       ! Ja\psi(0)
@@ -51,6 +81,7 @@
           XYNNZ,RaA,XYrp,XYcol,&
           NNZ,  A,  rp,  col,&
           psi0,JaPsi)
+      call CSRmultVc16(N,JNNZ,JaA,Jarp
       TmJaPsi = JaPsi ! m=0
       
       !  Jb Tm(H) Ja\psi(0), m=0
@@ -63,9 +94,10 @@
       psi_all_out(0,:) = JbTmJaPsi
       mu2d(0,0) = - dot_product(JbTmJaPsi,TnPsi)
 
-      ! increment in m
-      TmppJaPsi = 0d0
+      ! increment in m. For initial, T_{-1} = xT_0
       TmpJaPsi = TmJaPsi
+      call CSRmultVc16(N,NNZ,A,rp,col,TmpJaPsi,TmppJaPsi)
+      ! the rest then recursive definition.
       do cond_m = 1,Nc-1
       call op_chebyshev(N,NNZ,A,rp,col,&
           TmppJaPsi,TmpJaPsi,TmJaPsi)
@@ -82,11 +114,13 @@
 
       do cond_m = 0,Nc-1
         mu2d(cond_m,0) = - dot_product(psi_all_out(cond_m,:),TnPsi)
+!        write(*,*)cond_m,0,mu2d(cond_m,0)
       enddo
 
-      ! increment in n
-      TnppPsi = 0d0
+      ! increment in n. Similar treatment as m
       TnpPsi = TnPsi
+      call CSRmultVc16(N,NNZ,A,rp,col,TnpPsi,TnppPsi)
+      ! and the rest follows recursion
       do cond_n = 1,Nc-1
       call op_chebyshev(N,NNZ,A,rp,col,&
           TnppPsi,TnpPsi,TnPsi)
@@ -96,6 +130,7 @@
       ! calculate mu
       do cond_m = 0,Nc-1
         mu2d(cond_m,cond_n) = - dot_product(psi_all_out(cond_m,:),TnPsi)
+!        write(*,*)cond_m,cond_n,mu2d(cond_m,cond_n)
       enddo
       enddo
 
@@ -104,6 +139,8 @@
 
 
       mu2d_tot = mu2d_tot + mu2d
+        write(*,*)mu2d_tot(0:4,0:4)/real(i)
+        write(*,*)"----"
       mu2d2_tot = mu2d2_tot + mu2d*mu2d
       enddo ! all KPM random repeat
 
@@ -115,5 +152,4 @@
       deallocate(JaPsi,JbTmJaPsi)
       deallocate(TmJaPsi,TmpJaPsi,TmppJaPsi)
       deallocate(TnPsi,TnpPsi,TnppPsi)
-        deallocate(RaA,RbA)
-        deallocate(XA,YA,XYcol,XYrp)
+        deallocate(JaA,JbA,Jarp,Jbrp,Jacol,Jbcol)

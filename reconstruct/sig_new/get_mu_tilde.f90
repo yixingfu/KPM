@@ -3,6 +3,7 @@
       do m=0,Nc-1
       do n=0,Nc-1
       mu_tilde(m,n) = mu_avg(m,n)*hm(m)*hm(n)*gJ(m)*gJ(n)
+        write(*,*)m,n,mu_tilde(m,n)
       enddo
       enddo
 
