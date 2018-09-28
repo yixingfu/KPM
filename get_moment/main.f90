@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Sat 22 Sep 2018 03:38:02 PM DST
+! Last Modified=Fri 28 Sep 2018 01:48:52 AM DST
       program main
           use lapack95
           use f95_precision
@@ -20,7 +20,8 @@
           ! prepare (including the realization dependent)
           include "prepare.f90"
 
-          allocate(Jrp(N+1),JA(JNNZ),Jcol(JNNZ))
+          allocate(Jxrp(N+1),JxA(JNNZ),Jxcol(JNNZ))
+          allocate(Jyrp(N+1),JyA(JNNZ),Jycol(JNNZ))
           do seq_i=0,seq_rep-1
 
           rlz_id = REALIZATION0+my_id
@@ -135,7 +136,8 @@
               endif
           endif
 
-          deallocate(Jrp,JA,Jcol)
+          deallocate(Jxrp,JxA,Jxcol)
+          deallocate(Jyrp,JyA,Jycol)
           call MPI_FINALIZE(ierr)
 
       contains

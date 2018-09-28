@@ -104,9 +104,9 @@
 	! J matrix (CSR)
         integer,parameter::DIR_X=1,DIR_Y=2
         integer::Dir_a,Dir_b
-	complex*16,dimension(:),allocatable::JA,JxA,JyA,JaA,JbA
-	integer*8,dimension(:),allocatable::Jcol,Jrp
+	complex*16,dimension(:),allocatable::JxA,JyA,JaA,JbA
 	integer*8,dimension(:),allocatable::Jxcol,Jxrp,Jycol,Jyrp
+	integer*8,dimension(:),allocatable::Jacol,Jarp,Jbcol,Jbrp
 
 
 	! local variables
@@ -157,7 +157,7 @@
 	complex*16,dimension(0:1,0:1)::pauli_x,pauli_y,pauli_z
 	complex*16,dimension(0:1,0:1)::xf,xb,yf,yb,zf,zb,zz
 	complex*16,dimension(0:1,0:1)::txf,txb,tyf,tyb,tzf,tzb
-	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb
+	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb,Jtyf,Jtyb
         complex*16,dimension(0:1)::eiAx,eiAy
         complex*16::U_fwd,U_bwd
         complex*16::tx,tx_,ty,ty_

@@ -1,13 +1,13 @@
 ! Created=Wed 13 Dec 2017 01:15:17 PM STD
-! Last Modified=Sat 22 Sep 2018 03:40:03 PM DST
+! Last Modified=Fri 28 Sep 2018 01:57:05 AM DST
       ! This file computes the Jxy moment
       ! for arbitrary direction
       ! dir_a and dir_b
       !  we look for \sigma_ab
       ! calculating \mu_{m,n}
-        allocate(JaA(XYNNZ),JbA(XYNNZ))
+        allocate(JaA(JNNZ),JbA(JNNZ))
         allocate(Jarp(N+1),Jbrp(N+1))
-        allocate(Jacol(XYNNZ),Jbcol(XYNNZ))
+        allocate(Jacol(JNNZ),Jbcol(JNNZ))
       if (Dir_a .eq.DIR_X) then
           JaA = JxA
           Jarp = Jxrp
@@ -77,18 +77,19 @@
       TnPsi = psi0
 
       ! Ja\psi(0)
-      call op_commutator(N,&
-          XYNNZ,RaA,XYrp,XYcol,&
-          NNZ,  A,  rp,  col,&
-          psi0,JaPsi)
-      call CSRmultVc16(N,JNNZ,JaA,Jarp
+!      call op_commutator(N,&
+!          XYNNZ,RaA,XYrp,XYcol,&
+!          NNZ,  A,  rp,  col,&
+!          psi0,JaPsi)
+      call CSRmultVc16(N,JNNZ,JaA,Jarp,Jacol,psi0,JaPsi)
       TmJaPsi = JaPsi ! m=0
       
       !  Jb Tm(H) Ja\psi(0), m=0
-      call op_commutator(N,&
-          XYNNZ,RbA,XYrp,XYcol,&
-          NNZ,  A,  rp,  col,&
-          TmJaPsi,JbTmJaPsi)
+!      call op_commutator(N,&
+!          XYNNZ,RbA,XYrp,XYcol,&
+!          NNZ,  A,  rp,  col,&
+!          TmJaPsi,JbTmJaPsi)
+      call CSRmultVc16(N,JNNZ,JbA,Jbrp,Jbcol,TmJaPsi,JbTmJaPsi)
        
       ! \mu_xx_{0,0} = \psi(0)_out \cdot \psi(0)_in
       psi_all_out(0,:) = JbTmJaPsi
@@ -105,10 +106,11 @@
       TmpJaPsi = TmJaPsi
 
       ! close and save
-      call op_commutator(N,&
-          XYNNZ,RbA,XYrp,XYcol,&
-          NNZ,  A,  rp,  col,&
-          TmJaPsi,JbTmJaPsi)
+!      call op_commutator(N,&
+!          XYNNZ,RbA,XYrp,XYcol,&
+!          NNZ,  A,  rp,  col,&
+!          TmJaPsi,JbTmJaPsi)
+      call CSRmultVc16(N,JNNZ,JbA,Jbrp,Jbcol,TmJaPsi,JbTmJaPsi)
       psi_all_out(cond_m,:) = JbTmJaPsi
       enddo
 

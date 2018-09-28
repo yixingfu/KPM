@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
-! Last Modified=Wed 19 Sep 2018 11:15:43 AM DST
+! Last Modified=Fri 28 Sep 2018 01:36:16 AM DST
       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
@@ -19,13 +19,13 @@
       endif
 
       ! BHZ Definition
-
+        ! f is for c(r+ex)\dagger c(r). col = row - 1
       if (BHZ) then
-          xf= BHZ_SPIN * 0.5d0*III*pauli_x + 0.5d0*pauli_z
-          xb=-BHZ_SPIN * 0.5d0*III*pauli_x + 0.5d0*pauli_z
+          xf=-BHZ_SPIN * III*pauli_x + pauli_z
+          xb= BHZ_SPIN * III*pauli_x + pauli_z
 
-          yf= 0.5d0*III*pauli_y + 0.5d0*pauli_z
-          yb=-0.5d0*III*pauli_y + 0.5d0*pauli_z
+          yf=-III*pauli_y + pauli_z
+          yb= III*pauli_y + pauli_z
 
           zf=0d0
           zb=0d0
@@ -79,7 +79,7 @@
           ! x forward
           t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,phase)
-          i_=modulo(i,L)+1
+          i_=modulo(i-2,L)+1
           ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
@@ -94,7 +94,7 @@
           ! x backward
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
-          i_=modulo(i-2,L)+1
+          i_=modulo(i,L)+1
           ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
@@ -109,7 +109,7 @@
           ! y forward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j-0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j-0.5d0,P,Q,phase)
-          j_=modulo(j,L)+1
+          j_=modulo(j-2,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -124,7 +124,7 @@
           ! y backward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j+0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j+0.5d0,P,Q,phase)
-          j_=modulo(j-2,L)+1
+          j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
