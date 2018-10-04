@@ -1,5 +1,5 @@
 ! Created =Tue 12 Dec 2017 03:10:19 PM STD
-! Last Modified=Thu 20 Sep 2018 05:20:50 PM DST
+! Last Modified=Thu 04 Oct 2018 05:32:50 PM DST
 ! 
 
       ! This file prepares a few derived parameters from input file
@@ -29,6 +29,10 @@
           if (D.ne.1) then
               write(*,*) "Error: D=1 only for LRH model"
           endif
+      else if (MODEL_TYPE.eq.TYPE_IQHE_SQ) then
+          IQHE_SQ=.true.
+          PerSite=1+2*D
+          N = (L**D) ! No spin
       else
           PerSite=1+2*D
           N = 2*(L**D)

@@ -1,5 +1,5 @@
 ! Created=Wed 13 Dec 2017 11:51:36 PM STD
-! Last Modified=Fri 28 Sep 2018 01:50:27 AM DST
+! Last Modified=Thu 04 Oct 2018 05:47:24 PM DST
       ! This file makes J operator
 
       if (D.eq.2) then
@@ -13,6 +13,8 @@
                   include "make_j_PIFLUX.f90"
               else if (GRAPHENE) then
                   include "make_j_GRAPHENE.f90"
+              else if (IQHE_SQ) then
+                  include "make_j_IQHE_SQ.f90"
               else
                   include "make_j_SOC.f90"
               endif
