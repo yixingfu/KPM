@@ -52,6 +52,7 @@
           ! find moment and save result
           if ((task.eq.RHO) .or. (task.eq.RHODER))then
               include "get_mu.f90"
+                write(*,*) rlz_id, "done mu calculation"
 
               ! save results
               ! in the binary file we only need to record data needed

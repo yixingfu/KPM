@@ -5,6 +5,15 @@
       ! dir_a and dir_b
       !  we look for \sigma_ab
       ! calculating \mu_{m,n}
+
+        ! DEBUG
+!        open(37,file="ALL.dat",&
+!                status="replace",&
+!                form="unformatted",access="stream")
+!        write(37) N,Nc
+!
+        ! DEBUG
+        
         allocate(JaA(JNNZ),JbA(JNNZ))
         allocate(Jarp(N+1),Jbrp(N+1))
         allocate(Jacol(JNNZ),Jbcol(JNNZ))
@@ -28,20 +37,27 @@
           Jbcol = Jycol
       endif
 
+
 !       do i=1,N
 !          do j=rp(i),rp(i+1)-1
 !               write(*,"(2I4,2F10.4)") i,col(j),real(A(j)),imag(A(j))
 !          enddo
 !       enddo
 !       write(*,*) "END of H"
-
+!
 !       do i=1,N
-!          do j=XYrp(i),XYrp(i+1)-1
-!          write(*,"(2I4,2F10.4)") i,XYcol(j),real(RaA(j)),real(RbA(j))
+!          do j=Jarp(i),Jarp(i+1)-1
+!          write(*,"(2I4,2F10.4)") i,Jacol(j),real(JaA(j)),imag(JaA(j))
 !          enddo
 !       enddo
-!       write(*,*) "END of X,Y"
-
+!       write(*,*) "END of Ja"
+!       do i=1,N
+!          do j=Jbrp(i),Jbrp(i+1)-1
+!          write(*,"(2I4,2F10.4)") i,Jbcol(j),real(JbA(j)),imag(JbA(j))
+!          enddo
+!       enddo
+!       write(*,*) "END of Jb"
+!
       
 
       allocate(mu2d_tot(0:Nc-1,0:Nc-1),mu2d2_tot(0:Nc-1,0:Nc-1))
@@ -74,6 +90,7 @@
       enddo
 
 
+!        write(37) real(psi0), imag(psi0)
       TnPsi = psi0
 
       ! Ja\psi(0)
@@ -138,7 +155,7 @@
 
 
 
-
+!        write(37)real(mu2d),imag(mu2d)
 
       mu2d_tot = mu2d_tot + mu2d
         write(*,*)mu2d_tot(0:4,0:4)/real(i)
@@ -155,3 +172,5 @@
       deallocate(TmJaPsi,TmpJaPsi,TmppJaPsi)
       deallocate(TnPsi,TnpPsi,TnppPsi)
         deallocate(JaA,JbA,Jarp,Jbrp,Jacol,Jbcol)
+
+!        close(37)
