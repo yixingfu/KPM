@@ -20,7 +20,7 @@
 	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
         integer::MODEL_TYPE
         integer,parameter::TYPE_SOC=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
-        integer,parameter::TYPE_LRH1D=4,TYPE_IQHE_SQ=5
+        integer,parameter::TYPE_LRH1D=4,TYPE_IQHE_SQ=5,TYPE_IQHE_SQ=6
         integer::PIECE,temp_i,temp_start,total_count,set_count
         real*8::temp_i_real
 	integer::HONEYCOMB_BASIS
@@ -50,7 +50,7 @@
 	Logical::Inherit,SaveAll
 	Logical::ExactSpectrum,ExactStates
 	Logical::RandPhase
-	Logical::PIFLUX,GRAPHENE,LRH1D,IQHE_SQ
+	Logical::PIFLUX,GRAPHENE,LRH1D,IQHE_SQ,IQHE_SOC
 	Logical::Scramble, CondTensor
 
 	! Matrix dimensions

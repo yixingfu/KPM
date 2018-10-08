@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Thu 04 Oct 2018 05:45:53 PM DST
+! Last Modified=Mon 08 Oct 2018 02:58:23 PM DST
       program main
           use lapack95
           use f95_precision
@@ -39,6 +39,8 @@
               include "make_h_LRH1D.f90"
           else if (IQHE_SQ) then
               include "make_h_IQHE_SQ.f90"
+          else if (IQHE_SOC) then
+              include "make_h_IQHE_SOC.f90"
           else
               include "make_h.f90"
           endif 

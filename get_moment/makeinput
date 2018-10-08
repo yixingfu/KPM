@@ -53,6 +53,7 @@ done
 # 3=graphene (honeycomb lattice, pseudospin by A B lattice type)
 # 4=1D LRH model (set to 1D, set sigma, set to QP)
 # 5=IQHE square lattice
+# 6=IQHE square lattice SOC
 ### Changes needed
 # Exact Diag: Exact line; fixTwist; random phase; filename
 #

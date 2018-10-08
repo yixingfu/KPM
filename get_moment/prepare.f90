@@ -1,5 +1,5 @@
 ! Created =Tue 12 Dec 2017 03:10:19 PM STD
-! Last Modified=Thu 04 Oct 2018 05:32:50 PM DST
+! Last Modified=Mon 08 Oct 2018 03:00:46 PM DST
 ! 
 
       ! This file prepares a few derived parameters from input file
@@ -33,6 +33,10 @@
           IQHE_SQ=.true.
           PerSite=1+2*D
           N = (L**D) ! No spin
+      else if (MODEL_TYPE.eq.TYPE_IQHE_SOC) then
+          IQHE_SOC = .true.
+          PerSite=1+2*D
+          N = 2*(L**D)
       else
           PerSite=1+2*D
           N = 2*(L**D)
