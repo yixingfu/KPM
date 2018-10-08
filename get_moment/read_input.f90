@@ -48,6 +48,8 @@
         write(*,*)"19"
       read(11,*) Set_Norm_a
         write(*,*)"20"
+        read(11,*) IQHE_B
+        write(*,*) "21"
       close(11)
 
       if (QP) then

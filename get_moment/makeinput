@@ -3,6 +3,7 @@ export DIR_X=1
 export DIR_Y=2
 export HALLCOND=.true.
 export norm_a=8
+export IQHE_B=0.1
 rm *.in
 for W in $(seq 0.00 0.05 0.0); do
 #for Tx in $(seq -1. 0.01 1); do
@@ -40,6 +41,7 @@ echo "0,1">>batch$FileName.in ### Fibonacci basis. For regular fibonacci, it is 
 echo "0.333333333333333">>batch$FileName.in ### 1D LRH model: sigma
 echo "$HALLCOND,$Dir_a, $Dir_b">>batch$FileName.in ### 2D hall cond, direction of conductivity. X is 1, Y is 2. a is left, b is right. Only fast (memory consuming) method is implemented
 echo "$norm_a">>batch$FileName.in ###SPECIFICALLY SET NORM_A
+echo "$IQHE_B">>batch$FileName.in ###IQHE magnetic field B
 done
 #done
 done
@@ -50,7 +52,7 @@ done
 # 2=pi-flux (square lattice NN + NNN w/o spin)
 # 3=graphene (honeycomb lattice, pseudospin by A B lattice type)
 # 4=1D LRH model (set to 1D, set sigma, set to QP)
-#
+# 5=IQHE square lattice
 ### Changes needed
 # Exact Diag: Exact line; fixTwist; random phase; filename
 #

@@ -32,7 +32,7 @@
 
           ! x backward
           i_=modulo(i,L)+1
-          ind_r = xys2i(i_,j,s_,L)
+          ind_r = xy2i(i_,j,L)
           Jxcol(col_ind) = ind_r
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
@@ -84,7 +84,6 @@
               *t_tmp*open_bc(j,j_,L,OPEN_BC_y)
           col_ind = col_ind+1
 
-          End do
           End do
           End do
           Jyrp(rp_ind) = JNNZ+1

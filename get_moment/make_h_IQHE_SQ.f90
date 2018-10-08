@@ -81,7 +81,7 @@
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j+0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j+0.5d0,P,Q,phase)
           j_=modulo(j,L)+1
-          ind_r = xys2i(i,j_,s_,L)
+          ind_r = xy2i(i,j_,L)
           col(col_ind) = ind_r
           A(col_ind) = - cdexp(dcmplx(0d0,-Twist(2)-2d0*pi*i*IQHE_B)) &
               *t_tmp*open_bc(j,j_,L,OPEN_BC_y)

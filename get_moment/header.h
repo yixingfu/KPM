@@ -15,6 +15,7 @@
 	character(200)::arg_tmp
 	real*8,dimension(3)::inputPhase
 	real*8::BHZ_M
+	real*8::IQHE_B
 	integer::BHZ_SPIN
 	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
         integer::MODEL_TYPE

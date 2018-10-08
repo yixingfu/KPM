@@ -38,27 +38,27 @@
       endif
 
 
-!       do i=1,N
-!          do j=rp(i),rp(i+1)-1
-!               write(*,"(2I4,2F10.4)") i,col(j),real(A(j)),imag(A(j))
-!          enddo
-!       enddo
-!       write(*,*) "END of H"
-!
-!       do i=1,N
-!          do j=Jarp(i),Jarp(i+1)-1
-!          write(*,"(2I4,2F10.4)") i,Jacol(j),real(JaA(j)),imag(JaA(j))
-!          enddo
-!       enddo
-!       write(*,*) "END of Ja"
-!       do i=1,N
-!          do j=Jbrp(i),Jbrp(i+1)-1
-!          write(*,"(2I4,2F10.4)") i,Jbcol(j),real(JbA(j)),imag(JbA(j))
-!          enddo
-!       enddo
-!       write(*,*) "END of Jb"
-!
-      
+       do i=1,N
+          do j=rp(i),rp(i+1)-1
+               write(*,"(2I5,2F11.8)") i,col(j),real(A(j)),imag(A(j))
+          enddo
+       enddo
+       write(*,*) "END of H"
+
+       do i=1,N
+          do j=Jarp(i),Jarp(i+1)-1
+          write(*,"(2I5,2F11.8)") i,Jacol(j),real(JaA(j)),imag(JaA(j))
+          enddo
+       enddo
+       write(*,*) "END of Ja"
+       do i=1,N
+          do j=Jbrp(i),Jbrp(i+1)-1
+          write(*,"(2I5,2F11.8)") i,Jbcol(j),real(JbA(j)),imag(JbA(j))
+          enddo
+       enddo
+       write(*,*) "END of Jb"
+
+     
 
       allocate(mu2d_tot(0:Nc-1,0:Nc-1),mu2d2_tot(0:Nc-1,0:Nc-1))
       allocate(mu2d_avg(0:Nc-1,0:Nc-1),mu2d2_avg(0:Nc-1,0:Nc-1))
@@ -157,7 +157,7 @@
 
 !        write(37)real(mu2d),imag(mu2d)
 
-      mu2d_tot = mu2d_tot + mu2d
+      mu2d_tot = mu2d_tot + mu2d/N
         write(*,*)mu2d_tot(0:4,0:4)/real(i)
         write(*,*)"----"
       mu2d2_tot = mu2d2_tot + mu2d*mu2d
