@@ -18,6 +18,8 @@
           read(arg_tmp,*) RLZmax
           call getarg(4,arg_tmp)
           read(arg_tmp,*) Noutput
+          call getarg(5,arg_tmp)
+          read(arg_tmp,*) ForceNc
           write(*,*)RLZmin,RLZmax,Noutput
           badfiles=0
         
@@ -57,7 +59,9 @@
           
           enddo
 
-          deallocate(mu_avg,mu2_avg,mu_tilde,eps_grid,gamma_mu,gJ,hm)
+          deallocate(mu_avg,mu2_avg,mu_avg_real,&
+        mu_avg_imag,mu2_avg_real,&
+        mu2_avg_imag,mu_tilde,eps_grid,gamma_mu,gJ,hm)
         call MPI_FINALIZE(ierr)
 
       contains 

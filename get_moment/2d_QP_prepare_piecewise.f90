@@ -68,7 +68,7 @@
 
       ! place phase_vals in random locations
       do i=1,PIECE
- 20      call random_number(temp_i_real)
+20      call random_number(temp_i_real)
       temp_i = ceiling(temp_i_real*L*L)
       if (phase_all(1,temp_i).eq.-1) then
           phase_all(:,temp_i) = phase_vals(:,i)

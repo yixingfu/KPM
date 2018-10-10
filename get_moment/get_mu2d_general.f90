@@ -158,8 +158,8 @@
 !        write(37)real(mu2d),imag(mu2d)
 
       mu2d_tot = mu2d_tot + mu2d/N
-        write(*,*)mu2d_tot(0:4,0:4)/real(i)
-        write(*,*)"----"
+!        write(*,*)mu2d_tot(0:4,0:4)/real(i)
+!        write(*,*)"----"
       mu2d2_tot = mu2d2_tot + mu2d*mu2d
       enddo ! all KPM random repeat
 

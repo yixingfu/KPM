@@ -4,9 +4,11 @@
 	character(200)::outputfile_k
 	character(200)::arg_tmp
 	integer::RLZmax,RLZmin
-	integer::Nc,Noutput
+	integer::Nc,Noutput,ForceNc
 	real*8::norm_a,norm_b
 	complex*16,dimension(:,:),allocatable::mu_avg,mu2_avg,mu_tilde
+	real*8,dimension(:,:),allocatable::mu_avg_real,mu_avg_imag
+	real*8,dimension(:,:),allocatable::mu2_avg_real,mu2_avg_imag
 	
 	integer::Ntilde
 	real*8,dimension(:),allocatable::eps_grid,Gamma_mu

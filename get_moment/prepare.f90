@@ -7,6 +7,8 @@
       PIFLUX =  .false.
       GRAPHENE = .false.
       LRH1D = .false.
+      IQHE_SQ = .false.
+      IQHE_SOC = .false.
       if (MODEL_TYPE.eq.TYPE_BHZ) then
           BHZ=.true.
           PerSite=1+4*D

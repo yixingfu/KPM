@@ -12,7 +12,7 @@
           integer,intent(in)::m,n
           complex*16::III
 
-          III = dcmplx(0d0,1d1)
+          III = dcmplx(0d0,1d0)
 
           gamma_mn = ((eps-III*n*dsqrt(1d0-eps**2d0))&
               * zexp( III*n*dacos(eps))*ChebyT(m,eps))&

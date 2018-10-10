@@ -12,6 +12,7 @@
           do i = 0,Nc-1
           gJ(i) = ((Nc-i+1)*dcos(a_*i)+dsin(a_*i)/dtan(a_)) &
               /(Nc+1)
+!        write(*,*)"kernel",i,gJ(i)
           End do
 
           hm=2d0

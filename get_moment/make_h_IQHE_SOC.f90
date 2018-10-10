@@ -3,6 +3,7 @@
       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
+        write(*,*) "IQHE SOC, H"
       allocate(A(NNZ),col(NNZ),rp(N+1))
       if (fixedTwist) then
           Twist = OrigTwist*pi/real(L)
@@ -45,7 +46,8 @@
           allocate(phase_all(D,L*L))
 
           if (LIMIT_CORRELATION) then
-              include "2d_QP_prepare_piecewise.f90"
+                write(*,*) "crushing ..."
+!              include "2d_QP_prepare_piecewise.f90"
           else
               include "2d_QP_prepare.f90"
               phase_all(1,:) = phase(1)

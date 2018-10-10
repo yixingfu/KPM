@@ -4,7 +4,7 @@
 
           ! not differentiating QP or not
           if (my_id.eq.0) then
-              write(*,*) "2D,J,BHZ, working"
+              write(*,*) "2D,J,BHZ"
           endif
           ! reset
           Jxrp = 0
@@ -14,12 +14,12 @@
           ! txf*(-i),txb*(i), same as the ready use 3D case
           Jtxf = -txf*III
           Jtxb = txb*III
-        write(*,*)"Jtxf"
-        write(*,*)Jtxf
-        write(*,*)"Jtxb"
-        write(*,*)Jtxb
-        write(*,*)"----"
-
+!        write(*,*)"Jtxf"
+!        write(*,*)Jtxf
+!        write(*,*)"Jtxb"
+!        write(*,*)Jtxb
+!        write(*,*)"----"
+!
           do j=1,L!y
           do i=1,L!x
           do s=0,1
