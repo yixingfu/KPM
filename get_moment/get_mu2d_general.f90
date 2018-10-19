@@ -5,6 +5,7 @@
       ! dir_a and dir_b
       !  we look for \sigma_ab
       ! calculating \mu_{m,n}
+      idum=-(my_id+1)*64
 
         ! DEBUG
 !        open(37,file="ALL.dat",&
@@ -38,26 +39,26 @@
       endif
 
 
-       do i=1,N
-          do j=rp(i),rp(i+1)-1
-               write(*,"(2I5,2F11.8)") i,col(j),real(A(j)),imag(A(j))
-          enddo
-       enddo
-       write(*,*) "END of H"
-
-       do i=1,N
-          do j=Jarp(i),Jarp(i+1)-1
-          write(*,"(2I5,2F11.8)") i,Jacol(j),real(JaA(j)),imag(JaA(j))
-          enddo
-       enddo
-       write(*,*) "END of Ja"
-       do i=1,N
-          do j=Jbrp(i),Jbrp(i+1)-1
-          write(*,"(2I5,2F11.8)") i,Jbcol(j),real(JbA(j)),imag(JbA(j))
-          enddo
-       enddo
-       write(*,*) "END of Jb"
-
+!       do i=1,N
+!          do j=rp(i),rp(i+1)-1
+!               write(*,"(2I5,2F11.8)") i,col(j),real(A(j)),imag(A(j))
+!          enddo
+!       enddo
+!       write(*,*) "END of H"
+!
+!       do i=1,N
+!          do j=Jarp(i),Jarp(i+1)-1
+!          write(*,"(2I5,2F11.8)") i,Jacol(j),real(JaA(j)),imag(JaA(j))
+!          enddo
+!       enddo
+!       write(*,*) "END of Ja"
+!       do i=1,N
+!          do j=Jbrp(i),Jbrp(i+1)-1
+!          write(*,"(2I5,2F11.8)") i,Jbcol(j),real(JbA(j)),imag(JbA(j))
+!          enddo
+!       enddo
+!       write(*,*) "END of Jb"
+!
      
 
       allocate(mu2d_tot(0:Nc-1,0:Nc-1),mu2d2_tot(0:Nc-1,0:Nc-1))
@@ -72,13 +73,13 @@
       !those marked with out, multiplies J at first
 !<out|in>=<0|JaHHHHJbHHHHH|0>
 
-      mu2d_tot = 0
-      mu2d2_tot = 0
+      mu2d_tot = 0d0
+      mu2d2_tot = 0d0
 
 
       ! Repetition for KPM
       do i=1,Rep
-      mu2d = 0
+      mu2d = 0d0
 
       ! set \psi(0)
 !      call ResetRandSeed()

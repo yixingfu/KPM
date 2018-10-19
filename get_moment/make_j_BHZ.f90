@@ -67,11 +67,11 @@
           ! txf*(-i),txb*(i), same as the ready use 3D case
           Jtyf = -tyf*III
           Jtyb = tyb*III
-        write(*,*)"Jtyf"
-        write(*,*)Jtyf
-        write(*,*)"Jtyb"
-        write(*,*)Jtyb
-        write(*,*)"----"
+!        write(*,*)"Jtyf"
+!        write(*,*)Jtyf
+!        write(*,*)"Jtyb"
+!        write(*,*)Jtyb
+!        write(*,*)"----"
 
           do j=1,L!y
           do i=1,L!x
