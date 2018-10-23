@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Tue 23 Oct 2018 05:41:06 PM DST
+! Last Modified=Tue 23 Oct 2018 07:05:04 PM DST
       program main
           use lapack95 
           use f95_precision
@@ -51,14 +51,14 @@
 
 
           if (task.eq.OPTCOND) then
-                ! make J
-                include "make_j.f90"
+              ! make J
+              include "make_j.f90"
           endif
 
           ! find moment and save result
           if ((task.eq.RHO) .or. (task.eq.RHODER))then
               include "get_mu.f90"
-                write(*,*) rlz_id, "done mu calculation"
+              write(*,*) rlz_id, "done mu calculation"
 
               ! save results
               ! in the binary file we only need to record data needed
@@ -141,6 +141,26 @@
                   write(63,*) EigValTotALL
                   close(63)
               endif
+          endif
+
+          if (ExactIPR) then
+              call MPI_REDUCE(IPRx_all, IPRx_allTOT,N, &
+                  MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+              call MPI_REDUCE(IPRk_all, IPRk_allTOT,N, &
+                  MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+              call MPI_REDUCE(IPRcount, IPRcountTOT,1, &
+                  MPI_INT,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+              if (my_id.eq.(seq_rep*num_procs)) then
+                  write(*,*) "SAVING IPR ..."
+                  open(62, file=trim(outputfile_final)//".IPR",&
+                      status="replace",form="unformatted",&
+                      access="stream",action="write")
+                  write(62) N,IPRcountTOT,IPRx_allTOT,IPRk_allTOT
+                  close(62)
+                  deallocate(IPRx_allTOT,IPRk_allTOT)
+              endif
+                  deallocate(IPRx_all,IPRk_all)
+
           endif
 
           deallocate(Jxrp,JxA,Jxcol)

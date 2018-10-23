@@ -1,7 +1,6 @@
 ! Created =Tue 12 Dec 2017 03:10:19 PM STD
-! Last Modified=Tue 23 Oct 2018 12:04:46 PM DST
+! Last Modified=Tue 23 Oct 2018 06:55:27 PM DST
 ! 
-
       ! This file prepares a few derived parameters from input file
       BHZ = .false.
       PIFLUX =  .false.
@@ -70,4 +69,6 @@
       EigValTot = 0
       EigValLancTot = 0
 
-
+        if (EIGVALCOUNT.eq.0) then
+            EIGVALCOUNT = N
+        endif

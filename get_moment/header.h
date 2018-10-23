@@ -96,7 +96,7 @@
 	complex*16,dimension(:,:),allocatable::H_dense
 	complex*16,dimension(:),allocatable::work
 	real*8,dimension(:),allocatable::rwork,EigVal
-	integer,parameter::EIGVALCOUNT=3000
+	integer::EIGVALCOUNT
 	integer::STARTPOINT,ENDPOINT,i_tmp
 	real*8,dimension(EIGVALCOUNT)::EigValTot,EigValTotALL
 	real*8,dimension(EIGVALCOUNT)::EigValLanc,EigValLancTot
@@ -121,6 +121,12 @@
 	! 2D QP: phase
 	real*8,dimension(3)::phase
         real*8,dimension(:,:),allocatable::phase_vals,phase_all
+
+        ! IPR
+        real*8,dimension(:),allocatable::IPRx,IPRk,IPRx_all,IPRk_all
+        real*8,dimension(:),allocatable::IPRx_allTOT,IPRk_allTOT
+        integer::IPRcount,IPRcountTOT
+        complex*16,dimension(:),allocatable::psi_x,psi_k
 
 	! moment mu
 	real*8,dimension(:),allocatable::mu_tot,mu2_tot,mu,psi0R
