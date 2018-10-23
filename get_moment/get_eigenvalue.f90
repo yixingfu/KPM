@@ -47,11 +47,19 @@
           ! End of ED
 
           if (ExactStates) then
+        allocate(psi_test1(N),psi_test2(N))
+        do i=1,N
+        psi_test1 = H_dense(:,i)
+        call CSRmultVc16(N,NNZ,A,rp,col,psi_test1,psi_test2)
+       temp_val = sum(psi_test1/psi_test2)/N
+        write(*,*) temp_val,&
+                sqrt(sum(abs(psi_test1/psi_test2-temp_val)**2)/N)
+        enddo
               write(*,*) "saving exact states testing"
                 open(62,file=trim(outputfile_final)//".eigvec",&
                         status="replace",access="stream",action="write")
                 write(62) N
-                write(62) H_dense
+                write(62) dreal(H_dense),dimag(H_dense)
                 close(62)
           endif
           if (ExactSpectrum) then

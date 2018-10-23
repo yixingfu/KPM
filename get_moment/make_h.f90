@@ -202,15 +202,15 @@
           deallocate(eps,phase_all)
 
       endif
-      if (my_id.eq.0) then
-          open(111,file="MATRIX.txt",status="replace",&
-              form="unformatted",access="stream")
-          write(111) N
-          write(111) NNZ
-          write(*,*)"NNZ",NNZ
-          write(111) A, col, rp
-          close(111)
-      endif
+!      if (my_id.eq.0) then
+!          open(111,file="MATRIX.txt",status="replace",&
+!              form="unformatted",access="stream")
+!          write(111) N
+!          write(111) NNZ
+!          write(*,*)"NNZ",NNZ
+!          write(111) dreal(A),dimag(A), col, rp
+!          close(111)
+!      endif
 
 
 

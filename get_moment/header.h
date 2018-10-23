@@ -126,6 +126,8 @@
 	real*8,dimension(:),allocatable::mu_tot,mu2_tot,mu,psi0R
 	real*8,dimension(:),allocatable::mu_avg,mu2_avg
 	complex*16,dimension(:),allocatable::psi0,psi1
+	complex*16,dimension(:),allocatable::psi_test1,psi_test2
+	complex*16::temp_val
 	complex*16,dimension(:),allocatable::psi_tmp
 	complex*16,dimension(:),allocatable::psi_j,psi_j_p,psi_j_pp
 	!saveload

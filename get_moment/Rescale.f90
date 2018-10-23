@@ -12,12 +12,12 @@
           integer*8::i,j
         complex*16::Arpi
 
-!        do i=1,N
-!                do j=rp(i),rp(i+1)-1
-!        write(*,'(i4.4,a,i4.4,a,F11.9,a,F11.9)')i,',',col(j),&
-!                ',',real(A(j)),',',imag(A(j))
-!                enddo
-!        enddo
+        do i=1,N
+                do j=rp(i),rp(i+1)-1
+        write(*,'(i4.4,a,i4.4,a,F11.9,a,F11.9)')i,',',col(j),&
+                ',',real(A(j)),',',imag(A(j))
+                enddo
+        enddo
 
           do i=1,N
         Arpi = A(rp(i))
