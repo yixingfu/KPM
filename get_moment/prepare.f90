@@ -43,6 +43,7 @@
       else if (MODEL_TYPE.eq.TYPE_SELFDUAL_3D) then
           SELFDUAL_3D = .true.
           PerSite = 2+2*D
+          N = 2*(L**D)
       else
           PerSite=1+2*D
           N = 2*(L**D)

@@ -43,7 +43,12 @@
 
       if (D.eq.3) then
 
-          include "QP_prepare.f90"
+          include "QP_prepare_public.f90"
+        Phase(3) = -L*Twist(3)
+        Phase(2) = -L*Twist(1)
+        Phase(1) = -L*Twist(2)
+        write(*,*) rlz_id,"TWIST",twist
+        write(*,*) rlz_id,"Phase",phase
           ! initiate indices
           eps_ind = 1
           rp = 0
@@ -68,6 +73,7 @@
               (dcos(Q*i+phase(1))*pauli_z(s,s)) + &
               (dcos(P*j+phase(2))*pauli_x(s,s)) + &
               (dcos(R*k+phase(3))*pauli_y(s,s)))
+!          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
           
           ! opposite spin
@@ -76,6 +82,7 @@
               (dcos(Q*i+phase(1))*pauli_z(s,s_)) + &
               (dcos(P*j+phase(2))*pauli_x(s,s_)) + &
               (dcos(R*k+phase(3))*pauli_y(s,s_)))
+!          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
 
           !!! Hopping term
@@ -85,6 +92,7 @@
           t_tmp = t0 
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
+!          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
 
           ! (x,x-1) (xb)
@@ -93,6 +101,7 @@
           t_tmp = t0 
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
+!          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
 
           ! (y,y+1) (yf)
@@ -101,6 +110,7 @@
           t_tmp = t0 
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
+!          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
 
           ! (y,y-1) (yb)
@@ -109,6 +119,7 @@
           t_tmp = t0 
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
+!          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
 
           ! (z,z+1) (zf)
@@ -117,6 +128,7 @@
           t_tmp = t0 
           col(col_ind) = ind_r
           A(col_ind) = tzf(s,s)*t_tmp*open_bc(k,k_,L,OPEN_BC_z)
+!          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
 
           ! (z,z-1) (zb)
@@ -124,29 +136,32 @@
           ind_r = xyzs2i(i,j,k_,s,L)
           t_tmp = t0 
           col(col_ind) = ind_r
-          A(col_ind) = tzf(s,s)*t_tmp*open_bc(k,k_,L,OPEN_BC_z)
+          A(col_ind) = tzb(s,s)*t_tmp*open_bc(k,k_,L,OPEN_BC_z)
+!          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
 
 
           End do
           End do
           End do
+          end do
           rp(rp_ind) = NNZ+1
 
-          deallocate(eps,phase_all)
+!          deallocate(eps)
       else if (D.eq.2) then
           write(*,*) "not implemented - self dual 2D"
           
 
       endif
       if (my_id.eq.0) then
-          open(111,file="MATRIX.txt",status="replace",&
-              form="unformatted",access="stream")
-          write(111) N
-          write(111) NNZ
-          write(*,*)"NNZ",NNZ
-          write(111) A, col, rp
-          close(111)
+        ! use it for debug
+!          open(111,file="MATRIX.txt",status="replace",&
+!              form="unformatted",access="stream")
+!          write(111) N
+!          write(111) NNZ
+!          write(*,*)"NNZ",NNZ
+!          write(111) A, col, rp
+!          close(111)
       endif
 
 

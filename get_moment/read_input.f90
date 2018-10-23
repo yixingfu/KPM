@@ -52,7 +52,8 @@
         write(*,*) "21"
       close(11)
 
-      if (QP) then
+      if ((DISORDER_TYPE.eq.DISORDER_QP).or. &
+                (DISORDER_TYPE.eq.DISORDER_BOTH)) then
           fiboN = inv_fibo(L,FiboBasis)
       endif
 

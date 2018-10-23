@@ -19,7 +19,7 @@
 
       ! phase
       phase = 0
-      if (QP) then
+      if (DISORDER_TYPE.eq.DISORDER_QP) then
           
           if (RandPhase) then
               allocate(TwistAll(num_procs*3*seq_rep))

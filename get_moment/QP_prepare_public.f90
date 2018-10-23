@@ -11,7 +11,7 @@
           Wrnd = W
       else if (DISORDER_TYPE.eq.DISORDER_BOTH) then
           WQP = W
-          Wrdn = W2
+          Wrnd = W2
       endif
           if (RandPhase) then
               allocate(TwistAll(num_procs*3*seq_rep))
@@ -71,7 +71,7 @@
               Trnd = W
           else if (DISORDER_TYPE.eq.DISORDER_BOTH) then
               TQP = 0d0
-              Trdn =  0d0
+              Trnd =  0d0
               write(*,*) "Hopping not implemented for QP+RAND"
           endif
       endif

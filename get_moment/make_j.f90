@@ -17,8 +17,8 @@
                   include "make_j_IQHE_SQ.f90"
               else if (IQHE_SOC) then
                   include "make_j_IQHE_SOC.f90"
-              else if () then
-                  include "make_j_
+              else if (SELFDUAL_3D) then
+                  include "make_j_SELFDUAL.f90"
               else
                   include "make_j_SOC.f90"
               endif
