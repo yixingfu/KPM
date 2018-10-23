@@ -49,7 +49,7 @@
 	Logical::slowOPTCOND
 	Logical::fixedTwist
 	Logical::Inherit,SaveAll
-	Logical::ExactSpectrum,ExactStates
+	Logical::ExactSpectrum,ExactStates,ExactIPR
 	Logical::RandPhase
 	Logical::PIFLUX,GRAPHENE,LRH1D,IQHE_SQ,IQHE_SOC
         Logical::SELFDUAL_3D
