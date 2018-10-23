@@ -3,7 +3,7 @@
 
 	! All inputs
 	integer::D,L,Nc,Rep
-	real*8::W
+	real*8::W,W2
 	integer::task,RandType
 	character(200)::outputfile
 	character(200)::outputfile_final
@@ -21,6 +21,7 @@
         integer::MODEL_TYPE
         integer,parameter::TYPE_SOC=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
         integer,parameter::TYPE_LRH1D=4,TYPE_IQHE_SQ=5,TYPE_IQHE_SOC=6
+        integer,parameter::TYPE_SELFDUAL_3D=7
         integer::PIECE,temp_i,temp_start,total_count,set_count
         real*8::temp_i_real
 	integer::HONEYCOMB_BASIS
@@ -44,14 +45,17 @@
 
 
 	! Options
-	Logical::QP, BHZ, LIMIT_CORRELATION
+	Logical::BHZ, LIMIT_CORRELATION
 	Logical::slowOPTCOND
 	Logical::fixedTwist
 	Logical::Inherit,SaveAll
 	Logical::ExactSpectrum,ExactStates
 	Logical::RandPhase
 	Logical::PIFLUX,GRAPHENE,LRH1D,IQHE_SQ,IQHE_SOC
+        Logical::SELFDUAL_3D
 	Logical::Scramble, CondTensor
+        integer::DISORDER_TYPE
+        integer,parameter::DISORDER_QP=0,DISORDER_RAND=1,DISORDER_BOTH=2
 
 	! Matrix dimensions
 	integer*8::N, NNZ, JNNZ,XYNNZ

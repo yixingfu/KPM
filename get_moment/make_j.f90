@@ -1,5 +1,5 @@
 ! Created=Wed 13 Dec 2017 11:51:36 PM STD
-! Last Modified=Mon 08 Oct 2018 02:59:25 PM DST
+! Last Modified=Tue 23 Oct 2018 12:07:49 PM DST
       ! This file makes J operator
 
       if (D.eq.2) then
@@ -17,6 +17,8 @@
                   include "make_j_IQHE_SQ.f90"
               else if (IQHE_SOC) then
                   include "make_j_IQHE_SOC.f90"
+              else if () then
+                  include "make_j_
               else
                   include "make_j_SOC.f90"
               endif

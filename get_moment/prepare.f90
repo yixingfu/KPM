@@ -1,5 +1,5 @@
 ! Created =Tue 12 Dec 2017 03:10:19 PM STD
-! Last Modified=Mon 08 Oct 2018 03:00:46 PM DST
+! Last Modified=Tue 23 Oct 2018 12:04:46 PM DST
 ! 
 
       ! This file prepares a few derived parameters from input file
@@ -9,6 +9,7 @@
       LRH1D = .false.
       IQHE_SQ = .false.
       IQHE_SOC = .false.
+      SELFDUAL_3D =  .false.
       if (MODEL_TYPE.eq.TYPE_BHZ) then
           BHZ=.true.
           PerSite=1+4*D
@@ -39,6 +40,9 @@
           IQHE_SOC = .true.
           PerSite=1+2*D
           N = 2*(L**D)
+      else if (MODEL_TYPE.eq.TYPE_SELFDUAL_3D) then
+          SELFDUAL_3D = .true.
+          PerSite = 2+2*D
       else
           PerSite=1+2*D
           N = 2*(L**D)
