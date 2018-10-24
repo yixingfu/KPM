@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Tue 23 Oct 2018 07:05:04 PM DST
+! Last Modified=Wed 24 Oct 2018 12:49:13 AM DST
       program main
           use lapack95 
           use f95_precision
@@ -157,7 +157,7 @@
                   open(62, file=trim(outputfile_final)//".IPR",&
                       status="replace",form="unformatted",&
                       access="stream",action="write")
-                  write(62) N,IPRcountTOT,IPRx_allTOT,IPRk_allTOT
+                  write(62) N,IPRcountTOT,IPRx_allTOT,IPRk_allTOT,IPR_E
                   close(62)
                   deallocate(IPRx_allTOT,IPRk_allTOT)
               endif

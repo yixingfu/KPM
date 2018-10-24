@@ -125,6 +125,7 @@
         ! IPR
         real*8,dimension(:),allocatable::IPRx,IPRk,IPRx_all,IPRk_all
         real*8,dimension(:),allocatable::IPRx_allTOT,IPRk_allTOT
+        real*8,dimension(:),allocatable::IPR_E
         integer::IPRcount,IPRcountTOT
         complex*16,dimension(:),allocatable::psi_x,psi_k
         complex*16,dimension(:),allocatable::psi_x_up,psi_x_down

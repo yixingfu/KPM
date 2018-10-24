@@ -1,17 +1,18 @@
 ! Last Created=Tue 23 Oct 2018 06:32:55 PM DST
-! Last Modified=Tue 23 Oct 2018 10:49:26 PM DST
+! Last Modified=Wed 24 Oct 2018 12:48:46 AM DST
       ! This file computes IPR based on the ED states saved in H_dense
       ! as the first index (column) vectors. IPRx is direct, while IPRk
       ! is done after a fourier transformation
       if (rlz_id .eq. REALIZATION0) then
         write(*,*) "IPR CALCULATION"
-          allocate(IPRx_all(N),IPRk_all(N))
+          allocate(IPRx_all(N),IPRk_all(N),IPR_E(N))
           IPRx_all = 0d0
           IPRk_all = 0d0
           IPRcount = 0
       endif
         allocate(IPRx(N),IPRk(N),psi_x(N),psi_k(N))
       do i=1,N
+        IPR_E(i) = EigVal(i)
         psi_x = H_dense(:,i)
 
         ! real space
