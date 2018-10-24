@@ -180,5 +180,6 @@
           include "safe_mod.f90"
           include "dual.f90"
           include "operators.f90"
+          include "run_fft.f90"
 
       end program main

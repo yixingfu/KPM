@@ -127,6 +127,9 @@
         real*8,dimension(:),allocatable::IPRx_allTOT,IPRk_allTOT
         integer::IPRcount,IPRcountTOT
         complex*16,dimension(:),allocatable::psi_x,psi_k
+        complex*16,dimension(:),allocatable::psi_x_up,psi_x_down
+        complex*16,dimension(:),allocatable::psi_k_up,psi_k_down	
+ 	Logical::TWOSPIN3D
 
 	! moment mu
 	real*8,dimension(:),allocatable::mu_tot,mu2_tot,mu,psi0R

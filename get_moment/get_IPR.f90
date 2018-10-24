@@ -20,12 +20,12 @@
 
         ! momentum space
         if (TWOSPIN3D) then
-            allocate(psi_x_up(N/2),psi_x_down(N/2))
-            allocate(psi_k_up(N/2),psi_k_down(N/2))
+            allocate(psi_x_up(L*L*L),psi_x_down(L*L*L))
+            allocate(psi_k_up(L*L*L),psi_k_down(L*L*L))
             psi_x_up = psi_x(1:N:2)
             psi_x_down = psi_x(2:N:2)
-            call FFT_3D(L,L,L,N/2,psi_x_up,psi_k_up)
-            call FFT_3D(L,L,L,N/2,psi_x_down,psi_k_down)
+            call FFT_3D(L,L,L,L*L*L,psi_x_up,psi_k_up)
+            call FFT_3D(L,L,L,L*L*L,psi_x_down,psi_k_down)
             psi_k(1:N:2) = psi_k_up
             psi_k(2:N:2) = psi_k_down
             deallocate(psi_x_up,psi_x_down,psi_k_up,psi_k_down)

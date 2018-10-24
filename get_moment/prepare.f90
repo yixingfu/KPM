@@ -9,6 +9,8 @@
       IQHE_SQ = .false.
       IQHE_SOC = .false.
       SELFDUAL_3D =  .false.
+        
+          TWOSPIN3D=.false.
       if (MODEL_TYPE.eq.TYPE_BHZ) then
           BHZ=.true.
           PerSite=1+4*D
@@ -40,6 +42,7 @@
           PerSite=1+2*D
           N = 2*(L**D)
       else if (MODEL_TYPE.eq.TYPE_SELFDUAL_3D) then
+        TWOSPIN3D = .true.
           SELFDUAL_3D = .true.
           PerSite = 2+2*D
           N = 2*(L**D)
@@ -47,6 +50,9 @@
           PerSite=1+2*D
           N = 2*(L**D)
           ! Potential + spin up/down fwd/bwd matching
+          if (D.eq.3) then
+            TWOSPIN3D=.true.
+          endif
       endif
 
       NNZ = PerSite*N ! fwd & bwd each site per dim + disorder

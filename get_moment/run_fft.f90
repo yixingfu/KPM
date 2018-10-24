@@ -4,6 +4,7 @@
         subroutine FFT_3D(Nx, Ny, Nz, Ntot, X_in, X_out)
             integer,intent(in)::Nx,Ny,Nz,Ntot
             complex*16,dimension(Ntot),intent(in)::X_in
+            complex*16,dimension(Ntot),intent(out)::X_out
             type(DFTI_DESCRIPTOR), POINTER :: My_Desc_Handle
             Integer :: Status
             Integer, dimension(3)::L
