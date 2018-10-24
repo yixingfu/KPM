@@ -98,8 +98,8 @@
 	real*8,dimension(:),allocatable::rwork,EigVal
 	integer::EIGVALCOUNT
 	integer::STARTPOINT,ENDPOINT,i_tmp
-	real*8,dimension(EIGVALCOUNT)::EigValTot,EigValTotALL
-	real*8,dimension(EIGVALCOUNT)::EigValLanc,EigValLancTot
+	real*8,dimension(:),allocatable::EigValTot,EigValTotALL
+	real*8,dimension(:),allocatable::EigValLanc,EigValLancTot
 	integer::lwork,info
 	character(1)::JOBZ
 

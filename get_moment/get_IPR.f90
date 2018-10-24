@@ -4,6 +4,7 @@
       ! as the first index (column) vectors. IPRx is direct, while IPRk
       ! is done after a fourier transformation
       if (rlz_id .eq. REALIZATION0) then
+        write(*,*) "IPR CALCULATION"
           allocate(IPRx_all(N),IPRk_all(N))
           IPRx_all = 0d0
           IPRk_all = 0d0
@@ -14,13 +15,13 @@
         psi_x = H_dense(:,i)
 
         ! real space
-        IPRx(i) = sum(dabs(psi_x)**4d0)&
-            /(sum(dabs(psi_x)**2d0)**2d0)
+        IPRx(i) = sum(zabs(psi_x)**4d0)&
+            /(sum(zabs(psi_x)**2d0)**2d0)
 
         ! imag space
         IPRk = 1d0!Temp 
-        IPRk(i) = sum(dabs(psi_k)**4d0)&
-            /(sum(dabs(psi_k)**2d0)**2d0)
+        IPRk(i) = sum(zabs(psi_k)**4d0)&
+            /(sum(zabs(psi_k)**2d0)**2d0)
 
       end do
       IPRx_all = IPRx_all + IPRx

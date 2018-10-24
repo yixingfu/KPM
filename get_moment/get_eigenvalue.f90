@@ -64,12 +64,12 @@
           endif
 
           if (ExactIPR) then
-
+                include "get_IPR.f90"
           endif
 
 
           if (ExactSpectrum) then
-              STARTPOINT=ceiling(N-EIGVALCOUNT)/2
+              STARTPOINT=ceiling((N-EIGVALCOUNT)/real(2))
               ENDPOINT = STARTPOINT+EIGVALCOUNT-1
               EigValTot = EigValTot + EigVal(STARTPOINT:ENDPOINT)
               EigValLancTot = EigValLancTot + EigValLanc

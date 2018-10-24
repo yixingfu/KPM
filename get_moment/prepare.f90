@@ -72,3 +72,7 @@
         if (EIGVALCOUNT.eq.0) then
             EIGVALCOUNT = N
         endif
+        allocate(EigValTot(EIGVALCOUNT))
+        allocate(EigValTotALL(EIGVALCOUNT))
+        allocate(EigValLanc(EIGVALCOUNT))
+        allocate(EigValLancTot(EIGVALCOUNT))

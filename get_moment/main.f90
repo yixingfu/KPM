@@ -3,6 +3,7 @@
       program main
           use lapack95 
           use f95_precision
+          use MKL_DFTI
           implicit none
           include "mkl.fi"
           include "mpif.h"
@@ -144,6 +145,7 @@
           endif
 
           if (ExactIPR) then
+          allocate(IPRx_allTOT(N),IPRk_allTOT(N))
               call MPI_REDUCE(IPRx_all, IPRx_allTOT,N, &
                   MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
               call MPI_REDUCE(IPRk_all, IPRk_allTOT,N, &
