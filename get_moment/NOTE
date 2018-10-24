@@ -1,2 +1,3 @@
 Lanczos: the new method is not working; but old one is still good.
-DO NOT PUSH CURRENT CHANGE
+FOR FFT, run following:
+>> ifort -c [wherever dfti.f90 is located] [whatever flag we use for the others]
