@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:28:22 PM STD
-! Last Modified=Wed 30 May 2018 11:08:43 PM DST
+! Last Modified=Fri 28 Sep 2018 01:36:16 AM DST
       !This file creates H
       !The matrix is stored as CSR(A,col,rp)
       !
@@ -19,13 +19,13 @@
       endif
 
       ! BHZ Definition
-
+        ! f is for c(r+ex)\dagger c(r). col = row - 1
       if (BHZ) then
-          xf= BHZ_SPIN * 0.5d0*III*pauli_x + 0.5d0*pauli_z
-          xb=-BHZ_SPIN * 0.5d0*III*pauli_x + 0.5d0*pauli_z
+          xf=-BHZ_SPIN * III*pauli_x + pauli_z
+          xb= BHZ_SPIN * III*pauli_x + pauli_z
 
-          yf= 0.5d0*III*pauli_y + 0.5d0*pauli_z
-          yb=-0.5d0*III*pauli_y + 0.5d0*pauli_z
+          yf=-III*pauli_y + pauli_z
+          yb= III*pauli_y + pauli_z
 
           zf=0d0
           zb=0d0
@@ -56,78 +56,15 @@
 
 
 
-
       if (D.eq.2) then
-          phase = 0
-          if (QP) then
-              Wrnd = 0d0
-              WQP = W
-              if (RandPhase) then
-                  call random_number(phase)
-              else 
-                  phase = inputPhase
-              endif
-
-              phase = phase*2d0*pi
-              P = 2.0d0*pi*fibonacci(fiboN-fiboM,FiboBasis)&
-                /fibonacci(fiboN,FiboBasis)
-              Q = P
-              if (commC .ne. 0) then
-                  ! if set commensurate C, then Q=P=2pi/C
-                  P=2.0d0*pi/commC
-                  Q=P
-              endif
-
-              ! offset Q
-              P = P + setQ
-              Q = P
-
-              if (my_id.eq.0) then
-                  write(*,*)"Q=" , Q,"; M=",fiboM
-              endif
-          else 
-              WQP = 0d0
-              Wrnd = W
-          End if
-          TQP = 0d0
-          Trnd = 0d0
-          t0 = 1d0
-          if (RandType.eq.RandHOP) then
-              WQP = 0d0
-              Wrnd = 0d0
-              t0 = dsqrt(1d0-W**2)
-              if (QP) then
-                  TQP = W
-                  Trnd = 0d0
-              else 
-                  TQP = 0d0
-                  Trnd = W
-              endif
-          endif
-
+        include "2d_QP_prepare_BHZ.f90"
 
           rp = 0
           col = 0
           col_ind = 1
           rp_ind = 1
-          allocate(eps(L*L)) 
           eps_ind = 1
-          if (RandType.eq.RandPOT) then
-              do j=1,L
-              do i=1,L
 
-              eps(eps_ind) = &
-                  WQP*quasiperiodic(i+0d0,j+0d0,P,Q,phase)&
-                  + Wrnd*random2D(i+0d0,j+0d0,P,Q)
-              eps_ind=eps_ind+1
-              enddo
-              enddo
-              eps = eps - sum(eps)/real(L*L)
-          else if (RandType.eq.RandHOP) then
-              eps = 0d0
-          endif
-
-          eps_ind = 1
           do j=1,L! y
           do i=1,L! x
           do s = 0,1
@@ -142,7 +79,7 @@
           ! x forward
           t_tmp = t0 + Trnd*random2D(i-0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i-0.5d0,j+0d0,P,Q,phase)
-          i_=modulo(i,L)+1
+          i_=modulo(i-2,L)+1
           ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txf(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
@@ -157,7 +94,7 @@
           ! x backward
           t_tmp = t0 + Trnd*random2D(i+0.5d0,j+0d0,P,Q)&
               + TQP*quasiperiodic(i+0.5d0,j+0d0,P,Q,phase)
-          i_=modulo(i-2,L)+1
+          i_=modulo(i,L)+1
           ind_r = xys2i(i_,j,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = txb(s,s_)*t_tmp*open_bc(i,i_,L,OPEN_BC_x)
@@ -172,7 +109,7 @@
           ! y forward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j-0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j-0.5d0,P,Q,phase)
-          j_=modulo(j,L)+1
+          j_=modulo(j-2,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyf(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -187,7 +124,7 @@
           ! y backward
           t_tmp = t0 + Trnd*random2D(i+0.0d0,j+0.5d0,P,Q)&
               + TQP*quasiperiodic(i+0.0d0,j+0.5d0,P,Q,phase)
-          j_=modulo(j-2,L)+1
+          j_=modulo(j,L)+1
           ind_r = xys2i(i,j_,s_,L)
           col(col_ind) = ind_r
           A(col_ind) = tyb(s,s_)*t_tmp*open_bc(j,j_,L,OPEN_BC_y)
@@ -286,15 +223,15 @@
           deallocate(eps)
 
       endif
-      if (my_id.eq.0) then
-          open(111,file="MATRIX.txt",status="replace",&
-              form="unformatted",access="stream")
-          write(111) N
-          write(111) NNZ
-          write(*,*)"NNZ",NNZ
-          write(111) A, col, rp
-          close(111)
-      endif
+!      if (my_id.eq.0) then
+!          open(111,file="MATRIX.txt",status="replace",&
+!              form="unformatted",access="stream")
+!          write(111) N
+!          write(111) NNZ
+!          write(*,*)"NNZ",NNZ
+!          write(111) A, col, rp
+!          close(111)
+!      endif
 
 
 
@@ -307,6 +244,10 @@
       call LanczosBound(N,NNZ,A,rp,col,1000,Emax,Emin)
       norm_a = (Emax-Emin)/(2d0-0.2d0)
       norm_b = (Emax+Emin)/2
+        if (Set_norm_a .ne. 0) then
+                norm_a = Set_norm_a
+                norm_b = 0d0
+        endif
       call rescale_to_1(N,NNZ,A,rp,col,norm_a,norm_b)
 
 

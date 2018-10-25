@@ -1,26 +1,19 @@
-        program main
-                implicit none
-                real*8::eps
-                integer::i,m,n
-                integer,parameter::Nc=256
-                complex*16,dimension(:,:),allocatable::intgammamn
-                allocate(intgammamn(0:Nc-1,0:Nc-1))
-                intgammamn = 0
-                do m=0,Nc-1
-                do n=0,Nc-1
-          intgammamn(m,n)=int_gamma_mn(m,n,0d0,10000000d0,1000000)
-                enddo  
-                write(*,*)m
-                enddo
-                open(14,file="intgammamn_better.dat",&
-                        form="unformatted",access="stream")
-                write(14)real(intgammamn)
-                close(14)
-
-                contains
-                include "GammaMN.f90"
-                include "Chebyshev.f90"
-                include "StatMech.f90"
 
 
-        end program main
+      program main
+          integer::m,n,pts,i
+          real*8::beta,mu,int_gamma
+         write(*,*)"int_gamma_mn(m,n,mu,beta,pts)"
+         read(*,*)m,n,mu,beta,pts
+        call cpu_time(t1)
+          do i=1,10000
+         int_gamma = int_gamma_mn(m,n,mu,beta,pts)
+         enddo
+         call cpu_time(t2)
+         write(*,*)(t2-t1)/real(10000)
+        
+        contains
+            include "GammaMN.f90"
+            include "Chebyshev.f90"
+            include "StatMech.f90"
+      end program main

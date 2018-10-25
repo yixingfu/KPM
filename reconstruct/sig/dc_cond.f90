@@ -1,5 +1,5 @@
 ! Created=Tue 16 Jan 2018 05:13:10 AM STD
-! Last Modified=Mon 26 Mar 2018 06:17:00 PM EDT
+! Last Modified=Sun 23 Sep 2018 09:56:55 PM DST
       ! Computes DC conductivity
       ! Data to be prepared: mu_mn(0:Ntilde-1,0:Ntilde-1)
       ! Need to reserve a few loop variables: m,n
@@ -13,9 +13,11 @@
 
       ! working phase
       dc_conductivity = 0d0
-        !no, not in use.
+      
 !      do m=0,Nc-1
 !      do n=0,Nc-1
-!        dc_conductivity = dc_conductivity+mu_tilde(m,n)*intgammamn(m,n)
+!        dc_conductivity = dc_conductivity &
+!            +(mu_tilde(m,n)*gamma_mn(m,n,-norm_b/norm_a)&
+!            /((1d0-(norm_b/norm_a)**2d0)**2d0) )
 !      End do
 !      End do 

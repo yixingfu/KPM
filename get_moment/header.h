@@ -3,7 +3,7 @@
 
 	! All inputs
 	integer::D,L,Nc,Rep
-	real*8::W
+	real*8::W,W2
 	integer::task,RandType
 	character(200)::outputfile
 	character(200)::outputfile_final
@@ -15,11 +15,13 @@
 	character(200)::arg_tmp
 	real*8,dimension(3)::inputPhase
 	real*8::BHZ_M
+	real*8::IQHE_B
 	integer::BHZ_SPIN
 	integer::OPEN_BC_x,OPEN_BC_y,OPEN_BC_z
         integer::MODEL_TYPE
-        integer,parameter::TYPE_SLNN=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
-        integer,parameter::TYPE_LRH1D=4
+        integer,parameter::TYPE_SOC=0,TYPE_BHZ=1,TYPE_PI_SM=2,TYPE_GRAPHENE=3
+        integer,parameter::TYPE_LRH1D=4,TYPE_IQHE_SQ=5,TYPE_IQHE_SOC=6
+        integer,parameter::TYPE_SELFDUAL_3D=7
         integer::PIECE,temp_i,temp_start,total_count,set_count
         real*8::temp_i_real
 	integer::HONEYCOMB_BASIS
@@ -43,17 +45,20 @@
 
 
 	! Options
-	Logical::QP, BHZ, LIMIT_CORRELATION
+	Logical::BHZ, LIMIT_CORRELATION
 	Logical::slowOPTCOND
 	Logical::fixedTwist
 	Logical::Inherit,SaveAll
-	Logical::ExactSpectrum,ExactStates
+	Logical::ExactSpectrum,ExactStates,ExactIPR
 	Logical::RandPhase
-	Logical::PIFLUX,GRAPHENE,LRH1D
-	Logical::Scramble
+	Logical::PIFLUX,GRAPHENE,LRH1D,IQHE_SQ,IQHE_SOC
+        Logical::SELFDUAL_3D
+	Logical::Scramble, CondTensor
+        integer::DISORDER_TYPE
+        integer,parameter::DISORDER_QP=0,DISORDER_RAND=1,DISORDER_BOTH=2
 
 	! Matrix dimensions
-	integer*8::N, NNZ, JNNZ
+	integer*8::N, NNZ, JNNZ,XYNNZ
 
 
 	! Twist 
@@ -91,19 +96,22 @@
 	complex*16,dimension(:,:),allocatable::H_dense
 	complex*16,dimension(:),allocatable::work
 	real*8,dimension(:),allocatable::rwork,EigVal
-	integer,parameter::EIGVALCOUNT=3000
+	integer::EIGVALCOUNT
 	integer::STARTPOINT,ENDPOINT,i_tmp
-	real*8,dimension(EIGVALCOUNT)::EigValTot,EigValTotALL
-	real*8,dimension(EIGVALCOUNT)::EigValLanc,EigValLancTot
+	real*8,dimension(:),allocatable::EigValTot,EigValTotALL
+	real*8,dimension(:),allocatable::EigValLanc,EigValLancTot
 	integer::lwork,info
 	character(1)::JOBZ
 
 	! Normalization
-	real*8::norm_a,norm_b,Emin,Emax
+	real*8::norm_a,norm_b,Emin,Emax,Set_Norm_a,Set_Norm_b
 
 	! J matrix (CSR)
-	complex*16,dimension(:),allocatable::JA
-	integer*8,dimension(:),allocatable::Jcol,Jrp
+        integer,parameter::DIR_X=1,DIR_Y=2
+        integer::Dir_a,Dir_b
+	complex*16,dimension(:),allocatable::JxA,JyA,JaA,JbA
+	integer*8,dimension(:),allocatable::Jxcol,Jxrp,Jycol,Jyrp
+	integer*8,dimension(:),allocatable::Jacol,Jarp,Jbcol,Jbrp
 
 
 	! local variables
@@ -114,24 +122,44 @@
 	real*8,dimension(3)::phase
         real*8,dimension(:,:),allocatable::phase_vals,phase_all
 
+        ! IPR
+        real*8,dimension(:),allocatable::IPRx,IPRk,IPRx_all,IPRk_all
+        real*8,dimension(:),allocatable::IPRx_allTOT,IPRk_allTOT
+        real*8,dimension(:),allocatable::IPR_E
+        integer::IPRcount,IPRcountTOT
+        complex*16,dimension(:),allocatable::psi_x,psi_k
+        complex*16,dimension(:),allocatable::psi_x_up,psi_x_down
+        complex*16,dimension(:),allocatable::psi_k_up,psi_k_down	
+ 	Logical::TWOSPIN3D
+
 	! moment mu
 	real*8,dimension(:),allocatable::mu_tot,mu2_tot,mu,psi0R
 	real*8,dimension(:),allocatable::mu_avg,mu2_avg
 	complex*16,dimension(:),allocatable::psi0,psi1
+	complex*16,dimension(:),allocatable::psi_test1,psi_test2
+	complex*16::temp_val
 	complex*16,dimension(:),allocatable::psi_tmp
 	complex*16,dimension(:),allocatable::psi_j,psi_j_p,psi_j_pp
 	!saveload
 	integer::prevNc,j0
 
 	! 2d moment mu2d
-	real*8,dimension(:,:),allocatable::mu2d_tot,mu2d2_tot
-	real*8,dimension(:,:),allocatable::mu2d_avg,mu2d2_avg
-	real*8,dimension(:,:),allocatable::mu2d
-	complex*16,dimension(:),allocatable::psi0_out,psi1_out,psi_tmp_out
-	complex*16,dimension(:),allocatable::psi_in,psi_p_in,psi_pp_in
-	complex*16,dimension(:),allocatable::psi_out,psi_p_out,psi_pp_out
+	complex*16,dimension(:,:),allocatable::mu2d_tot,mu2d2_tot
+	complex*16,dimension(:,:),allocatable::mu2d_avg,mu2d2_avg
+	complex*16,dimension(:,:),allocatable::mu2d
+
 	! fast (high memory consumption)
 	complex*16,dimension(:,:),allocatable::psi_all_out
+        complex*16,dimension(:),allocatable::JaPsi,JbTmJaPsi
+        complex*16,dimension(:),allocatable::TmJaPsi,TmpJaPsi,TmppJaPsi
+        complex*16,dimension(:),allocatable::TnPsi,TnpPsi,TnppPsi
+	integer::cond_m,cond_n
+
+	! old
+        complex*16,dimension(:),allocatable::psi_out,&
+	psi0_out,psi1_out,psi_tmp_out,psi_in,&
+	psi_p_in,psi_pp_in,psi_p_out,psi_pp_out
+	
 
 !!	! 2d moment reduced memory
 !!	integer::proj_N
@@ -146,7 +174,7 @@
 	complex*16,dimension(0:1,0:1)::pauli_x,pauli_y,pauli_z
 	complex*16,dimension(0:1,0:1)::xf,xb,yf,yb,zf,zb,zz
 	complex*16,dimension(0:1,0:1)::txf,txb,tyf,tyb,tzf,tzb
-	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb
+	complex*16,dimension(0:1,0:1)::Jtxf,Jtxb,Jtyf,Jtyb
         complex*16,dimension(0:1)::eiAx,eiAy
         complex*16::U_fwd,U_bwd
         complex*16::tx,tx_,ty,ty_

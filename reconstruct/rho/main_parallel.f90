@@ -66,6 +66,13 @@
                 rho_tot_collect,rho2_tot_collect
 !              write(13)RLZmax+1-RLZmin,Ntilde,Egrid,rho_tot,rho2_tot
               close(13)
+              open(15,file=trim(outputfile)//".txt",status="replace")
+                do i=1,Ntilde
+
+                write(15,*) Egrid(i),rho_tot(i)
+
+                enddo
+                close(15)
         endif
                 deallocate(Egrid,rho_tot,rho2_tot,rho2_tot_collect,&
                 rho_tot_collect)

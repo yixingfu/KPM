@@ -1,5 +1,5 @@
 ! Created=Wed 13 Dec 2017 01:15:17 PM STD
-! Last Modified=Thu 10 May 2018 03:05:34 PM DST
+! Last Modified=Fri 28 Sep 2018 01:59:09 AM DST
       ! This file computes the Jxy moment
 
       allocate(mu2d_tot(0:Nc-1,0:Nc-1),mu2d2_tot(0:Nc-1,0:Nc-1))
@@ -16,19 +16,24 @@
       mu2d_tot = 0
       mu2d2_tot = 0
 
-      do i=1,Rep
-      mu2d = 0
 
+      ! Repetition for KPM
+      do i=1,Rep
+      mu2d = 0d0
+
+      ! set \psi(0)
       call ResetRandSeed()
       call random_number(psi0R)
       psi0 = zexp(dcmplx(0d0,2.0d0*pi*psi0R))
 
-      call CSRmultVc16(N,JNNZ,JA,Jrp,Jcol,psi0,psi0_out)
+      ! \psi(0)_out = J\psi(0)
+      call CSRmultVc16(N,JNNZ,JxA,Jxrp,Jxcol,psi0,psi0_out)
 
+      ! \mu_xx_{0,0} = \psi(0)_out \cdot \psi(0)_out
       mu2d(0,0) = dot_product(psi0_out,psi0_out)
-
+      
       call CSRmultVc16(N,NNZ,A,rp,col,psi0,psi1)
-      call CSRmultVc16(N,JNNZ,JA,Jrp,Jcol,psi1,psi_tmp)
+      call CSRmultVc16(N,JNNZ,JxA,Jxrp,Jxcol,psi1,psi_tmp)
 
       mu2d(0,1) = dot_product(psi0_out,psi_tmp)
       mu2d(1,0) = mu2d(0,1)
@@ -41,12 +46,12 @@
       ! now the central part: do the loops and find mu2d
       ! two ways: 1. slow; 2. fast
       ! what we need is mu2d
-
+        
       if (slowOPTCOND) then
           do j=2,Nc-1
           call CSRmultVc16(N,NNZ,A,rp,col,psi_p_in,psi_tmp)
           psi_in = 2d0*psi_tmp-psi_pp_in
-          call CSRmultVc16(N,JNNZ,JA,Jrp,Jcol,psi_in,psi_tmp)
+          call CSRmultVc16(N,JNNZ,JxA,Jxrp,Jxcol,psi_in,psi_tmp)
           psi_pp_in = psi_p_in
           psi_p_in  = psi_in
 
@@ -80,7 +85,7 @@
           do j=2,Nc-1
           call CSRmultVc16(N,NNZ,A,rp,col,psi_p_in,psi_tmp)
           psi_in = 2d0*psi_tmp-psi_pp_in
-          call CSRmultVc16(N,JNNZ,JA,Jrp,Jcol,psi_in,psi_tmp)
+          call CSRmultVc16(N,JNNZ,JxA,Jxrp,Jxcol,psi_in,psi_tmp)
           psi_pp_in = psi_p_in
           psi_p_in  = psi_in
 

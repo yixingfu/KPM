@@ -1,29 +1,41 @@
 #### Last Modified=Wed 04 Apr 2018 03:36:16 PM EDT
+export DIR_X=1
+export DIR_Y=2
+export HALLCOND=.true.
+export norm_a=8
+export IQHE_B=0.1
+# RANDOM or QP
+export QP=0
+export RAND=1
+export BOTH=2
+export W2=0.1
 rm *.in
-for W in $(seq 0.00 0.05 2.0); do
+for W in $(seq 0.00 0.05 0.0); do
 #for Tx in $(seq -1. 0.01 1); do
+for BHZ_M in $(seq -1 0.2 5); do
 export d3l=1
 export Tx=1.0
 export Ty=1.0
 export Tz=1.0
-export Nc=4096
-export M=5
+export Nc=256
+export M=2
+export Dir_a=$DIR_Y; export Dir_b=$DIR_X  # for OC
 export C=0 ### commensurate, if set to non zero (2pi/C). Overwrite M.
 export Qset=0 # overwrite all
 export Qn=0
-export FileName=W$W\_Nc$Nc\_M$M
-echo "2,55,$Nc,$W,18, 0" >> batch$FileName.in ### D,L,Nc,W,Rep,RLZ0
-echo ".true., .false., .false. " >> batch$FileName.in ### QP?, fixTwist?, Slow OPTCOND?
-echo "1, 1, .false." >> batch$FileName.in ### RHO=1,OPTCOND=2,RHODER=3; RandPOT=1,RandHOP=2; Scrambled or not
+export FileName=W$W\_Nc$Nc\_BHZM$BHZ_M
+echo "2,55,$Nc,$W,$W2,18, 0" >> batch$FileName.in ### D,L,Nc,W,Rep,RLZ0
+echo "$QP, .false., .false. " >> batch$FileName.in ### QP or random, fixTwist?, Slow OPTCOND?
+echo "2, 1, .false." >> batch$FileName.in ### RHO=1,OPTCOND=2,RHODER=3; RandPOT=1,RandHOP=2; Scrambled or not
 echo "$Tx,$Ty,$Tz " >> batch$FileName.in ### Twist(-1 to 1), correspond to -pi to pi
-echo "'$FileName'">>batch$FileName.in ###out file(mark disorder)
+echo "'$FileName'">>batch$FileName.in ###out file(mark disorder, etc.)
 ####echo ".false.,.false.">>batch$FileName.in ###Inherit,SaveAll
-echo ".false.,.false.">>batch$FileName.in ###Exact Spectrum; Exact Eigen States
+echo ".false.,.false.,.false.,0">>batch$FileName.in ###Exact Spectrum; Exact Eigen States; IPR ; max state for ES. If 0, all.
 echo ".true.,0,0,0">>batch$FileName.in ### Random phase (for QP); given phase (-1 to 1) if random phase is false
 echo "$M,$C,$Qset,$Qn">>batch$FileName.in ### Q=2pi F_{n-m}/L, this number is the m; Set Q directly- overwrite everything else before it. Qn: overwrite everything if not 0 (integer)
-echo "0">>batch$FileName.in ### Model Type: See below
-echo "1,1">>batch$FileName.in ### BHZ: SPIN UP (+1) or SPIN DONW (-1); M in BHZ
-echo "0,0,0">>batch$FileName.in ### Open boundary condition: 1 for open; 0 for not open (periodic)
+echo "1">>batch$FileName.in ### Model Type: See below
+echo "1,$BHZ_M">>batch$FileName.in ### BHZ: SPIN UP (+1) or SPIN DONW (-1); M in BHZ
+echo "1,0,0">>batch$FileName.in ### Open boundary condition: 1 for open; 0 for not open (periodic)
 ####echo "0,0,0">>batch$FileName.in ### For pi-flux -- not yet using
 echo ".false.,1">>batch$FileName.in ### Limited correlation. Pieces of correlated. This option overrides non-random phase. Only on Model 0
 echo "2,0.866025403784439,0.5">>batch$FileName.in ### HoneyComb Choices: 0=use lattice basis; 1=use xy basis; 2=use specific set below; 3=set theta, below;;; Then is the vector for sigma we look for sigma. No effect if doing rho
@@ -32,7 +44,10 @@ echo "0">>batch$FileName.in ### honeycomb set theta (counterclockwise, ix, iy,jx
 echo "1">>batch$FileName.in ### HEXAGON=2,PARAGRAM=1
 echo "0,1">>batch$FileName.in ### Fibonacci basis. For regular fibonacci, it is 0,1. For Lucas, 2,1
 echo "0.333333333333333">>batch$FileName.in ### 1D LRH model: sigma
-
+echo "$HALLCOND,$Dir_a, $Dir_b">>batch$FileName.in ### 2D hall cond, direction of conductivity. X is 1, Y is 2. a is left, b is right. Only fast (memory consuming) method is implemented
+echo "$norm_a">>batch$FileName.in ###SPECIFICALLY SET NORM_A
+echo "$IQHE_B">>batch$FileName.in ###IQHE magnetic field B
+done
 #done
 done
 
@@ -42,7 +57,9 @@ done
 # 2=pi-flux (square lattice NN + NNN w/o spin)
 # 3=graphene (honeycomb lattice, pseudospin by A B lattice type)
 # 4=1D LRH model (set to 1D, set sigma, set to QP)
-#
+# 5=IQHE square lattice
+# 6=IQHE square lattice SOC
+# 7=Self Dual 3D model
 ### Changes needed
 # Exact Diag: Exact line; fixTwist; random phase; filename
 #

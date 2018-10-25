@@ -202,15 +202,15 @@
           deallocate(eps,phase_all)
 
       endif
-      if (my_id.eq.0) then
-          open(111,file="MATRIX.txt",status="replace",&
-              form="unformatted",access="stream")
-          write(111) N
-          write(111) NNZ
-          write(*,*)"NNZ",NNZ
-          write(111) A, col, rp
-          close(111)
-      endif
+!      if (my_id.eq.0) then
+!          open(111,file="MATRIX.txt",status="replace",&
+!              form="unformatted",access="stream")
+!          write(111) N
+!          write(111) NNZ
+!          write(*,*)"NNZ",NNZ
+!          write(111) dreal(A),dimag(A), col, rp
+!          close(111)
+!      endif
 
 
 
@@ -223,6 +223,10 @@
       call LanczosBound(N,NNZ,A,rp,col,1000,Emax,Emin)
       norm_a = (Emax-Emin)/(2d0-0.2d0)
       norm_b = (Emax+Emin)/2
+        if (Set_norm_a .ne. 0) then
+                norm_a = Set_norm_a
+                norm_b = 0d0
+        endif
       call rescale_to_1(N,NNZ,A,rp,col,norm_a,norm_b)
 
 

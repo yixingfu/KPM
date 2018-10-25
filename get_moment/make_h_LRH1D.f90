@@ -19,7 +19,7 @@
 
       ! phase
       phase = 0
-      if (QP) then
+      if (DISORDER_TYPE.eq.DISORDER_QP) then
           
           if (RandPhase) then
               allocate(TwistAll(num_procs*3*seq_rep))
@@ -93,6 +93,10 @@
       call LanczosBound(N,NNZ,A,rp,col,1000,Emax,Emin)
       norm_a = (Emax-Emin)/(2d0-0.2d0)
       norm_b = (Emax+Emin)/2
+        if (Set_norm_a .ne. 0) then
+                norm_a = Set_norm_a
+                norm_b = 0d0
+        endif
       call rescale_to_1(N,NNZ,A,rp,col,norm_a,norm_b)
 
 

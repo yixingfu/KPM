@@ -1,8 +1,9 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Wed 05 Sep 2018 03:11:13 PM DST
+! Last Modified=Wed 24 Oct 2018 12:49:13 AM DST
       program main
-          use lapack95
+          use lapack95 
           use f95_precision
+          use MKL_DFTI
           implicit none
           include "mkl.fi"
           include "mpif.h"
@@ -20,7 +21,8 @@
           ! prepare (including the realization dependent)
           include "prepare.f90"
 
-          allocate(Jrp(N+1),JA(JNNZ),Jcol(JNNZ))
+          allocate(Jxrp(N+1),JxA(JNNZ),Jxcol(JNNZ))
+          allocate(Jyrp(N+1),JyA(JNNZ),Jycol(JNNZ))
           do seq_i=0,seq_rep-1
 
           rlz_id = REALIZATION0+my_id
@@ -36,6 +38,12 @@
               include "make_h_GRAPHENE.f90"
           else if (LRH1D) then
               include "make_h_LRH1D.f90"
+          else if (IQHE_SQ) then
+              include "make_h_IQHE_SQ.f90"
+          else if (IQHE_SOC) then
+              include "make_h_IQHE_SOC.f90"
+          else if (SELFDUAL_3D) then
+              include "make_h_SELFDUAL.f90"
           else
               include "make_h.f90"
           endif 
@@ -51,6 +59,7 @@
           ! find moment and save result
           if ((task.eq.RHO) .or. (task.eq.RHODER))then
               include "get_mu.f90"
+              write(*,*) rlz_id, "done mu calculation"
 
               ! save results
               ! in the binary file we only need to record data needed
@@ -75,7 +84,12 @@
               endif
 
           else if (task.eq.OPTCOND) then
-              include "get_mu2d.f90"
+              if (CondTensor) then
+                  write(*,*) "include hall conductivity"
+                  include "get_mu2d_general.f90"
+              else
+                  include "get_mu2d.f90"
+              endif
 
               ! save result
               rlz_id = REALIZATION0+my_id
@@ -86,7 +100,8 @@
                   form="unformatted",access="stream")
               write(18) Nc
               write(18) norm_a,norm_b
-              write(18) mu2d_avg,mu2d2_avg
+              write(18) dreal(mu2d_avg),dimag(mu2d_avg)
+              write(18) dreal(mu2d2_avg),dimag(mu2d2_avg)
               close(18)
               open(19,file=trim(outputfile_final)//".log",&
                   status="replace")
@@ -129,7 +144,29 @@
               endif
           endif
 
-          deallocate(Jrp,JA,Jcol)
+          if (ExactIPR) then
+          allocate(IPRx_allTOT(N),IPRk_allTOT(N))
+              call MPI_REDUCE(IPRx_all, IPRx_allTOT,N, &
+                  MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+              call MPI_REDUCE(IPRk_all, IPRk_allTOT,N, &
+                  MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+              call MPI_REDUCE(IPRcount, IPRcountTOT,1, &
+                  MPI_INT,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+              if (my_id.eq.(seq_rep*num_procs)) then
+                  write(*,*) "SAVING IPR ..."
+                  open(62, file=trim(outputfile_final)//".IPR",&
+                      status="replace",form="unformatted",&
+                      access="stream",action="write")
+                  write(62) N,IPRcountTOT,IPRx_allTOT,IPRk_allTOT,IPR_E
+                  close(62)
+                  deallocate(IPRx_allTOT,IPRk_allTOT)
+              endif
+                  deallocate(IPRx_all,IPRk_all)
+
+          endif
+
+          deallocate(Jxrp,JxA,Jxcol)
+          deallocate(Jyrp,JyA,Jycol)
           call MPI_FINALIZE(ierr)
 
       contains
@@ -142,5 +179,7 @@
           include "open_bc.f90"
           include "safe_mod.f90"
           include "dual.f90"
+          include "operators.f90"
+          include "run_fft.f90"
 
       end program main
