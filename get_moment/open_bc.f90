@@ -1,4 +1,4 @@
-! Last Modified=Fri 27 Jul 2018 10:48:59 AM DST
+! Last Modified=Thu 25 Oct 2018 01:10:35 AM EDT
 ! returns 0 if need to be cut
       integer function open_bc(i,i_,L,open_bc_logical)
           integer::i,i_,L,open_bc_logical
@@ -22,16 +22,18 @@
 
       integer function set_shape(HC_r,HC_r_,HC_r_ref)
           real*8,dimension(2)::HC_r,HC_r_,HC_r_ref
-          integer::temp
+          integer::temp,temp2
           real*8,parameter::threshold=6400
           real*8::radius
           ! circle with radius 80
 
           temp = 1
           radius = dot_product(HC_r-HC_r_ref,HC_r-HC_r_ref)
-          temp = temp * (abs(radius).lt.threshold)
+          temp2 = (abs(radius).lt.threshold)
+          temp = temp * temp2
           radius = dot_product(HC_r_-HC_r_ref,HC_r_-HC_r_ref)
-          temp = temp * (abs(radius).lt.threshold)
+          temp2 = (abs(radius).lt.threshold)
+          temp = temp * temp2
         write(*,*)HC_r,temp
 
           set_shape = temp

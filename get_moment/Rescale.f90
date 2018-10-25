@@ -1,5 +1,5 @@
 ! Created=Mon 29 Jan 2018 02:45:12 PM EST
-! Last Modified=Thu 10 May 2018 03:05:35 PM DST
+! Last Modified=Thu 25 Oct 2018 01:11:45 AM EDT
 ! This file gives rescale back and forth.
 
 
@@ -10,6 +10,7 @@
           complex*16,dimension(NNZ),intent(inout)::A
           real*8,intent(in)::norm_a,norm_b
           integer*8::i,j
+        integer::temp
         complex*16::Arpi
 
 !        do i=1,N
@@ -21,7 +22,8 @@
 
           do i=1,N
         Arpi = A(rp(i))
-          A(rp(i)) = Arpi-norm_b*(abs(Arpi).gt.0.000001d0)
+        temp = (abs(Arpi).gt.0.000001d0)
+          A(rp(i)) = Arpi-norm_b*temp
           enddo
           A = A/norm_a
           write(*,*)'normalization factors:',norm_a,norm_b
