@@ -1,8 +1,9 @@
 ! Last Created=Tue 23 Oct 2018 06:32:55 PM DST
-! Last Modified=Wed 24 Oct 2018 12:48:46 AM DST
+! Last Modified=Fri 26 Oct 2018 11:22:33 AM DST
       ! This file computes IPR based on the ED states saved in H_dense
       ! as the first index (column) vectors. IPRx is direct, while IPRk
       ! is done after a fourier transformation
+      ! Also do level stats with it
       if (seq_i .eq. 0) then
         write(*,*) "IPR CALCULATION"
           allocate(IPRx_all(N),IPRk_all(N),IPR_E(N))
@@ -10,6 +11,8 @@
           IPRk_all = 0d0
           IPRcount = 0
       endif
+
+      include "level_stat.f90"
         allocate(IPRx(N),IPRk(N),psi_x(N),psi_k(N))
       do i=1,N
         IPR_E(i) = EigVal(i)

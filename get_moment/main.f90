@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Wed 24 Oct 2018 12:49:13 AM DST
+! Last Modified=Sat 27 Oct 2018 03:17:36 PM DST
       program main
           use lapack95 
           use f95_precision
@@ -146,22 +146,30 @@
 
           if (ExactIPR) then
           allocate(IPRx_allTOT(N),IPRk_allTOT(N))
+          allocate(GapRatio_sumTOT(BinCount),GapRatio_numTOT(BinCount))
               call MPI_REDUCE(IPRx_all, IPRx_allTOT,N, &
                   MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
               call MPI_REDUCE(IPRk_all, IPRk_allTOT,N, &
                   MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
               call MPI_REDUCE(IPRcount, IPRcountTOT,1, &
                   MPI_INT,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+              call MPI_REDUCE(GapRatio_sum, GapRatio_sumTOT,BinCount, &
+                  MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+              call MPI_REDUCE(GapRatio_num, GapRatio_numTOT,BinCount, &
+                  MPI_INT,MPI_SUM,0,MPI_COMM_WORLD,ierr)
               if (my_id.eq.(seq_rep*num_procs)) then
                   write(*,*) "SAVING IPR ..."
                   open(62, file=trim(outputfile_final)//".IPR",&
                       status="replace",form="unformatted",&
                       access="stream",action="write")
-                  write(62) N,IPRcountTOT,IPRx_allTOT,IPRk_allTOT,IPR_E
+                  write(62) N,IPRcountTOT,IPRx_allTOT,IPRk_allTOT,&
+                      IPR_E,GapRatio_sumTOT,GapRatio_numTOT
                   close(62)
                   deallocate(IPRx_allTOT,IPRk_allTOT)
+                  deallocate(GapRatio_sumTOT,GapRatio_numTOT)
               endif
                   deallocate(IPRx_all,IPRk_all)
+                  deallocate(GapRatio_sum,GapRatio_numTOT)
 
           endif
 

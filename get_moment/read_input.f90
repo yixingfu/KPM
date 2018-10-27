@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 03:19:48 PM STD
-! Last Modified=Tue 23 Oct 2018 06:54:15 PM DST
+! Last Modified=Sat 27 Oct 2018 03:20:44 PM DST
       ! read inputfile name from command line
       call getarg(1,inputfile)
       ! read inputs D,L,Nc,W,QP?, from input file
@@ -15,7 +15,8 @@
       read(11,*) outputfile
         write(*,*)"5"
 !!        read(11,*) Inherit, SaveAll
-      read(11,*) ExactSpectrum, ExactStates, ExactIPR, EigvalCount
+      read(11,*) ExactSpectrum, ExactStates, ExactIPR, EigvalCount,&
+          BinCount,LSEmax
         write(*,*)"6"
       read(11,*) RandPhase, inputPhase
         write(*,*)"7"

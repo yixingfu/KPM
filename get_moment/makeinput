@@ -30,7 +30,7 @@ echo "2, 1, .false." >> batch$FileName.in ### RHO=1,OPTCOND=2,RHODER=3; RandPOT=
 echo "$Tx,$Ty,$Tz " >> batch$FileName.in ### Twist(-1 to 1), correspond to -pi to pi
 echo "'$FileName'">>batch$FileName.in ###out file(mark disorder, etc.)
 ####echo ".false.,.false.">>batch$FileName.in ###Inherit,SaveAll
-echo ".false.,.false.,.false.,0">>batch$FileName.in ###Exact Spectrum; Exact Eigen States; IPR ; max state for ES. If 0, all.
+echo ".false.,.false.,.false.,0,101,1.0">>batch$FileName.in ###Exact Spectrum; Exact Eigen States; IPR ; max state for ES. If 0, all;  Bincount for level stat, must be odd; Max E size for Level stat
 echo ".true.,0,0,0">>batch$FileName.in ### Random phase (for QP); given phase (-1 to 1) if random phase is false
 echo "$M,$C,$Qset,$Qn">>batch$FileName.in ### Q=2pi F_{n-m}/L, this number is the m; Set Q directly- overwrite everything else before it. Qn: overwrite everything if not 0 (integer)
 echo "1">>batch$FileName.in ### Model Type: See below

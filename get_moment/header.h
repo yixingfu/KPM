@@ -126,6 +126,11 @@
         real*8,dimension(:),allocatable::IPRx,IPRk,IPRx_all,IPRk_all
         real*8,dimension(:),allocatable::IPRx_allTOT,IPRk_allTOT
         real*8,dimension(:),allocatable::IPR_E
+        real*8,dimension(:),allocatable::GapRatio_sumTOT,GapRatio_numTOT
+        real*8,dimension(:),allocatable::GapRatio_sum,GapRatio_num
+        real*8::temp_denom,curr_E,prev_E,next_E
+        integer::bin_ind,BinCount
+        real*8::LSEmax
         integer::IPRcount,IPRcountTOT
         complex*16,dimension(:),allocatable::psi_x,psi_k
         complex*16,dimension(:),allocatable::psi_x_up,psi_x_down
