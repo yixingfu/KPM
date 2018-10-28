@@ -165,11 +165,14 @@
                   write(62) N,IPRcountTOT,IPRx_allTOT,IPRk_allTOT,&
                       IPR_E,GapRatio_sumTOT,GapRatio_numTOT
                   close(62)
+
                   deallocate(IPRx_allTOT,IPRk_allTOT)
                   deallocate(GapRatio_sumTOT,GapRatio_numTOT)
               endif
                   deallocate(IPRx_all,IPRk_all)
-                  deallocate(GapRatio_sum,GapRatio_numTOT)
+!        write(*,*)GapRatio_sum
+                  deallocate(GapRatio_sum)
+        deallocate(GapRatio_num)
 
           endif
 

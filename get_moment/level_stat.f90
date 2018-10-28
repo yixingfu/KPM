@@ -14,14 +14,16 @@
             GapRatio_sum = 0d0
             GapRatio_num = 0
         endif
-
+        
+        LS_inc = 2
         ! 
-        temp_denom = (2*BinCount*LSEmax)
-        do i=2,N-1
+        temp_denom = (2*LSEmax)/BinCount
+        do i=1+LS_inc,N-LS_inc,LS_inc
           curr_E = EigVal(i)
-          bin_ind = ceiling((curr_E - LSEmax)/temp_denom
-          prev_E = EigVal(i-1)
-          next_E = EigVal(i+1)
+          if (abs(curr_E).lt.LSEmax) then
+          bin_ind = ceiling((curr_E + LSEmax)/temp_denom)
+          prev_E = EigVal(i-LS_inc)
+          next_E = EigVal(i+LS_inc)
           
           prev_delta = abs(curr_E-prev_E)
           next_delta = abs(curr_E-next_E)
@@ -30,7 +32,8 @@
 
           GapRatio_sum(bin_ind) = GapRatio_sum(bin_ind) + temp_gapratio
           GapRatio_num(bin_ind) = GapRatio_num(bin_ind) + 1
-
+!        write(*,*)curr_E,GapRatio_sum(bin_ind),GapRatio_num(bin_ind)
+                endif
         enddo
 
 
