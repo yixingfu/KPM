@@ -15,6 +15,8 @@
           call MPI_INIT(ierr)
           call MPI_COMM_RANK(MPI_COMM_WORLD,my_id,ierr)
           call MPI_COMM_SIZE(MPI_COMM_WORLD,num_procs,ierr)
+        call ResetRandSeed(my_id*9)
+
           ! read inputs
           include "read_input.f90"
 

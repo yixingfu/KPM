@@ -22,7 +22,7 @@
       mu2d = 0d0
 
       ! set \psi(0)
-      call ResetRandSeed()
+!      call ResetRandSeed()
       call random_number(psi0R)
       psi0 = zexp(dcmplx(0d0,2.0d0*pi*psi0R))
 

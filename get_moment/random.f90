@@ -35,14 +35,19 @@
 
       real*8 function random2D(i,j,P,Q)
           ! This is the random that fits 2D case best
-          real*8::i,j
+          real*8::i,j,U1,U2
           real*8::P,Q
           real*8,dimension(2)::phase
           real*8,parameter::pi=3.1415926535897932384626433832795d0
-          call random_number(phase)
-          phase = phase*2d0*pi
-          random2D = dcos(P*i+phase(1))+&
-              dcos(Q*j+phase(2))
+!          call random_number(phase)
+!          phase = phase*2d0*pi
+!          random2D = dcos(P*i+phase(1))+&
+!              dcos(Q*j+phase(2))
+
+          ! gaussian
+          call random_number(U1)
+          call random_number(U2)
+          random2D =dsqrt(-2d0*dlog(U1))*dcos(2d0*pi*U2)*W
           return
       end function random2D
 
