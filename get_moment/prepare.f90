@@ -72,8 +72,6 @@
 
         XYNNZ = N
 
-      EigValTot = 0
-      EigValLancTot = 0
 
         if (EIGVALCOUNT.eq.0) then
             EIGVALCOUNT = N
@@ -82,3 +80,5 @@
         allocate(EigValTotALL(EIGVALCOUNT))
         allocate(EigValLanc(EIGVALCOUNT))
         allocate(EigValLancTot(EIGVALCOUNT))
+      EigValTot = 0
+      EigValLancTot = 0
