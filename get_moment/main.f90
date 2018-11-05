@@ -15,7 +15,6 @@
           call MPI_INIT(ierr)
           call MPI_COMM_RANK(MPI_COMM_WORLD,my_id,ierr)
           call MPI_COMM_SIZE(MPI_COMM_WORLD,num_procs,ierr)
-        call ResetRandSeed(my_id*9)
 
           ! read inputs
           include "read_input.f90"
@@ -28,6 +27,7 @@
           do seq_i=0,seq_rep-1
 
           rlz_id = REALIZATION0+my_id
+        call ResetRandSeed(rlz_id*9)
           write(outputfile_final,&
               '(a,i4.4)')trim(outputfile)//"_",rlz_id
 
@@ -128,6 +128,11 @@
           enddo
 
           if (ExactSpectrum) then
+                open(34,file=trim(outputfile_final)//".LowEig",&
+                        status="replace",form="unformatted",&
+                        access="stream",action="write")
+                write(34)seq_rep, MinEigs
+                close(34)
               call MPI_REDUCE(EigValTot, EigValTotALL,EIGVALCOUNT, &
                   MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
               if (my_id .eq. (seq_rep*num_procs)) then
@@ -147,6 +152,12 @@
           endif
 
           if (ExactIPR) then
+                open(34,file=trim(outputfile_final)//".LowEig",&
+                        status="replace",form="unformatted",&
+                        access="stream",action="write")
+                write(34)seq_rep, MinEigs
+                close(34)
+
           allocate(IPRx_allTOT(N),IPRk_allTOT(N))
           allocate(GapRatio_sumTOT(BinCount),GapRatio_numTOT(BinCount))
               call MPI_REDUCE(IPRx_all, IPRx_allTOT,N, &
@@ -179,8 +190,23 @@
 
           endif
 
+
+        if (LanczosLS) then
+                open(99,file=trim(outputfile_final)//".LS",&
+                        status="replace",form="unformatted",&
+                        access="stream",action="write")
+                write(99) seq_rep,LanczosEigs
+                close(99)
+                open(51,file=trim(outputfile_final)//".LStxt")
+                do i=1,seq_rep*8
+                write(51,*)LanczosEigs(i)
+                enddo
+                close(51)
+        endif
+
           deallocate(Jxrp,JxA,Jxcol)
           deallocate(Jyrp,JyA,Jycol)
+        deallocate(LanczosEigs)
           call MPI_FINALIZE(ierr)
 
       contains
@@ -195,5 +221,6 @@
           include "dual.f90"
           include "operators.f90"
           include "run_fft.f90"
+          include "arpack_wrap.f90"
 
       end program main

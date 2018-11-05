@@ -15,7 +15,7 @@
           endif
 
 
-          !Query
+!          !Query
           allocate(work(2))
           allocate(rwork(3*N-2))
           allocate(EigVal(N))
@@ -37,10 +37,15 @@
           if (info.ne.0) then
               write(*,*)"something wrong, exact diag "
           endif
+        minEigLoc = minloc(EigVal)
+        MinEigs((seq_i*15+1):(seq_i*15+15)) &
+                = EigVal((minEigLoc(1)-7):(minEigLoc(1)+7))
+          do i=(seq_i*15+1),(seq_i*15+15)
+                write(*,*)'==',MinEigs(i)
+          enddo
+        
 
-          ! compare with new Lanzcos
-!        call LanczosLowest(N,NNZ,A,rp,col,&
-!                      1000*EIGVALCOUNT,EIGVALCOUNT,EigValLanc)
+
           ! empirical: 1.5*eigvalcount should be enough
           ! come back later. Not resolving the lowest ones
           deallocate(work,rwork)
@@ -87,3 +92,27 @@
 
           deallocate(H_dense)
       endif        
+
+
+
+
+        ! if lanczos: do lanczos
+          ! new!!!
+        if (LanczosLS) then
+        write(*,*) "ARPACK1 "
+        call arpack_wrap_ends(N,NNZ,A,rp,col,&
+                ARPACK_OUT1,10,0.000001d0,200)
+        write(*,*) "ARPACK2 "
+        call arpack_wrap_center(N,NNZ,A,rp,col,&
+                ARPACK_OUT2,10,0.000001d0,200)
+        write(*,*) "ARPACK result"
+        do i=1,8
+!        write(*,*)'--',sqrt(abs(ARPACK_OUT2(i)+10000)),&
+!                ';',ARPACK_OUT2(i)+10000
+        write(*,*)'--',ARPACK_OUT1(i),ARPACK_OUT2(i)+10000
+        enddo
+      LanczosEigs((seq_i*8+1):(seq_i*8+8)) = &
+                sqrt(abs(ARPACK_OUT2(1:8)+10000))
+        endif
+
+

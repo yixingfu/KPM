@@ -96,6 +96,7 @@
 	complex*16,dimension(:,:),allocatable::H_dense
 	complex*16,dimension(:),allocatable::work
 	real*8,dimension(:),allocatable::rwork,EigVal
+	complex*16,dimension(6)::ARPACK_OUT1,ARPACK_OUT2
 	integer::EIGVALCOUNT
 	integer::STARTPOINT,ENDPOINT,i_tmp
 	real*8,dimension(:),allocatable::EigValTot,EigValTotALL
@@ -123,6 +124,8 @@
         real*8,dimension(:,:),allocatable::phase_vals,phase_all
 
         ! IPR
+	integer,dimension(1)::minEigLoc
+	real*8,dimension(:),allocatable::MinEigs
         real*8,dimension(:),allocatable::IPRx,IPRk,IPRx_all,IPRk_all
         real*8,dimension(:),allocatable::IPRx_allTOT,IPRk_allTOT
         real*8,dimension(:),allocatable::IPR_E
@@ -138,7 +141,8 @@
         complex*16,dimension(:),allocatable::psi_x_up,psi_x_down
         complex*16,dimension(:),allocatable::psi_k_up,psi_k_down	
  	Logical::TWOSPIN3D
-
+	Logical::LanczosLS
+	real*8,dimension(:),allocatable::LanczosEigs
 	! moment mu
 	real*8,dimension(:),allocatable::mu_tot,mu2_tot,mu,psi0R
 	real*8,dimension(:),allocatable::mu_avg,mu2_avg

@@ -212,7 +212,7 @@
 
           ! misc
           integer::ierr
-          real*8,parameter::NEG_LARGE=100d0
+          real*8,parameter::NEG_LARGE=1000d0
 
           ! test positive
           complex*16,dimension(N)::ev,Hev,aLev
@@ -261,9 +261,9 @@
 
           ! Initiate Emin Emax
           Emin = 0.0d0
-          EminTEMP = 1d70
+          EminTEMP = 1d30
           Emax = 0.0d0
-          EmaxTEMP = -1d70
+          EmaxTEMP = -1d30
 
           ! up to Lmax steps
           do j = 1,Lmax
@@ -332,9 +332,9 @@
           ! workL for dim of wL
           !write(*,*) aL
           call zheev('V','U',j+1,aL,j+1,wL,workL,2*j+1,rworkL,info)
-          !write(*,*) "zheev result."
+!          write(*,*) "zheev result."
           !write(*,*) "info: ",info
-          !write(*,*) wL
+!          write(*,*) wL
           if (info .ne. 0) then
               write(*,*)"wrong: diag L subspace"
           endif
@@ -361,7 +361,7 @@
               if (pos_test .lt. 0) then
                   Eall(ie) = 0d0-Eall(ie)
               endif
-              write(*,*)abs(ev(1:3)/Hev(1:3))
+              write(*,*)abs(ev(1:9)/Hev(1:9))
               write(*,*)Eall(ie),'@',pos_test,'step',j
               enddo
 

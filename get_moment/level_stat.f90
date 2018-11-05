@@ -14,8 +14,10 @@
             GapRatio_sum = 0d0
             GapRatio_num = 0
         endif
+       write(*,*)"=.=",EigVal((N/2-5):(N/2+5)) 
+       write(*,*)"=-=",IPR_E((N/2-5):(N/2+5)) 
         
-        LS_inc = 2
+        LS_inc = 2-mod(L,2)
         ! 
         temp_denom = (2*LSEmax)/BinCount
         do i=1+LS_inc,N-LS_inc,LS_inc

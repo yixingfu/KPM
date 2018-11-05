@@ -16,7 +16,7 @@
         write(*,*)"5"
 !!        read(11,*) Inherit, SaveAll
       read(11,*) ExactSpectrum, ExactStates, ExactIPR, EigvalCount,&
-          BinCount,LSEmax
+          BinCount,LSEmax, LanczosLS
         write(*,*)"6"
       read(11,*) RandPhase, inputPhase
         write(*,*)"7"
@@ -52,7 +52,7 @@
         read(11,*) IQHE_B
         write(*,*) "21"
       close(11)
-
+        allocate(LanczosEigs(seq_rep*8),MinEigs(seq_rep*15))
       if ((DISORDER_TYPE.eq.DISORDER_QP).or. &
                 (DISORDER_TYPE.eq.DISORDER_BOTH)) then
           fiboN = inv_fibo(L,FiboBasis)

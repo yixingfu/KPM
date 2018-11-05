@@ -51,6 +51,9 @@
               phase_all(1,:) = phase(1)
               phase_all(2,:) = phase(2)
           endif
+        write(*,*)"PHASE",phase(1:2)
+        write(*,*)"TWIST",Twist(1:2)
+
           ! initiate indices
           eps_ind = 1
           rp = 0

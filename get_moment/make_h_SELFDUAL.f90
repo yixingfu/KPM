@@ -10,7 +10,7 @@
 
           allocate(TwistAll(num_procs*3*seq_rep))
           call random_number(TwistAll)
-          Twist=TwistAll(my_id*3+1:my_id*3+3)
+          Twist=TwistAll((my_id*3+1):(my_id*3+3))
           twist=twist*2d0-1d0
           write(*,*) 'twist:',Twist
           deallocate(TwistAll)

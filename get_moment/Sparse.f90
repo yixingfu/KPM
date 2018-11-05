@@ -33,9 +33,43 @@
           v_out(i)=v_out_i
           End do
           return
+        end subroutine CSRmultVc16
+
+      subroutine CSRmultVc16_square_offset(N,NNZ,A,rp,col,&
+                OffsetVal,v_in, v_out)
+          !!! INPUTS
+          ! OffsetVal: how much offset?
+          ! N: dimension of matrix
+          ! NNZ: # of nunzero
+          ! A: value
+          ! rp: row pointer
+          ! col: column index
+          ! v_in: vector to multiply
+          ! v_out: result vector(OUTPUT)
+          ! Operation: v_out = M*v_in
+
+          integer*8,intent(in)::N,NNZ
+          integer*8,dimension(NNZ),intent(in)::col
+          integer*8,dimension(N+1),intent(in)::rp
+          complex*16,dimension(NNZ),intent(in)::A
+          complex*16,dimension(N),intent(in)::v_in
+          complex*16,dimension(N),intent(out)::v_out
+          real*8::OffsetVal
+          complex*16,dimension(N)::v_temp1,v_temp2
+
+        call CSRmultVc16(N,NNZ,A,rp,col,v_in,v_temp1)
+        call CSRmultVc16(N,NNZ,A,rp,col,v_temp1,v_temp2)
+        v_out = v_temp2 - OffsetVal*v_in
+
+          return
 
 
-      End subroutine CSRmultVc16
+      End subroutine CSRmultVc16_square_offset
+
+
+
+
+
 
 
 
