@@ -77,3 +77,14 @@
       endif
 
 
+
+      !! For symmetry breaking
+        xf = (1+SB) * xf
+        xb = (1+SB) * xb
+        
+        yf = (1-SB) * yf
+        yb = (1-SB) * yb
+
+        ! zf unchanged
+
+        

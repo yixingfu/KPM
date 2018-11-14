@@ -66,6 +66,7 @@
 	real*8,dimension(3)::Twist,OrigTwist
 	real*8,dimension(:),allocatable::TwistAll
 	complex*16,dimension(3)::expTwist
+	real*8::SB
 
 	! Disorder
 	real*8::WQP,Wrnd,P,Q,R,TQP,Trnd,t0,t

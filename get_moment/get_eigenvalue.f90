@@ -37,7 +37,7 @@
           if (info.ne.0) then
               write(*,*)"something wrong, exact diag "
           endif
-        minEigLoc = minloc(EigVal)
+        minEigLoc = minloc(abs(EigVal))
         MinEigs((seq_i*15+1):(seq_i*15+15)) &
                 = EigVal((minEigLoc(1)-7):(minEigLoc(1)+7))
           do i=(seq_i*15+1),(seq_i*15+15)

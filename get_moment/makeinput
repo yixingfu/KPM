@@ -1,4 +1,5 @@
 #### Last Modified=Wed 04 Apr 2018 03:36:16 PM EDT
+export SB=0
 export DIR_X=1
 export DIR_Y=2
 export HALLCOND=.true.
@@ -47,6 +48,7 @@ echo "0.333333333333333">>batch$FileName.in ### 1D LRH model: sigma
 echo "$HALLCOND,$Dir_a, $Dir_b">>batch$FileName.in ### 2D hall cond, direction of conductivity. X is 1, Y is 2. a is left, b is right. Only fast (memory consuming) method is implemented
 echo "$norm_a">>batch$FileName.in ###SPECIFICALLY SET NORM_A
 echo "$IQHE_B">>batch$FileName.in ###IQHE magnetic field B
+echo "$SB">>batch$FileName.in ### symmetry breaking. 0 is not breaking symmetry. It takes t_z=t, t_x=(1+SB)t, t_y=(1-SB)t. Accordingly when doing selfdual model, we need W_z=t,W_x=(1-SB)t,W_y=(1+SB)t. THIS IS ONLY IMPLEMENTED FOR SELFDUAL (TYPE=7)
 done
 #done
 done

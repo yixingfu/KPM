@@ -51,6 +51,7 @@
         write(*,*)"20"
         read(11,*) IQHE_B
         write(*,*) "21"
+        read(11,*) SB
       close(11)
         allocate(LanczosEigs(seq_rep*8),MinEigs(seq_rep*15))
       if ((DISORDER_TYPE.eq.DISORDER_QP).or. &

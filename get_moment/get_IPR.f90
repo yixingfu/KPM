@@ -30,6 +30,19 @@
             psi_x_down = psi_x(2:N:2)
             call FFT_3D(L,L,L,L*L*L,psi_x_up,psi_k_up)
             call FFT_3D(L,L,L,L*L*L,psi_x_down,psi_k_down)
+        if (my_id.eq.0) then
+        write(*,*)"state:",i
+        write(*,*)"----xup"
+        write(*,*)psi_x_up
+        write(*,*)"----xdown"
+        write(*,*)psi_x_down
+        write(*,*)"----kup"
+        write(*,*)psi_k_up
+        write(*,*)"----kdown"
+        write(*,*)psi_k_down
+        write(*,*)"----"
+
+        endif
             psi_k(1:N:2) = psi_k_up
             psi_k(2:N:2) = psi_k_down
             deallocate(psi_x_up,psi_x_down,psi_k_up,psi_k_down)
