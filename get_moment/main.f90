@@ -1,5 +1,5 @@
 ! Created=Tue 12 Dec 2017 02:59:28 PM STD
-! Last Modified=Sat 27 Oct 2018 03:17:36 PM DST
+! Last Modified=Thu 15 Nov 2018 01:09:28 AM STD
       program main
           use lapack95 
           use f95_precision
@@ -53,10 +53,10 @@
           !call printCSR(N,NNZ,A,col,rp)
 
 
-          if (task.eq.OPTCOND) then
+!          if (task.eq.OPTCOND) then
               ! make J
               include "make_j.f90"
-          endif
+!          endif
 
           ! find moment and save result
           if ((task.eq.RHO) .or. (task.eq.RHODER))then
@@ -77,6 +77,7 @@
                   write(15) Nc
                   write(15) norm_a,norm_b
                   write(15) mu_avg,mu2_avg
+                  write(15) mu_J2_avg,mu_J22_avg
                   close(15)
                   open(16,file=trim(outputfile_final)//".log",&
                       status="replace")

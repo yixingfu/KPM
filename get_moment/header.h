@@ -146,8 +146,11 @@
 	real*8,dimension(:),allocatable::LanczosEigs
 	! moment mu
 	real*8,dimension(:),allocatable::mu_tot,mu2_tot,mu,psi0R
+	real*8,dimension(:),allocatable::mu_J2_tot,mu_J22_tot,mu_J2
 	real*8,dimension(:),allocatable::mu_avg,mu2_avg
+	real*8,dimension(:),allocatable::mu_J2_avg,mu_J22_avg
 	complex*16,dimension(:),allocatable::psi0,psi1
+	complex*16,dimension(:),allocatable::psi0J2,psi0J2x,psi0J2y
 	complex*16,dimension(:),allocatable::psi_test1,psi_test2
 	complex*16::temp_val
 	complex*16,dimension(:),allocatable::psi_tmp

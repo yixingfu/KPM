@@ -1,11 +1,17 @@
-! Last Modified=Thu 10 May 2018 03:02:02 PM DST
-! Last Modified=Thu 10 May 2018 03:02:02 PM DST
-      ! This file computes mu
-
+! Branched=Wed 14 Nov 2018 02:58:10 PM STD
+! Last Modified=Thu 15 Nov 2018 01:07:58 AM STD
+      ! This file computes mu, that comes from (J^2 \rho)
+        if (my_id.eq.0) then
+            "2D only - mu with J2"
+        endif
       allocate(mu_tot(0:Nc-1),mu2_tot(0:Nc-1))
       allocate(mu_avg(0:Nc-1),mu2_avg(0:Nc-1))
+      allocate(mu_J2_tot(0:Nc-1),mu_J22_tot(0:Nc-1))
+      allocate(mu_J2_avg(0:Nc-1),mu_J22_avg(0:Nc-1))
       allocate(mu(0:Nc-1))
+      allocate(mu_J2(0:Nc-1))
       allocate(psi0R(N),psi0(N),psi1(N),psi_tmp(N))
+      allocate(psi0J2(N),psi0J2x(N),psi0J2y(N))
       allocate(psi_j(N),psi_j_p(N),psi_j_pp(N))
       mu_tot = 0
       mu2_tot = 0
@@ -24,12 +30,20 @@
       enddo
       ! psi0 gives mu0
       mu = 0
+      mu_J2 = 0
       mu(0) = dot_product(psi0,psi0)
+      call CSRmultVc16(N,JNNZ,JxA,Jxrp,Jxcol,psi0,psi_tmp)
+      call CSRmultVc16(N,JNNZ,JxA,Jxrp,Jxcol,psi_tmp,psi0J2x)
+      call CSRmultVc16(N,JNNZ,JyA,Jyrp,Jycol,psi0,psi_tmp)
+      call CSRmultVc16(N,JNNZ,JyA,Jyrp,Jycol,psi_tmp,psi0J2y)
+      psi0J2 = psi0J2x + psi0J2y
+      mu_J2(0) = dot_product(psi0J2,psi0)
 
       ! Then calculate psi1
       call CSRmultVc16(N,NNZ,A,rp,col,psi0,psi1)
       ! psi1 gives mu1
       mu(1) = dot_product(psi0,psi1)
+      mu_J2(1) = dot_product(psi0J2,psi1)
 
       psi_j_pp = psi0
       psi_j_p  = psi1
@@ -42,53 +56,36 @@
 
       ! mu(j)
       mu(j) = dot_product(psi0,psi_j)
+      mu_J2(j) = dot_product(psi0J2,psi_j)
 
       ! renew psi_j_pp and psi_j_p
       psi_j_pp = psi_j_p
       psi_j_p = psi_j
       enddo
       mu = mu/N
+      mu_J2 = mu_J2/N
       if (task .eq. RHODER) then
           write(*,*) "THIS IS ABANDONED"
-!                allocate(orig_mu(0:Nc-1))
-!                orig_mu = mu
-!                mu = 0d0
-!                ! For even Uk
-!                tempTsum = 0d0
-!                do iT=0,Nc-3,2
-!                        tempTsum = tempTsum+orig_mu(iT)
-!                        mu(iT+1) = (iT+1)*(2d0*tempTsum-1d0)
-!                enddo
-!                if (modulo(Nc,2).eq.0) then
-!                        tempTsum = tempTsum+orig_mu(Nc-2)
-!                        mu(Nc-1) = (Nc-1)*(2d0*tempTsum-1d0)
-!                endif
-!
-!                ! For odd Uk
-!                tempTsum = 0d0
-!                do iT=1,Nc-3,2
-!                        tempTsum = tempTsum+orig_mu(iT)
-!                        mu(iT+1) = (iT+1)*(2d0*tempTsum)
-!                enddo
-!                if (modulo(Nc,2).eq.1) then
-!                        tempTsum = tempTsum+orig_mu(Nc-2)
-!                        mu(Nc-1) = (Nc-1)*(2d0*tempTsum)
-!                endif
-!
-!                deallocate(orig_mu)
       endif
 
 !        write(*,*)mu(0:5)
       mu_tot = mu_tot+mu
+      mu_J2_tot = mu_J2_tot+mu_J2
         write(*,*)mu_tot(0:4)/real(i)
+        write(*,*)mu_J2_tot(0:4)/real(i)
         write(*,*)"-----"
       mu2_tot = mu2_tot+mu**2
+      mu_J22_tot = mu_J22_tot+mu_J2**2
       enddo
       mu_avg = mu_tot/(Rep)
+      mu_J2_avg = mu_J2_tot/(Rep)
       mu2_avg = mu2_tot/(Rep)
+      mu_J22_avg = mu_J22_tot/(Rep)
       ! divide by N as required by DoS
       ! This is because the delta function rep of rho has 1/N,
       ! dividing by total # of states.
       deallocate(mu_tot,mu2_tot,mu)
+      deallocate(mu_J2_tot,mu_J22_tot,mu_J2)
       deallocate(psi0R,psi0,psi1)
       deallocate(psi_j,psi_j_p,psi_j_pp,psi_tmp)
+      deallocate(psi0J2,psi0J2x,psi0J2y)
