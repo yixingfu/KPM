@@ -60,7 +60,7 @@
 
           ! find moment and save result
           if ((task.eq.RHO) .or. (task.eq.RHODER))then
-              include "get_mu.f90"
+              include "get_mu_J2.f90"
               write(*,*) rlz_id, "done mu calculation"
 
               ! save results
@@ -121,6 +121,7 @@
           deallocate(A,rp,col)
           if (task .eq. RHO) then
               deallocate(mu_avg,mu2_avg)
+              deallocate(mu_J2_avg,mu_J22_avg)
           else if (task.eq.OPTCOND) then
               deallocate(mu2d_avg,mu2d2_avg)
           endif

@@ -2,9 +2,12 @@
 ! Last Modified=Fri 07 Sep 2018 11:02:22 AM DST
       ! 
       allocate(rho(1:Ntilde))
+      allocate(rho_J2(1:Ntilde))
       ! it need to be scaled here, and scaled back later
       allocate(Egrid_t(1:Ntilde))
       Egrid_t = (Egrid-norm_b)/norm_a
+        rho = 0
+        rho_J2 = 0
 
 
       if (useFFT) then
@@ -15,11 +18,15 @@
               !1/(pi sqrt(1-x^2)) (g0 mu0+2 sum (g_n mu_n Tn(x)))
               Ei = Egrid_t(i)
               rhoi = gJ(0)*mu_avg(0)
+              rho_J2i = gJ(0)*mu_J2_avg(0)
               do j=1,ForceNc-1
               rhoi = rhoi+&
                   2d0*gJ(j)*mu_avg(j)*ChebyT(j,Ei)
+              rho_J2i = rho_J2i+&
+                  2d0*gJ(j)*mu_J2_avg(j)*ChebyT(j,Ei)
               End do
               rho(i) = rhoi/(norm_a*pi*dsqrt(1d0-Ei*Ei))
+              rho_J2(i) = rho_J2i/(norm_a*pi*dsqrt(1d0-Ei*Ei))
               End do
           else if (Der .eq. 1) then
               do i=1,Ntilde
@@ -68,7 +75,10 @@
 
       endif
       rho_tot = rho_tot+(rho)
+      rho_J2_tot = rho_J2_tot+(rho_J2)
       rho2_tot = rho2_tot+rho*rho
-      deallocate(rho,Egrid_t)
+      rho_J22_tot = rho_J22_tot+rho_J2*rho_J2
+      deallocate(rho,rho_J2,Egrid_t)
       deallocate(mu_avg,mu2_avg)! no longer used
+      deallocate(mu_J2_avg,mu_J22_avg)! no longer used
 

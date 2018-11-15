@@ -52,30 +52,39 @@
 !!!                endif
         call MPI_REDUCE(rho_tot,rho_tot_collect,Ntilde,&
                 MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+        call MPI_REDUCE(rho_J2_tot,rho_J2_tot_collect,Ntilde,&
+                MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
         call MPI_REDUCE(rho2_tot,rho2_tot_collect,Ntilde,&
+                MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
+        call MPI_REDUCE(rho_J22_tot,rho_J22_tot_collect,Ntilde,&
                 MPI_DOUBLE_PRECISION,MPI_SUM,0,MPI_COMM_WORLD,ierr)
         call MPI_REDUCE(N_rlz_actual,N_rlz_collect,1,&
                 MPI_INTEGER,MPI_SUM,0,MPI_COMM_WORLD,ierr)
 
      if (my_id .eq. 0) then
-        write(*,*) N_rlz_collect,rho_tot_collect(1)
+        write(*,*) N_rlz_collect,rho_tot_collect(1),&
+                rho_J2_tot_collect(1)
              write(outputfile,'(a,i6.6)')trim(outputfile),ForceNc
               open(13,file=trim(outputfile)//".dat",status="replace",&
                       form="unformatted",access="stream")
                 write(13)N_rlz_collect,Ntilde,Egrid,&
-                rho_tot_collect,rho2_tot_collect
+                rho_tot_collect,rho2_tot_collect,&
+                rho_J2_tot_collect,rho_J22_tot_collect
 !              write(13)RLZmax+1-RLZmin,Ntilde,Egrid,rho_tot,rho2_tot
               close(13)
               open(15,file=trim(outputfile)//".txt",status="replace")
                 do i=1,Ntilde
 
-                write(15,*) Egrid(i),rho_tot(i)
+                write(15,*) Egrid(i),rho_tot_collect(i),&
+                                rho_J2_tot_collect(i)
 
                 enddo
                 close(15)
         endif
                 deallocate(Egrid,rho_tot,rho2_tot,rho2_tot_collect,&
                 rho_tot_collect)
+                deallocate(rho_J2_tot,rho_J22_tot,rho_J22_tot_collect,&
+                rho_J2_tot_collect)
         call MPI_FINALIZE(ierr)
               contains 
                       include "Chebyshev.f90"

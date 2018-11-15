@@ -2,7 +2,7 @@
 ! Last Modified=Thu 15 Nov 2018 01:07:58 AM STD
       ! This file computes mu, that comes from (J^2 \rho)
         if (my_id.eq.0) then
-            "2D only - mu with J2"
+            write(*,*) "2D only - mu with J2"
         endif
       allocate(mu_tot(0:Nc-1),mu2_tot(0:Nc-1))
       allocate(mu_avg(0:Nc-1),mu2_avg(0:Nc-1))

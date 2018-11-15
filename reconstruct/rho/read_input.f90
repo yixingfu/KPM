@@ -7,11 +7,14 @@
         Nc=2
       read(11,iostat=ios) Nc
       allocate(mu_avg(0:Nc-1),mu2_avg(0:Nc-1))
+      allocate(mu_J2_avg(0:Nc-1),mu_J22_avg(0:Nc-1))
       read(11,iostat=ios) norm_a,norm_b
       read(11,iostat=ios) mu_avg,mu2_avg
+      read(11,iostat=ios) mu_J2_avg,mu_J22_avg
       close(11,iostat=ios)
            if (ios .ne. 0) then
                 deallocate(mu_avg,mu2_avg)
+                deallocate(mu_J2_avg,mu_J22_avg)
                 cycle
            endif
         N_rlz_actual = N_rlz_actual + 1
@@ -36,6 +39,15 @@
               rho2_tot= 0
                 rho2_tot_collect=0
                 rho2_tot_collect=0
+
+              allocate(Egrid(1:Ntilde),rho_J2_tot(1:Ntilde), &
+                                rho_J22_tot(1:Ntilde))
+              allocate(rho_J2_tot_collect(1:Ntilde), &
+                                rho_J22_tot_collect(1:Ntilde))
+              rho_J2_tot = 0
+              rho_J22_tot= 0
+                rho_J22_tot_collect=0
+                rho_J22_tot_collect=0
       ! This is the same for all. 
       do i=1,Ntilde
               Egrid(i) = i/real(Ntilde)*2d0*outputEmax-outputEmax

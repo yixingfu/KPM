@@ -10,15 +10,18 @@
 	integer::Der
 	real*8::norm_a,norm_b,tempTsum
 	real*8,dimension(:),allocatable::mu_avg,mu2_avg,orig_mu
+	real*8,dimension(:),allocatable::mu_J2_avg,mu_J22_avg,orig_mu_J2
 	integer::iT
 
 	
 	
 	! rho calculation
 	integer::Ntilde
-	real*8::Ei,rhoi
+	real*8::Ei,rhoi,rho_J2i
 	real*8,dimension(:),allocatable::Egrid,rho,rho_tot,Egrid_t,rho2_tot
+	real*8,dimension(:),allocatable::rho_J2,rho_J2_tot,rho_J22_tot
 	real*8,dimension(:),allocatable::rho_tot_collect,rho2_tot_collect
+	real*8,dimension(:),allocatable::rho_J2_tot_collect,rho_J22_tot_collect
 
 	
 	! Jackson Kernel
