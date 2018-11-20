@@ -72,18 +72,18 @@
         ! improvement pending: pauli_x(s,s), pauli_y(s,s) and
         ! puali_z(s,s_) are 0
           A(col_ind) = WQP * ( &
-              (dcos(Q*i+phase(1))*pauli_z(s,s)) + &
-              ((1-SB)*dcos(P*j+phase(2))*pauli_x(s,s)) + &
-              ((1+SB)*dcos(R*k+phase(3))*pauli_y(s,s)))
+              (dsin(Q*i+phase(1))*pauli_z(s,s)) + &
+              ((1-SB)*dsin(P*j+phase(2))*pauli_x(s,s)) + &
+              ((1+SB)*dsin(R*k+phase(3))*pauli_y(s,s)))
 !          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
           
           ! opposite spin
           col(col_ind) = xyzs2i(i,j,k,s_,L)
           A(col_ind) = WQP * ( &
-              (dcos(Q*i+phase(1))*pauli_z(s,s_)) + &
-              ((1-SB)*dcos(P*j+phase(2))*pauli_x(s,s_)) + &
-              ((1+SB)*dcos(R*k+phase(3))*pauli_y(s,s_)))
+              (dsin(Q*i+phase(1))*pauli_z(s,s_)) + &
+              ((1-SB)*dsin(P*j+phase(2))*pauli_x(s,s_)) + &
+              ((1+SB)*dsin(R*k+phase(3))*pauli_y(s,s_)))
 !          write(*,*)A(col_ind), col(col_ind),rp_ind-1
           col_ind = col_ind+1
 

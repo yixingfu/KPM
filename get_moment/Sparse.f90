@@ -35,6 +35,7 @@
           return
         end subroutine CSRmultVc16
 
+
       subroutine CSRmultVc16_square_offset(N,NNZ,A,rp,col,&
                 OffsetVal,v_in, v_out)
           !!! INPUTS
@@ -65,6 +66,21 @@
 
 
       End subroutine CSRmultVc16_square_offset
+
+        subroutine CSR_print(N,NNZ,A,rp,col)
+          integer*8,intent(in)::N,NNZ
+          integer*8,dimension(NNZ),intent(in)::col
+          integer*8,dimension(N+1),intent(in)::rp
+          complex*16,dimension(NNZ),intent(in)::A
+        integer*8::i,j
+        do i=1,N
+                do j=rp(i),rp(i+1)-1
+        write(*,'(i4.4,a,i4.4,a,F11.9,a,F11.9)')i,',',col(j),&
+                ',',real(A(j)),',',imag(A(j))
+                enddo
+        enddo
+        return
+        end subroutine CSR_print
 
 
 

@@ -25,8 +25,12 @@
               rho_J2i = rho_J2i+&
                   2d0*gJ(j)*mu_J2_avg(j)*ChebyT(j,Ei)
               End do
-              rho(i) = rhoi/(norm_a*pi*dsqrt(1d0-Ei*Ei))
-              rho_J2(i) = rho_J2i/(norm_a*pi*dsqrt(1d0-Ei*Ei))
+                rhoi = rhoi/(norm_a*pi*dsqrt(1d0-Ei*Ei))
+              rho(i) = rhoi
+!              rho_J2(i) = rho_J2i/(norm_a*pi*dsqrt(1d0-Ei*Ei))
+                rho_J2i=rho_J2i/(norm_a*pi*dsqrt(1d0-Ei*Ei))
+              rho_J2(i) = rho_J2i/(rhoi+0.000000001)
+        write(*,*)Ei,rhoi,rho_J2i,rho_J2i/rhoi
               End do
           else if (Der .eq. 1) then
               do i=1,Ntilde

@@ -1,9 +1,13 @@
 ! Branched=Wed 14 Nov 2018 02:58:10 PM STD
 ! Last Modified=Thu 15 Nov 2018 01:07:58 AM STD
       ! This file computes mu, that comes from (J^2 \rho)
-        if (my_id.eq.0) then
-            write(*,*) "2D only - mu with J2"
-        endif
+!        if (my_id.eq.0) then
+!            write(*,*) "2D only - mu with J2"
+!        write(*,*)"J"
+!        call CSR_print(N,JNNZ,JxA,Jxrp,Jxcol)
+!        write(*,*)"H"
+!        call CSR_print(N,NNZ,A,rp,col)
+!        endif
       allocate(mu_tot(0:Nc-1),mu2_tot(0:Nc-1))
       allocate(mu_avg(0:Nc-1),mu2_avg(0:Nc-1))
       allocate(mu_J2_tot(0:Nc-1),mu_J22_tot(0:Nc-1))
@@ -32,11 +36,12 @@
       mu = 0
       mu_J2 = 0
       mu(0) = dot_product(psi0,psi0)
+        
       call CSRmultVc16(N,JNNZ,JxA,Jxrp,Jxcol,psi0,psi_tmp)
       call CSRmultVc16(N,JNNZ,JxA,Jxrp,Jxcol,psi_tmp,psi0J2x)
-      call CSRmultVc16(N,JNNZ,JyA,Jyrp,Jycol,psi0,psi_tmp)
-      call CSRmultVc16(N,JNNZ,JyA,Jyrp,Jycol,psi_tmp,psi0J2y)
-      psi0J2 = psi0J2x + psi0J2y
+!      call CSRmultVc16(N,JNNZ,JyA,Jyrp,Jycol,psi0,psi_tmp)
+!      call CSRmultVc16(N,JNNZ,JyA,Jyrp,Jycol,psi_tmp,psi0J2y)
+      psi0J2 = psi0J2x ! + psi0J2y
       mu_J2(0) = dot_product(psi0J2,psi0)
 
       ! Then calculate psi1

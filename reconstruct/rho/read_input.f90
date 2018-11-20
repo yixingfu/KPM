@@ -40,7 +40,7 @@
                 rho2_tot_collect=0
                 rho2_tot_collect=0
 
-              allocate(Egrid(1:Ntilde),rho_J2_tot(1:Ntilde), &
+              allocate(rho_J2_tot(1:Ntilde), &
                                 rho_J22_tot(1:Ntilde))
               allocate(rho_J2_tot_collect(1:Ntilde), &
                                 rho_J22_tot_collect(1:Ntilde))
