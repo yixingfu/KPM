@@ -44,9 +44,12 @@
       if (D.eq.3) then
 
           include "QP_prepare_public.f90"
-        Phase(3) = -L*Twist(3)
-        Phase(2) = -L*Twist(1)
-        Phase(1) = -L*Twist(2)
+        Phase(3) = -Twist(3)
+        Phase(2) = -Twist(1)
+        Phase(1) = -Twist(2) 
+        !! NOTE: \theta/L = \phi, where theta is (0,pi)
+        !! The phase here is \theta/L
+
         write(*,*) rlz_id,"TWIST",twist
         write(*,*) rlz_id,"Phase",phase
           ! initiate indices

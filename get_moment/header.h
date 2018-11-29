@@ -150,11 +150,12 @@
 	real*8,dimension(:),allocatable::mu_avg,mu2_avg
 	real*8,dimension(:),allocatable::mu_J2_avg,mu_J22_avg
 	complex*16,dimension(:),allocatable::psi0,psi1
-	complex*16,dimension(:),allocatable::psi0J2,psi0J2x,psi0J2y
+	complex*16,dimension(:),allocatable::psi0J,psi1J
 	complex*16,dimension(:),allocatable::psi_test1,psi_test2
 	complex*16::temp_val
 	complex*16,dimension(:),allocatable::psi_tmp
 	complex*16,dimension(:),allocatable::psi_j,psi_j_p,psi_j_pp
+	complex*16,dimension(:),allocatable::psi_jJ,psi_j_pJ,psi_j_ppJ
 	!saveload
 	integer::prevNc,j0
 
